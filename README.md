@@ -1,27 +1,46 @@
 # Hadnet
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+> Helping you connect with black-owned businesses and community groups in your area.
 
-## Development server
+## Team
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+  - __Product Owner__: Winntana Beyene
+  - __Scrum Master__: Adam Hebert
+  - __Development Team Members__: Sam Keer, Jordan Estes
 
-## Code scaffolding
+## Table of Contents
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. [Usage](#Usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
+    1. [Tasks](#tasks)
+1. [Team](#team)
+1. [Contributing](#contributing)
 
-## Build
+## Usage
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+To Start Server:
 
-## Running unit tests
+```javascript
+// Need usage instructions
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Requirements
 
-## Running end-to-end tests
+- Node (^8.0.0)
+- Postgres (^10.0)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Development
 
-## Further help
+### Installing Dependencies
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+From within the root directory:
+
+```javascript
+npm install
+```
+
+### Roadmap
+
+View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
