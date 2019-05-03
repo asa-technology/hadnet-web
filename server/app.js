@@ -10,8 +10,9 @@ const path = require('path');
 const auth = require('./routes/auth');
 const businesses = require('./routes/businesses');
 const community = require('./routes/community');
-const user = require('./routes/user.js')
-const review = require('./routes/review.js')
+const user = require('./routes/user.js');
+const review = require('./routes/review.js');
+const sam = require('./routes/sam.js')
 
 //middleware
 app.use(bodyParser.json())
@@ -27,5 +28,7 @@ app.use('/api/user', user)
 app.use('/api/community', community);
 // review route
 app.use('/api/review', review)
+// sam route
+app.use('/api/sam', sam);
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`));
