@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const { db } = require('../database/index');
 const port = process.env.PORT || 3000;
+const path = require('path');
 
 //routers
 const auth = require('./routes/auth');
@@ -14,15 +15,17 @@ const review = require('./routes/review.js')
 
 //middleware
 app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, '../dist/hadnet')));
+
 // authentication route
-app.use('/auth', auth);
+app.use('/api/auth', auth);
 // businesses route
-app.use('/business', businesses)
+app.use('/api/business', businesses)
 // user route
-app.use('/user', user)
+app.use('/api/user', user)
 // community route
-app.use('/community', community);
+app.use('/api/community', community);
 // review route
-app.use('/review', review)
+app.use('/api/review', review)
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`));
