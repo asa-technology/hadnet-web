@@ -19,6 +19,7 @@ import { IsThisBlackOwnedComponent } from './components/is-this-black-owned/is-t
 import {WebcamModule} from 'ngx-webcam';
 import {FormsModule} from '@angular/forms';
 import { BusinessListingItemComponent } from './components/business-listing-item/business-listing-item.component';
+import { MapViewComponent } from './components/map-view/map-view.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { BusinessListingItemComponent } from './components/business-listing-item
     HomeViewComponent,
     LoginComponent,
     IsThisBlackOwnedComponent,
-    BusinessListingItemComponent
+    BusinessListingItemComponent,
+    MapViewComponent
   ],
   imports: [
     BrowserModule,
