@@ -6,7 +6,7 @@
 
   - __Product Owner__: Winntana Beyene
   - __Scrum Master__: Adam Hebert
-  - __Development Team Members__: Sam Keer, Jordan Estes
+  - __Development Team Members__: Sam Keer, Jordan Estes , Adam Hebert, Winntana Beyene
 
 ## Table of Contents
 
@@ -15,12 +15,23 @@
 - [Requirements](#requirements)
 - [Development](#development)
     - [Installing Dependencies](#installing-dependencies)
+- [Roadmap](#roadmap)
 
 
 ## Usage
 
 To Start Server:
-```npm run server-dev```
+```npm start```
+All server routes are in server/routes.
+
+To Compile Angular App:
+```ng build```
+All compiled files end up in dist/
+
+To Start Isolated Client App:
+```ng serve```
+All client files located in src/
+All component files located in src/app/components/
 
 ## Requirements
 
@@ -44,4 +55,5 @@ npm install
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/asa-technology/hadnet-client/projects)
+View the project roadmap [here](https://github.com/asa-technology/hadnet-client/projects)<br>
+View the project Wireframe [here](https://www.figma.com/file/MitOK9eXtlV1mDtcz0Aq0Sip/Untitled?node-id=7%3A69)

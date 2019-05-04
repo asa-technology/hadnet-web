@@ -40,6 +40,22 @@ export class MapViewComponent implements OnInit {
 
     const marker: any = tomtom.L.marker([29.9511, -90.0715]).addTo(map);
     marker.bindPopup('hadnet headquarters', 'address').openPopup();
+
+    this.selectedBusiness = {
+      id: 123123,
+      name: 'Hadnet Headquarters',
+      idBusinessType: 2352354,
+      phoneNumber: 5044311223,
+      email: 'autoserv@yahoo.com',
+      urlHomepage: 'autoserv.com',
+      address: '1800 North Broad St New Orleans',
+      idFeaturedImage: 235235,
+      latitude: 29.9511,
+      longitude:  -90.077200,
+      idUser: 2352345,
+      averageRating: 3,
+      legalBusinessName: 'Hadnet Headquarterz',
+    };
   }
 
 }
