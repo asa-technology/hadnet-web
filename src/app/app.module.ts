@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { BusinessListingsComponent } from './components/business-listings/busine
 import { IsThisBlackOwnedComponent } from './components/is-this-black-owned/is-this-black-owned.component';
 import {WebcamModule} from 'ngx-webcam';
 import {FormsModule} from '@angular/forms';
+import { BusinessListingItemComponent } from './components/business-listing-item/business-listing-item.component';
 
 
 @NgModule({
@@ -17,13 +19,15 @@ import {FormsModule} from '@angular/forms';
     HeaderComponent,
     BusinessListingsComponent,
     HomeViewComponent,
-    IsThisBlackOwnedComponent
+    IsThisBlackOwnedComponent,
+    BusinessListingItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     WebcamModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
