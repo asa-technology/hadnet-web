@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     axios.get('https://api.data.gov/sam/v3/registrations',{
         params: {
             'api_key': process.env.SAM_API_KEY,
-            'qterms': '(minorityOwned:true)+AND+(samAddress.zip:70119)'
+            'qterms': '(minorityOwned:true)+AND+(samAddress.zip:70116)'
         },
     })
     .then((results) => {
@@ -27,7 +27,17 @@ router.get('/', (req, res) => {
     })
     .then((results) => {
         results.forEach((result) => {
-            console.log(result.data['sam_data'].registration.businessTypes)
+            const listing = result.data['sam_data'].registration;
+            const businessEntry = {
+                name: listing.legalBusinessName,
+                address: `${listing.samAddress.line1} ${listing.samAddress.city}, ${listing.samAddress.stateorProvince} ${listing.samAddress.zip}-${listing.samAddress.zipPlus4}`,
+                phone_number: listing.electronicBusinessPoc.usPhone,
+                email: listing.electronicBusinessPoc.email,
+                legal_business_name: listing.legalBusinessName,
+            }
+            console.log(businessEntry.name)
+            console.log(businessEntry.address, businessEntry.phone_number, businessEntry.email)
+            console.log(listing.businessTypes)
         })
     })
 })

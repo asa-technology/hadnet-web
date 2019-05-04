@@ -2,7 +2,7 @@
   //url: string
   //id_business --> foreign key
 
-module.exports.businesses = [
+module.exports.images = [
     {
         id: 1,
         url: "https://images.unsplash.com/photo-1449130015084-2d48a345ae62?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80", 

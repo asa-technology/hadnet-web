@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
    * get user by id from database
    */
   if(users[id]){
-    console.log(`Grabbing user at id: ${id}`);
+    console.log(`Grabbing user at id: ${id + 1}`);
     res.send(users[id]);
   } else {
     res.sendStatus(404);
