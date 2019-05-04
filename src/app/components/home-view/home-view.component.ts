@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MapViewComponent } from '../map-view/map-view.component';
 
 @Component({
   selector: 'app-home-view',
