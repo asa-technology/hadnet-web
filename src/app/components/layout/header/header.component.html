@@ -3,4 +3,5 @@
     <div class="topnav">
       <a class="active"  routerLink="/">Home</a> | <a routerLink="/business-listings">Business Listings</a> | <a routerLink="/isThisBlackOwned">isThisBlackOwned</a> | <a *ngIf="!authService.isLoggedIn" routerLink="/login">Log In</a> <a *ngIf="authService.isLoggedIn" routerLink="" (click)="authService.logout()">Log Out</a> | 
     </div>
+
 </header>
