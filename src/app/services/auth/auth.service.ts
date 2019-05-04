@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { auth } from 'firebase/app';
+import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 
@@ -33,6 +34,36 @@ export class AuthService {
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
     this.router.navigate(['login'])
+  }
+
+  fbLogin() {
+    return new Promise<any>((resolve, reject) => {
+      let provider = new firebase.auth.FacebookAuthProvider();
+      this.afAuth.auth  
+        .signInWithPopup(provider)
+        .then(res => {
+          resolve(res);
+        }, err => {
+          console.log(err);
+          reject(err);
+        })
+    })
+  }
+
+  googleLogin() {
+    return new Promise<any>((resolve, reject) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      this.afAuth.auth
+        .signInWithPopup(provider)
+        .then(res => {
+          resolve(res);
+        }, err => {
+          console.log(err);
+          reject(err);
+        })
+    })
   }
 
   get isLoggedIn(): boolean {
