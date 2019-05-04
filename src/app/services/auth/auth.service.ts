@@ -21,6 +21,22 @@ export class AuthService {
     })
   }
 
+  async signup(email: string, password: string) {
+    try {
+      await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+      this.router.navigate(['']);
+    } catch (error) {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      if (errorCode === 'auth/weak-password') {
+        alert('Error! The password is too weak.')
+      } else {
+        alert("Error! " + errorMessage)
+      }
+      console.log(error);
+    }
+  }
+
   async login(email: string, password: string) {
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password);
@@ -29,41 +45,33 @@ export class AuthService {
       alert("Error! " + e.message);
     }
   }
-
+  
   async logout() {
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
     this.router.navigate(['login'])
   }
-
-  fbLogin() {
-    return new Promise<any>((resolve, reject) => {
+  
+  async fbLogin() {
+    try {
       let provider = new firebase.auth.FacebookAuthProvider();
-      this.afAuth.auth  
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
+      await this.afAuth.auth.signInWithPopup(provider)
+      this.router.navigate(['']);
+    } catch(error) {
+      alert("Error! " + error.message);
+    }
   }
-
-  googleLogin() {
-    return new Promise<any>((resolve, reject) => {
+  
+  async googleLogin() {
+    try {
       let provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope('profile');
       provider.addScope('email');
-      this.afAuth.auth
-        .signInWithPopup(provider)
-        .then(res => {
-          resolve(res);
-        }, err => {
-          console.log(err);
-          reject(err);
-        })
-    })
+      await this.afAuth.auth.signInWithPopup(provider)
+      this.router.navigate(['']);
+    } catch(error) {
+      alert("Error! " + error.message);
+    }
   }
 
   get isLoggedIn(): boolean {
