@@ -41,6 +41,7 @@ export class MapViewComponent implements OnInit {
     const marker: any = tomtom.L.marker([29.9511, -90.0715]).addTo(map);
     marker.bindPopup('hadnet headquarters', 'address').openPopup();
 
+// initial business selected so user has an idea of what to do with the map
     this.selectedBusiness = {
       id: 123123,
       name: 'Hadnet Headquarters',
