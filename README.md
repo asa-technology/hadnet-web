@@ -6,7 +6,7 @@
 
   - __Product Owner__: Winntana Beyene
   - __Scrum Master__: Adam Hebert
-  - __Development Team Members__: Sam Keer, Jordan Estes
+  - __Development Team Members__: Sam Keer, Jordan Estes , Adam Hebert, Winntana Beyene
 
 ## Table of Contents
 
@@ -15,6 +15,7 @@
 - [Requirements](#requirements)
 - [Development](#development)
     - [Installing Dependencies](#installing-dependencies)
+- [Roadmap](#roadmap)
 
 
 ## Usage
@@ -54,4 +55,5 @@ npm install
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/asa-technology/hadnet-client/projects)
+View the project roadmap [here](https://github.com/asa-technology/hadnet-client/projects)<br>
+View the project Wireframe [here](https://www.figma.com/file/MitOK9eXtlV1mDtcz0Aq0Sip/Untitled?node-id=4%3A332)
