@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BusinessListing } from '../../models/BusinessListing';
+import { BusinessListingService } from 'src/app/services/business-listings/business-listing.service';
 
 @Component({
   selector: 'app-business-listings',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./business-listings.component.css']
 })
 export class BusinessListingsComponent implements OnInit {
-
-  constructor() { }
+  businessListings: BusinessListing[];
+  constructor(private businessListingService: BusinessListingService) { }
 
   ngOnInit() {
+    this.businessListings = this.businessListingService.getBusinessListings();
   }
 
 }
