@@ -12,7 +12,7 @@ export class BusinessListingsComponent implements OnInit {
   constructor(private businessListingService: BusinessListingService) { }
 
   ngOnInit() {
-    this.businessListings = this.businessListingService.getBusinessListings();
+    this.businessListingService.getBusinessListings().subscribe( businessListings => this.businessListings = businessListings);
   }
 
 }
