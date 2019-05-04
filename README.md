@@ -56,4 +56,4 @@ npm install
 ### Roadmap
 
 View the project roadmap [here](https://github.com/asa-technology/hadnet-client/projects)<br>
-View the project Wireframe [here](https://www.figma.com/file/MitOK9eXtlV1mDtcz0Aq0Sip/Untitled?node-id=4%3A332)
+View the project Wireframe [here](https://www.figma.com/file/MitOK9eXtlV1mDtcz0Aq0Sip/Untitled?node-id=7%3A69)
