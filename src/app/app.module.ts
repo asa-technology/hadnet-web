@@ -20,6 +20,7 @@ import {WebcamModule} from 'ngx-webcam';
 import {FormsModule} from '@angular/forms';
 import { BusinessListingItemComponent } from './components/business-listing-item/business-listing-item.component';
 import { MapViewComponent } from './components/map-view/map-view.component';
+import { HomeSelectedBusinessComponent } from './components/home-selected-business/home-selected-business.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MapViewComponent } from './components/map-view/map-view.component';
     LoginComponent,
     IsThisBlackOwnedComponent,
     BusinessListingItemComponent,
-    MapViewComponent
+    MapViewComponent,
+    HomeSelectedBusinessComponent
   ],
   imports: [
     BrowserModule,

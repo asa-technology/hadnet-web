@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { BusinessListingService } from 'src/app/services/business-listings/business-listing.service';
+import { BusinessListing } from '../../models/BusinessListing';
+
 declare let L;
 declare let tomtom: any;
 
@@ -10,6 +12,8 @@ declare let tomtom: any;
 })
 export class MapViewComponent implements OnInit {
   // gets all business listings for rendering on map
+
+  selectedBusiness: BusinessListing;
   constructor(private businessListingService: BusinessListingService) { }
 
   ngOnInit() {
@@ -22,9 +26,18 @@ export class MapViewComponent implements OnInit {
     });
     this.businessListingService.getBusinessListings().subscribe( (businessListings) => businessListings.forEach((listing) => {
       const businessMarker: any = tomtom.L.marker([listing.latitude, listing.longitude]).addTo(map);
-      businessMarker.bindPopup(`<strong>${listing.name}</strong><br>${listing.address}`);
-      console.log(listing);
+      // what shows up when a user clicks a pin on the map
+      businessMarker.bindPopup(
+        `<div>
+        <strong>${listing.name}</strong><br>
+        ${listing.address}<br>
+        </div>`);
+      businessMarker.on('click', () => {
+        this.selectedBusiness = listing;
+        console.log(listing);
+      });
     }));
+
     const marker: any = tomtom.L.marker([29.9511, -90.0715]).addTo(map);
     marker.bindPopup('hadnet headquarters', 'address').openPopup();
   }
