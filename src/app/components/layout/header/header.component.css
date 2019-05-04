@@ -25,3 +25,8 @@
     background-color: #4CAF50;
     color: white;
   }
+
+.navbar {
+  justify-content: space-between;
+  padding: 0px;
+}
