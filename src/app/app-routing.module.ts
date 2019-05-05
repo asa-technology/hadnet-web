@@ -5,13 +5,15 @@ import { BusinessListingsComponent } from './components/business-listings/busine
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { IsThisBlackOwnedComponent } from './components/is-this-black-owned/is-this-black-owned.component';
+import { BusinessProfileComponent } from './components/business-profile/business-profile.component';
 
 const routes: Routes = [
   {path: '', component: HomeViewComponent},
   {path: 'business-listings', component: BusinessListingsComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
-  {path: 'isThisBlackOwned', component: IsThisBlackOwnedComponent}
+  {path: 'isThisBlackOwned', component: IsThisBlackOwnedComponent},
+  {path: 'business-profile', component: BusinessProfileComponent}
 ];
 
 @NgModule({
