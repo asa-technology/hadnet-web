@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BusinessListing } from '../../models/BusinessListing';
 import { BusinessListingService } from '../../services/business-listings/business-listing.service';
+import { GetBusinessImagesService } from '../../services/business-images-and-ratings/get-business-images.service';
+import { BusinessImage } from '../../models/BusinessImage';
+
 @Component({
   selector: 'app-business-profile',
   templateUrl: './business-profile.component.html',
@@ -8,13 +11,22 @@ import { BusinessListingService } from '../../services/business-listings/busines
 })
 export class BusinessProfileComponent implements OnInit {
   businessListing: BusinessListing;
-  constructor(private businessListingService: BusinessListingService ) { }
+  businessImages: BusinessImage;
+  businessPhoneNumber: string;
+  businessRating: string;
+
+  constructor(private businessListingService: BusinessListingService, private getBusinessRatingService: GetBusinessImagesService ) { }
 
   ngOnInit() {
     this.businessListingService.getBusinessListings()
     .subscribe((businessListings) => {
       this.businessListing = businessListings[0];
-      console.log(this.businessListing);
-    });
+      this.businessPhoneNumber = `${this.businessListing.phoneNumber}`;
+      this.businessRating = `${this.businessListing.averageRating}`;
+      this.getBusinessRatingService.getBusinessImages(this.businessListing.id)
+          .subscribe((images) => {
+          this.businessImages = images;
+          });
+      });
+    }
   }
-}

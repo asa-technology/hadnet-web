@@ -1,13 +1,12 @@
 <div>
-  <p>{{ businessListing.name }} </p>
-  <p> {{ businessListing.averageRating.toString() }} </p>
-  <p> {{ businessListing.idFeaturedImage.toString() }} </p>
+  <h3> {{ businessListing.name }} </h3>
+  <p> Average Rating: {{ businessRating }} </p>
+  <img class="business-img" src="{{ businessImages.url }}">
   <div class="business-data">
-    <p> ******* verification status placeholder ****** </p>
-    <p> {{ businessListing.phoneNumber }} </p>
+    <p> verification status *** </p>
+    <p> {{ businessPhoneNumber }} </p>
     <p> {{ businessListing.email }} </p>
-    <p> {{ businessListing.urlHomepage }} </p>
+    <p> {{ businessListing.address }} </p>
   </div>
-
   <app-ratings></app-ratings>
 </div>
