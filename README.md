@@ -20,22 +20,19 @@
 
 ## Usage
 
-To Start Server:
+#### To Start Server:
 ```npm start```
 
 All server routes are in server/routes.
 
-To Compile Angular App:
+#### To Compile (Angular Files):
 ```ng build```
 
-All compiled files end up in dist/
+All compiled files end up in _dist/_
 
-To Start Isolated Client App:
-```ng serve```
+All Angular client files located in _src/_
 
-All client files located in src/
-
-All component files located in src/app/components/
+All component files located in _src/app/components/_
 
 ## Requirements
 
