@@ -22,15 +22,19 @@
 
 To Start Server:
 ```npm start```
+
 All server routes are in server/routes.
 
 To Compile Angular App:
 ```ng build```
+
 All compiled files end up in dist/
 
 To Start Isolated Client App:
 ```ng serve```
+
 All client files located in src/
+
 All component files located in src/app/components/
 
 ## Requirements
