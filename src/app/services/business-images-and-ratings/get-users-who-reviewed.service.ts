@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BusinessRating } from '../../models/BusinessRating';
 import { Observable } from 'rxjs';
+import { User } from '../../models/User';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GetBusinessRatingsService {
-  businessRatingsEndpoint = '/api/review/business/';
+export class GetUsersWhoReviewedService {
+  userRatingsEndpoint = '/api/user/';
   constructor(private http: HttpClient) { }
 
-  getBusinessRatings(id: number): Observable<BusinessRating[]> {
-    return this.http.get<BusinessRating[]>(this.businessRatingsEndpoint.concat(`:${id}`));
-  }
+  getUsersWhoReviewed(id: number): Observable<User[]> {
+    return this.http.get<User[]>(this.userRatingsEndpoint.concat(`:${id}`));
+}
 }
