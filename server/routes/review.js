@@ -4,8 +4,10 @@ const { db } = require('../../database/index');
 const { reviews } = require('../../database/mock-reviews');
 
 router.get('/business/:id', (req, res) => {
-  const businessId = parseInt(req.params.id);
-
+  // if(req.params.id){
+  //   const businessId = parseInt(req.params.id);
+  // } commenting out for now to hardcode id of 1
+  const businessId = 1;
     /****************TODO****************
    * get reviews for specific business
    */

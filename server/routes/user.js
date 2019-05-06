@@ -19,13 +19,13 @@ router.get('/', (req, res) => {
 // gets user at specified id
 router.get('/:id', (req, res) => {
   const id = req.params.id - 1;
-
+  //for presentation: autoserv user comment hardcoded for username
   /****************TODO****************
    * get user by id from database
    */
   if(users[id]){
     console.log(`Grabbing user at id: ${id + 1}`);
-    res.send(users[id]);
+    res.send([users[id]]); // we need to send back an array of users if it's for reviews
   } else {
     res.sendStatus(404);
   }
@@ -36,7 +36,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   const user = req.body;
   console.log(`added user: ${user.display_name} to db`);
-  
+
   /****************TODO****************
    * add business to database
    */
