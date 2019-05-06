@@ -18,7 +18,7 @@
             <option value="5">Five: &#9733;&#9733;&#9733;&#9733;&#9733;</option>
           </select>
           <div class="input-group">
-            <input class="form-control" placeholder="Review goes here..." #userReview required>
+            <textarea class="form-control" placeholder="Review goes here..." #userReview required></textarea>
           </div>
           <button (click)="submitReview(userReview.value, userRating.value)" class="btn btn-block btn-secondary pb-2">Submit Review</button>
         </div>
