@@ -1,15 +1,26 @@
 <div class="container-fluid">
   <p class="display-4 text-center">Reviews</p>
-  <div class="row pb-2">
-    <div class="col">
-      <button (click)="toggleForm()" class="btn btn-block btn-secondary pb-2">Write a Review</button>
+  <div *ngIf="authService.isLoggedIn">
+    <div class="row pb-2">
+      <div class="col">
+        <button (click)="toggleForm()" *ngIf="!showReviewForm" class="btn btn-block btn-secondary pb-2">Write a Review</button>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col" *ngIf="showReviewForm">
-      <div class="form-group">
-        <div class="input-group">
-          <input class="form-control" placeholder="Review goes here..." name="reviewText" id="reviewText" rows="3">
+    <div class="row">
+      <div class="col" *ngIf="showReviewForm">
+        <div class="form-group">
+          <select class="custom-select" #userRating required>
+            <option selected>Select a Rating</option>
+            <option value="1">One: &#9733;&#9734;&#9734;&#9734;&#9734;</option>
+            <option value="2">Two: &#9733;&#9733;&#9734;&#9734;&#9734;</option>
+            <option value="3">Three: &#9733;&#9733;&#9733;&#9734;&#9734;</option>
+            <option value="4">Four: &#9733;&#9733;&#9733;&#9733;&#9734;</option>
+            <option value="5">Five: &#9733;&#9733;&#9733;&#9733;&#9733;</option>
+          </select>
+          <div class="input-group">
+            <input class="form-control" placeholder="Review goes here..." #userReview required>
+          </div>
+          <button (click)="submitReview(userReview.value, userRating.value)" class="btn btn-block btn-secondary pb-2">Submit Review</button>
         </div>
       </div>
     </div>
