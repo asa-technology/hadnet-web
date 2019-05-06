@@ -1,5 +1,19 @@
 <div class="container-fluid">
   <p class="display-4 text-center">Reviews</p>
+  <div class="row pb-2">
+    <div class="col">
+      <button (click)="toggleForm()" class="btn btn-block btn-secondary pb-2">Write a Review</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" *ngIf="showReviewForm">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" placeholder="Review goes here..." name="reviewText" id="reviewText" rows="3">
+        </div>
+      </div>
+    </div>
+  </div>
   <ul class="userReview list-group" *ngFor="let review of reviews">
     <li class="list-group-item">
       <div>

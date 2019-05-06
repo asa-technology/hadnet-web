@@ -13,6 +13,7 @@ export class RatingsComponent implements OnInit {
   reviews: BusinessRating[];
   userProfilePic: string;
   userDisplayName: string;
+  showReviewForm: boolean = false;
   constructor(private getBusinessRatingsService: GetBusinessRatingsService,
               private getUsersWhoReviewedService: GetUsersWhoReviewedService ) { }
 
@@ -30,6 +31,10 @@ export class RatingsComponent implements OnInit {
           this.userDisplayName = user[0].displayName;
         });
     });
+  }
+
+  toggleForm() {
+    this.showReviewForm = !this.showReviewForm;
   }
 
 }
