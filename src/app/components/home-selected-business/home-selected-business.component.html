@@ -1,8 +1,7 @@
-<div>
-  <h2>{{ selectedBusiness.name }}</h2>
-  <p>{{ selectedBusiness.address }}</p>
-  <p>additional business info here pls</p>
-  <a routerLink="/business-profile">Business Profile</a>
+
+<div class="list-group">
+  <a href="#!" class="list-group-item list-group-item-action list-group-item-secondary">{{ selectedBusiness.name }}</a>
+  <div class="card-header">Address:{{ selectedBusiness.address }}<br>
+    {{ selectedBusiness.phone_number }}<br><a routerLink="/business-profile">Business Profile</a></div>
+
 </div>
-
-
