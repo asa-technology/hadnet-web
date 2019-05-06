@@ -12,6 +12,6 @@ export class GetUsersWhoReviewedService {
   constructor(private http: HttpClient) { }
 
   getUsersWhoReviewed(id: number): Observable<User[]> {
-    return this.http.get<User[]>(this.userRatingsEndpoint.concat(`:${id}`));
+    return this.http.get<User[]>(this.userRatingsEndpoint.concat(`${id}`));
 }
 }
