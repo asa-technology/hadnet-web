@@ -1,6 +1,9 @@
 <div style="text-align:center">
+  <div class="alert alert-info" *ngIf="!loading && businessNotFound" role="alert">
+      Couldn't recognize that business, please try again.
+  </div>
 
-  <div>
+  <div *ngIf="!loading">
     <webcam [height]="500" [width]="375" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
             [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
             [videoOptions]="videoOptions"
@@ -18,11 +21,16 @@
     <!-- DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px"> -->
     <!-- <button (click)="showNextWebcam(deviceId);">Activate</button> -->
   </div>
+
+  <div class="spinner-border mt-3" *ngIf="loading" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
 </div>
 
-<div class="snapshot" *ngIf="webcamImage">
+<!-- <div class="snapshot" *ngIf="webcamImage">
   <img [src]="webcamImage.imageAsDataUrl"/>
-</div>
+</div> -->
 
 <h4 *ngIf="errors.length > 0">Messages:</h4>
 <ul *ngFor="let error of errors">

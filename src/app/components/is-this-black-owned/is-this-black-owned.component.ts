@@ -17,6 +17,9 @@ export class IsThisBlackOwnedComponent implements OnInit {
     // width: {ideal: 1024},
     // height: {ideal: 576}
   };
+  public loading = false;
+  public businessFound = false;
+  public businessNotFound = false;
   constructor() { }
 
   // ngOnInit() {
@@ -40,7 +43,17 @@ export class IsThisBlackOwnedComponent implements OnInit {
   }
 
   public triggerSnapshot(): void {
+    this.loading = true;
+    this.toggleWebcam();
     this.trigger.next();
+    setTimeout(() => {
+      this.loading = false;
+      this.businessNotFound = true;
+      this.toggleWebcam();
+    }, 3000)
+    setTimeout(() => {
+      this.businessNotFound = false;
+    }, 10000)
   }
 
   public toggleWebcam(): void {
