@@ -112,7 +112,7 @@ const Model = Sequelize.Model;
       type: Sequelize.STRING,
       allowNull: false,
     },
-    phone_number: Sequelize.INTEGER,
+    phone_number: Sequelize.STRING,
     email: Sequelize.STRING,
     url_homepage: Sequelize.STRING,
     address: {
