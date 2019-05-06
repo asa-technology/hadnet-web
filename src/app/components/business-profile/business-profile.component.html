@@ -1,12 +1,28 @@
-<div>
-  <h3> {{ businessListing.name }} </h3>
-  <p> Average Rating: {{ businessRating }} </p>
-  <img class="business-img" src="{{ businessImages.url }}">
-  <div class="business-data">
-    <p> verification status *** </p>
-    <p> {{ businessPhoneNumber }} </p>
-    <p> {{ businessListing.email }} </p>
-    <p> {{ businessListing.address }} </p>
+<div class="container-fluid text-center" style="overflow-y: scroll; height: 830px">
+  <div class="row h-25">
+    <div class="col">
+      <img class="business-img img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/4/43/Milepost_31_storefront.JPG">
+    </div>
   </div>
-  <app-ratings></app-ratings>
+  <div class="row h-auto">
+    <div class="col shadow bg-secondary">
+      <h3 class="display-4 text-white font-weight-bold"> {{ businessListing.name }} </h3>
+    </div>
+  </div>
+  <div class="row h-auto">
+    <div class="col-12">
+      Average Rating: {{ businessRating }}
+    </div>
+    <div class="col-12 business-data">
+      <p> verification status *** </p>
+      <p> {{ businessPhoneNumber }} </p>
+      <p> {{ businessListing.email }} </p>
+      <p> {{ businessListing.address }} </p>
+    </div>
+  </div>
+  <div class="row h-50">
+    <div class="col">
+      <app-ratings></app-ratings>
+    </div>
+  </div>
 </div>
