@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { db } = require('../../database/index');
-
+const { getAllBusinesses } = require('../../database/helpers');
 
 // mock data
 const { businesses } = require('../../database/mock-business-data');
@@ -9,7 +9,11 @@ const { businesses } = require('../../database/mock-business-data');
 // gets all businesses
 router.get('/', (req, res) => {
   console.log('Grabbing all businesses');
-
+  /*getAllBusinesses()
+  .then((results) => {
+    console.log(results)
+    res.send(results);
+  })
   /****************TODO****************
    * get all businesses from database
   */
