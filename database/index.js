@@ -51,7 +51,7 @@ const Model = Sequelize.Model;
         type: Sequelize.STRING,
         allowNull: false,
       },
-      google_id: {
+      firebase_id: {
         type: Sequelize.STRING,
         allowNull: false,
       },

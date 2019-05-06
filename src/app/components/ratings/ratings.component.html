@@ -1,17 +1,17 @@
-<h4>Reviews</h4>
-<li>
-  <ul class="userReview" *ngFor="let review of reviews">
-    <div>
-      <img class="reviewProfilePic" src="{{ userProfilePic }}">
-    </div>
-    <div class="reviewDescription">
-      Name: <strong> {{ userDisplayName }} </strong>
-   <br>
-   Rating: {{ review.ratingNumber }}
-   <br>
-   Experience: {{ review.text }}
-   </div>
+<div class="container-fluid">
+  <p class="display-4 text-center">Reviews</p>
+  <ul class="userReview list-group" *ngFor="let review of reviews">
+    <li class="list-group-item">
+      <div>
+        <img class="reviewProfilePic img-thumbnail" src="{{ userProfilePic }}">
+      </div>
+      <div class="reviewDescription">
+        <span class="font-weight-bold">Name: </span>{{ userDisplayName }}<br>
+        <span class="font-weight-bold">Rating: </span>{{ review.ratingNumber }}<br>
+        <span class="font-weight-bold">Experience: </span> {{ review.text }}
+      </div>
+    </li>
   </ul>
-</li>
+</div>
 <!-- <app-ratings-item></app-ratings-item> **worry about individual ratings later, for now grabbing straight
 from the source into ratings, each item can be a component later if we want -->

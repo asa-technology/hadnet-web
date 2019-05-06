@@ -18,7 +18,7 @@ module.exports.businesses = [
         id: 1,
         name: "Autoserv",
         id_business_type: 1,
-        phone_number: 5044311231,
+        phoneNumber: 5044311231, //changed to camelCase to address biz profile issues regarding nums/strings/models
         email: "autoserv@yahoo.com",
         url_homepage: "autoserv.com",
         address: "1800 North Broad St New Orleans",
@@ -26,7 +26,7 @@ module.exports.businesses = [
         latitude: 29.977350,
         longitude: -90.077200,
         id_user: 1,
-        average_rating: 4,
+        averageRating: 4, //changed to camelCase to address biz profile issues regarding nums/strings/models
         legal_business_name: "Autoserv",
     },{
         id: 2,
@@ -57,5 +57,5 @@ module.exports.businesses = [
         average_rating: 5,
         legal_business_name: "Beautyhair Inc.",
     },
-    
+
 ]

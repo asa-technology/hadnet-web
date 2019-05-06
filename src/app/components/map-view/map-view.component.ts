@@ -17,6 +17,7 @@ export class MapViewComponent implements OnInit {
   constructor(private businessListingService: BusinessListingService) { }
 
   ngOnInit() {
+    tomtom.setProductInfo('Hadnet', '0.1');
     const map = tomtom.L.map('map', {
       key: 'BATuQkjG9LX7IGcAzxbZVkXG1GUPsF68',
       basePath: '/assets/sdk',

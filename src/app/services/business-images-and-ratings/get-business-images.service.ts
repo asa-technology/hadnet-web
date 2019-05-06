@@ -11,6 +11,6 @@ export class GetBusinessImagesService {
   constructor(private http: HttpClient) { }
 
   getBusinessImages(id: number): Observable<BusinessImage> {
-    return this.http.get<BusinessImage>(this.businessImagesEndpoint.concat(`:${id}`));
+    return this.http.get<BusinessImage>(this.businessImagesEndpoint.concat(`${id}`));
   }
 }
