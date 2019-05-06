@@ -20,8 +20,8 @@ router.get('/business/:id', (req, res) => {
     const businessImages = images.filter((image) => {
         return  (image.id_business === businessId)
     })
-    if (images[0]){
-        res.send(images[0]);
+    if (businessImages){
+        res.send(businessImages);
     } else {
         res.sendStatus(404);
     }

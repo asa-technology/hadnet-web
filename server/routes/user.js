@@ -18,14 +18,14 @@ router.get('/', (req, res) => {
 
 // gets user at specified id
 router.get('/:id', (req, res) => {
-  //const id = req.params.id - 1;
-const id = 6; //for presentation: autoserv user comment hardcoded for username
+  const id = req.params.id - 1;
+  //for presentation: autoserv user comment hardcoded for username
   /****************TODO****************
    * get user by id from database
    */
   if(users[id]){
     console.log(`Grabbing user at id: ${id + 1}`);
-    res.send([users[id]]);
+    res.send([users[id]]); // we need to send back an array of users if it's for reviews
   } else {
     res.sendStatus(404);
   }
