@@ -1,4 +1,29 @@
-<h1>Business Listings</h1>
-<ul *ngFor="let businessListing of businessListings">
-<li> {{ businessListing.name }} </li>
-</ul>
+<div class="container-fluid h-100">
+  <div class="row">
+    <div class="col text-center">
+      <h1 class="display-4">Business Listings</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <ul *ngFor="let businessListing of businessListings" class="list-group">
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-4">
+              <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Mon_Ami_Boulangerie_%288119944759%29.jpg">
+            </div>
+            <div class="col-8">
+                <h5>{{ businessListing.name }}</h5>
+                <p style="font-size: 14px;">
+                  <span class="font-weight-bold">Average Rating: </span>{{ businessListing.average_rating }}<br>
+                  <span class="font-weight-bold">Email: </span>{{ businessListing.email }}<br>
+                  <span class="font-weight-bold">Phone: </span>{{ businessListing.phoneNumber }}<br>
+                  <span class="font-weight-bold">Address: </span>{{ businessListing.address }}<br>
+                </p>
+            </div> 
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
