@@ -9,7 +9,7 @@
   //BLEND THIS DATA WITH mock-account-data.js
 
   module.exports.users =[
-    {   
+    {
         id: 1,
         email: "autoserv@yahoo.com",
         display_name: "Shawn Pendleton",
@@ -17,7 +17,7 @@
         google_id: 2304,
         url_image: "https://i.imgur.com/D6qT57Y.jpg",
     },
-    {   
+    {
         id: 2,
         email: "johnandsons@gmail.com",
         display_name: "Veronica Hemsworth",
@@ -60,18 +60,18 @@
     {
         id: 7,
         email: "bailey143@gmail.com",
-        display_name: "Eustice Bailey",
+        displayName: "Eustice Bailey",
         account_type: 'User',
         google_id: 7777,
-        url_image: "https://www.ctvnews.ca/polopoly_fs/1.1338067.1371997734!/httpImage/image.jpg_gen/derivatives/landscape_620/image.jpg",
+        urlImage: "https://www.ctvnews.ca/polopoly_fs/1.1338067.1371997734!/httpImage/image.jpg_gen/derivatives/landscape_620/image.jpg",
     },
     {
         id: 8,
         email: "fredTomToms@gmail.com",
-        display_name: "Fred Thomas",
+        displayName: "Fred Thomas",
         account_type: 'User',
         google_id: 90,
-        image_url: "https://static.livebooks.com/d2f9f46aa9ed49e5861ee9958c4ceb9d/i/c2eb99db1a374c6290b548d4a9d44342/1/4SoifmQp45JMgBnHghiDJ/Faces-Mendez_Shala_17E.jpg",
+        imageUrl: "https://static.livebooks.com/d2f9f46aa9ed49e5861ee9958c4ceb9d/i/c2eb99db1a374c6290b548d4a9d44342/1/4SoifmQp45JMgBnHghiDJ/Faces-Mendez_Shala_17E.jpg",
     },
     {
         id: 9,

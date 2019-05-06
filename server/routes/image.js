@@ -15,15 +15,16 @@ router.get('/:id', (req, res) =>{
 })
 
 router.get('/business/:id', (req, res) => {
+  //gotta re-dynamic this endpoint, changed the first if statement to automatically send back display businesses image
     const businessId = parseInt(req.params.id)
     const businessImages = images.filter((image) => {
         return  (image.id_business === businessId)
     })
-    if (businessId > 0){
+    if (businessImages){
         res.send(businessImages);
     } else {
         res.sendStatus(404);
     }
-}) 
+})
 
 module.exports = router;

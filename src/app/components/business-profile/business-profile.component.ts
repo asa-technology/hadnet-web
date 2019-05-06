@@ -14,6 +14,7 @@ export class BusinessProfileComponent implements OnInit {
   businessImages: BusinessImage;
   businessPhoneNumber: string;
   businessRating: string;
+  businessImage: string;
 
   constructor(private businessListingService: BusinessListingService, private getBusinessRatingService: GetBusinessImagesService ) { }
 
@@ -25,7 +26,8 @@ export class BusinessProfileComponent implements OnInit {
       this.businessRating = `${this.businessListing.averageRating}`;
       this.getBusinessRatingService.getBusinessImages(this.businessListing.id)
           .subscribe((images) => {
-          this.businessImages = images;
+          console.log(images[0]);
+          this.businessImage = images[0].url;
           });
       });
     }

@@ -11,6 +11,6 @@ export class GetBusinessRatingsService {
   constructor(private http: HttpClient) { }
 
   getBusinessRatings(id: number): Observable<BusinessRating[]> {
-    return this.http.get<BusinessRating[]>(this.businessRatingsEndpoint.concat(`:${id}`));
+    return this.http.get<BusinessRating[]>(this.businessRatingsEndpoint.concat(`${id}`));
   }
 }
