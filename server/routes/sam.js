@@ -49,7 +49,7 @@ router.get('/:zip', (req, res) => {
             const street = streetAdd.join(' ');
             axios.get('https://api.tomtom.com/search/2/structuredGeocode.json', {
                 countryCode: 'USA',
-                streetNumber:listing.samAddress.line1.split(' ')[0],
+                streetNumber: streetNum,
                 streetName: encodeURI(street),
                 municipality: 'New%20Orleans',
                 countrySubdivision: 'Louisiana',
