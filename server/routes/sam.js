@@ -43,6 +43,20 @@ router.get('/:zip', (req, res) => {
                 average_rating: 0,
                 legal_business_name: listing.legalBusinessName,
             };
+            const streetNum = listing.samAddress.line1.split(' ')[0];
+            const streetAdd = listing.samAddress.line1.split(' ')
+            streetAdd.shift();
+            const street = streetAdd.join(' ');
+            axios.get('https://api.tomtom.com/search/2/structuredGeocode.json', {
+                countryCode: 'USA',
+                streetNumber:listing.samAddress.line1.split(' ')[0],
+                streetName: encodeURI(street),
+                municipality: 'New%20Orleans',
+                countrySubdivision: 'Louisiana',
+                postalCode:`${listing.samAddress.zip}-${listing.samAddress.zipPlus4}`,
+                extendedPostalCodesFor:'Addr',
+                key: process.env.MAPS_API_KEY,
+            })
             
             if (listing.businessTypes.includes('OY')){
                 addBusiness(businessEntry)
