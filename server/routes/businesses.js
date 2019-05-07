@@ -9,7 +9,7 @@ const { businesses } = require('../../database/mock-business-data');
 // gets all businesses
 router.get('/', (req, res) => {
   console.log('Grabbing all businesses');
-  /*getAllBusinesses()
+  getAllBusinesses()
   .then((results) => {
     console.log(results)
     res.send(results);
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
   /****************TODO****************
    * get all businesses from database
   */
-  res.send(businesses);
+  //res.send(businesses);
 });
 
 
