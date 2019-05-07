@@ -10,7 +10,11 @@ router.get('/:id', (req, res) =>{
         console.log(`Grabbing image at id: ${id + 1}`)
         res.send(images[id])
     } else {
-        res.sendStatus(404);
+        res.send({
+            id: null,
+            url: 'https://i.imgur.com/BNtJWJM.png',
+            idBusiness: null,
+        });
     }
 })
 
@@ -23,7 +27,11 @@ router.get('/business/:id', (req, res) => {
     if (businessImages){
         res.send(businessImages);
     } else {
-        res.sendStatus(404);
+        res.send({
+            id: null,
+            url: 'https://i.imgur.com/BNtJWJM.png',
+            idBusiness: null,
+        });
     }
 })
 
