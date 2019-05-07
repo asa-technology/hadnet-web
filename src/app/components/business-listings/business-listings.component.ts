@@ -11,14 +11,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./business-listings.component.css']
 })
 export class BusinessListingsComponent implements OnInit {
-  businessListings: BusinessListing[];
+  businessListings;
   constructor(private businessListingService: BusinessListingService, 
               private imageService: GetBusinessImagesService,
               private businessProfileService: BusinessProfileService,
               private router: Router) { }
 
   ngOnInit() {
-    this.businessListingService.getBusinessListings().subscribe( businessListings => this.businessListings = businessListings);
+    this.businessListingService.getBusinessListings().subscribe( businessListings => {
+      this.businessListings = businessListings
+      this.businessListings.forEach((business) => {
+        this.imageService.getImageById(business.id)
+          .subscribe((image) => business.ftImg = image);
+      })
+    });
+  }
+
+  checkListing(business) {
+    console.log(business);
   }
 
   goToProfile(business) {

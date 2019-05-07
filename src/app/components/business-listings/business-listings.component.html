@@ -10,10 +10,10 @@
         <li class="list-group-item">
           <div class="row">
             <div class="col-4">
-              <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Mon_Ami_Boulangerie_%288119944759%29.jpg">
+              <img class="img-fluid" src="{{businessListing.ftImg.url}}">
             </div>
             <div class="col-8">
-                <h5>{{ businessListing.name }}</h5>
+                <h5 (click)="checkListing(businessListing)">{{ businessListing.name }}</h5>
                 <p style="font-size: 14px;">
                   <span class="font-weight-bold">Average Rating: </span>{{ businessListing.average_rating }}<br>
                   <span class="font-weight-bold">Email: </span>{{ businessListing.email }}<br>
