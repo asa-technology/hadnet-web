@@ -47,6 +47,22 @@ const getBusinessById = (id) => {
     });
 }
 
+//get business by user id
+
+const getBusinessByUser = (userId) => {
+    Business.findOne({
+        where: {
+            id_user: userId,
+        }
+    })
+    .then((result) => {
+        return result;
+    })
+    .catch((err) => {
+        console.log(err)
+    });  
+}
+
  // Add user to database
  const addUser = (userObj) => {
     return User.create(userObj)
@@ -90,18 +106,52 @@ const getReviewsByBusiness = (businessId) => {
             id_business: businessId,
         }
     })
+    .then((result) => {
+        return result;
+    })
+    .catch((err) => {
+        console.log(err)
+    });  
 }
 
 //get featured image
-const gwt
+const getFeaturedImage = (imageId) => {
+    return Image.findOne({
+        where: {
+            id: imageId,
+        }
+    })
+    .then((result) => {
+        return result;
+    })
+    .catch((err) => {
+        console.log(err)
+    });  
+}
+
+//get all images for a business
+const getAllImagesByBusiness = (businessId) => {
+    return Image.findAll({
+        where: {in_business: businessId}
+    })
+    .then((result) => {
+        return result;
+    })
+    .catch((err) => {
+        console.log(err)
+    });  
+}
 
 module.exports = {
     addBusiness,
     getBusinessById,
     getAllBusinesses,
+    getBusinessByUser,
     addUser,
     getUserById,
     addReview,
     getReviewsByBusiness,
+    getFeaturedImage,
+    getAllImagesByBusiness,
 
 }
