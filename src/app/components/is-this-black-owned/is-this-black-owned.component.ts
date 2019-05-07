@@ -76,7 +76,7 @@ public webcamImageInfo: any;
     console.info('received webcam image', webcamImage);
     this.webcamImage = webcamImage;
     this.webcamImageInfo = this.webcamImage.imageAsBase64;
-   this.googleTextService.isBusinessVerified(this.webcamImageInfo).subscribe((image)=>{
+   this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((image)=>{
       console.log(image);
     })
   }
