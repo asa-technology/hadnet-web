@@ -13,4 +13,8 @@ export class GetBusinessImagesService {
   getBusinessImages(id: number): Observable<BusinessImage> {
     return this.http.get<BusinessImage>(this.businessImagesEndpoint.concat(`${id}`));
   }
+
+  getImageById(id:number) {
+    return this.http.get(`/api/image/${id}`);
+  }
 }
