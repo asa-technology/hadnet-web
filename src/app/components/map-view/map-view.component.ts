@@ -12,35 +12,26 @@ declare let tomtom: any;
 })
 export class MapViewComponent implements OnInit {
   // gets all business listings for rendering on map
+  lat: number
+  long: number
 
   selectedBusiness: BusinessListing;
   constructor(private businessListingService: BusinessListingService) { }
 
   ngOnInit() {
-    tomtom.setProductInfo('Hadnet', '0.1');
-    const map = tomtom.L.map('map', {
-      key: 'BATuQkjG9LX7IGcAzxbZVkXG1GUPsF68',
-      basePath: '/assets/sdk',
-      center: [ 30, -91 ],
-      zoom: 15,
-      source : 'vector'
-    });
-    this.businessListingService.getBusinessListings().subscribe( (businessListings) => businessListings.forEach((listing) => {
-      const businessMarker: any = tomtom.L.marker([listing.latitude, listing.longitude]).addTo(map);
-      // what shows up when a user clicks a pin on the map
-      businessMarker.bindPopup(
-        `<div>
-        <strong>${listing.name}</strong><br>
-        ${listing.address}<br>
-        </div>`);
-      businessMarker.on('click', () => {
-        this.selectedBusiness = listing;
-        console.log(listing);
-      });
-    }));
-
-    const marker: any = tomtom.L.marker([29.9511, -90.0715]).addTo(map);
-    marker.bindPopup('hadnet headquarters', 'address').openPopup();
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.long = position.coords.longitude;
+        console.log(this.lat, this.long)
+        this.renderMap();
+      })
+    } else {
+      this.lat =  29.9511;
+      this.long = -90.0715;
+      this.renderMap();
+    }
+    
 
 // initial business selected so user has an idea of what to do with the map
     this.selectedBusiness = {
@@ -59,5 +50,30 @@ export class MapViewComponent implements OnInit {
       legalBusinessName: 'Hadnet Headquarterz',
     };
   }
+  renderMap(){
+    tomtom.setProductInfo('Hadnet', '0.1');
+    const map = tomtom.L.map('map', {
+      key: 'BATuQkjG9LX7IGcAzxbZVkXG1GUPsF68',
+      basePath: '/assets/sdk',
+      center: [ this.lat, this.long ],
+      zoom: 15,
+      source : 'vector'
+    });
+    this.businessListingService.getBusinessListings().subscribe( (businessListings) => businessListings.forEach((listing) => {
+      const businessMarker: any = tomtom.L.marker([listing.latitude, listing.longitude]).addTo(map);
+      // what shows up when a user clicks a pin on the map
+      businessMarker.bindPopup(
+        `<div>
+        <strong>${listing.name}</strong><br>
+        ${listing.address}<br>
+        </div>`);
+      businessMarker.on('click', () => {
+        this.selectedBusiness = listing;
+        console.log(listing);
+      });
+    }));
 
+    // const marker: any = tomtom.L.marker([29.9511, -90.0715]).addTo(map);
+    // marker.bindPopup('hadnet headquarters', 'address').openPopup();
+  }
 }
