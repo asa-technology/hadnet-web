@@ -83,6 +83,7 @@ const addReview = (reviewObj) => {
     });  
 }
 
+// get all the reviews of a certain business by that businesses id
 const getReviewsByBusiness = (businessId) => {
     return Review.findAll({
         where: {
@@ -90,6 +91,9 @@ const getReviewsByBusiness = (businessId) => {
         }
     })
 }
+
+//get featured image
+const gwt
 
 module.exports = {
     addBusiness,
