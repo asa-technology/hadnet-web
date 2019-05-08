@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { auth } from 'firebase/app';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
-
+import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user: User;
-  constructor(public afAuth: AngularFireAuth, public router: Router) { 
+  constructor(public afAuth: AngularFireAuth, public router: Router, public http: HttpClient) { 
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -21,9 +20,18 @@ export class AuthService {
     })
   }
 
-  async signup(email: string, password: string) {
+  async signup(email: string, password: string, displayName: string, type: string) {
     try {
       await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+      await this.user.updateProfile({ displayName })
+      const userObj = {
+        email: this.user.email,
+        displayName: this.user.displayName,
+        firebaseId: this.user.uid,
+        accountType: type,
+        urlImage: "https://i.imgur.com/BNtJWJM.png"
+      }
+      this.http.post<any>('/api/user', userObj).subscribe();
       this.router.navigate(['']);
     } catch (error) {
       let errorCode = error.code;
@@ -56,6 +64,14 @@ export class AuthService {
     try {
       let provider = new firebase.auth.FacebookAuthProvider();
       await this.afAuth.auth.signInWithPopup(provider)
+      const userObj = {
+        email: this.user.email,
+        displayName: this.user.displayName,
+        firebaseId: this.user.uid,
+        accountType: "User",
+        urlImage: this.user.photoURL
+      }
+      this.http.post<any>('/api/user', userObj).subscribe();
       this.router.navigate(['']);
     } catch(error) {
       alert("Error! " + error.message);
