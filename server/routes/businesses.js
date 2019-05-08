@@ -77,9 +77,33 @@ router.post('/isVerfied', (req, res) => {
       }
     ]
   }).then(result =>{
-    console.log(result.data.responses[0].textAnnotations[0].description);
-  }).catch(error=>{
-    console.error(error, 'this is the error');
+    // need to regex out all potential special characters this google api might generate,
+    // and find a better way to plot this function out so that it doesn't take
+    // a long time to execute
+
+    // array of pieces of text that have been captured in picture
+    let readText = result.data.responses[0].textAnnotations[0].description.split(' ');
+    console.log(readText);
+    // current verification status
+    return getAllBusinesses().then((businesses)=>{
+      let verificationStatus = false;
+      businesses.map((business)=>{
+        return business.legalBusinessName.toUpperCase().split(' ');
+      })
+      .filter((businessesToBeComparedToReadText)=>{
+          return businessesToBeComparedToReadText.includes(...readText);
+
+      }).length > 0 ? verificationStatus = true : null;
+      let obj = { verificationStatus: verificationStatus, text: readText };
+      return obj;
+    })
+  })
+  .then(verificationStatus => {
+    console.log(verificationStatus)
+    res.send(verificationStatus);
+  })
+  .catch(error=>{
+    res.send('failure to verify, or text was misinterpreted, line 102 businesses.js server')
   })
 });
 
