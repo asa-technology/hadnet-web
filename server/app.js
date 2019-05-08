@@ -16,7 +16,9 @@ const image = require('./routes/image.js')
 const sam = require('./routes/sam.js')
 
 //middleware
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '10mb', extended: true}));
+// app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/hadnet')));
 
 // authentication route
