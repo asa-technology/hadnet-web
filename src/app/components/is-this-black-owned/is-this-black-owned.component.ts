@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+import {GoogleTextService} from '../../services/google-text.service';
+
 
 @Component({
   selector: 'app-is-this-black-owned',
@@ -20,16 +22,15 @@ export class IsThisBlackOwnedComponent implements OnInit {
   public loading = false;
   public businessFound = false;
   public businessNotFound = false;
-  constructor() { }
+  constructor(private googleTextService: GoogleTextService) { }
 
-  // ngOnInit() {
-  // }
+
   
   public errors: WebcamInitError[] = [];
 
   // latest snapshot
   public webcamImage: WebcamImage = null;
-
+public webcamImageInfo: any;
   // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
   // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
@@ -74,6 +75,10 @@ export class IsThisBlackOwnedComponent implements OnInit {
   public handleImage(webcamImage: WebcamImage): void {
     console.info('received webcam image', webcamImage);
     this.webcamImage = webcamImage;
+    this.webcamImageInfo = this.webcamImage.imageAsBase64;
+   this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((image)=>{
+      console.log(image);
+    })
   }
 
   public cameraWasSwitched(deviceId: string): void {
