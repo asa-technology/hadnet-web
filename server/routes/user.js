@@ -36,11 +36,20 @@ router.get('/:id', (req, res) => {
 // add user
 router.post('/', (req, res) => {
   const user = req.body;
+<<<<<<< HEAD
   console.log(`Adding user: ${user.display_name} to db`);
   addUser(user)
     .then(result => {
       res.sendStatus(201);
     })
+=======
+  console.log(`added user: ${user.displayName} to db`);
+
+  /****************TODO****************
+   * add business to database
+   */
+  res.send(`added user: ${user.displayName} to db`)
+>>>>>>> 4c2c4f0dbb11152684aed94c447727f735a3c0f3
 })
 
 

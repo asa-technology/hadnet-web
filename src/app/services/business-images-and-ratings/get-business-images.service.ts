@@ -15,6 +15,6 @@ export class GetBusinessImagesService {
   }
 
   getImageById(id:number) {
-    return this.http.get(`/api/image/${id}`);
+    return this.http.get<BusinessImage>(`/api/image/${id}`);
   }
 }

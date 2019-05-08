@@ -20,7 +20,11 @@ export class BusinessListingsComponent implements OnInit {
   ngOnInit() {
     this.businessListingService.getBusinessListings().subscribe( businessListings => {
       this.businessListings = businessListings
+<<<<<<< HEAD
       console.log(this.businessListings);
+=======
+      console.log(this.businessListings)
+>>>>>>> 4c2c4f0dbb11152684aed94c447727f735a3c0f3
       this.businessListings.forEach((business) => {
         this.imageService.getImageById(business.id)
           .subscribe((image) => {
@@ -34,6 +38,7 @@ export class BusinessListingsComponent implements OnInit {
           });
       })
     });
+    
   }
 
   checkListing(business) {

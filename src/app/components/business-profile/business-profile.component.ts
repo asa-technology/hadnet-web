@@ -24,10 +24,10 @@ export class BusinessProfileComponent implements OnInit {
     this.businessListing = this.businessProfileService.currentProfile;
     this.businessPhoneNumber = `${this.businessListing.phoneNumber}`;
     this.businessRating = `${this.businessListing.averageRating}`;
-    this.getBusinessImagesService.getBusinessImages(this.businessListing.id)
+    this.getBusinessImagesService.getImageById(this.businessListing.id)
       .subscribe((images) => {
       console.log(images[0]);
-      this.businessImage = images[0].url;
+      this.businessImage = images.url;
       });
   }
 }

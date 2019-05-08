@@ -4,13 +4,14 @@ import { auth } from 'firebase/app';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user: User;
-  constructor(public afAuth: AngularFireAuth, public router: Router) { 
+  constructor(public afAuth: AngularFireAuth, public router: Router, private http: HttpClient) { 
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -24,6 +25,7 @@ export class AuthService {
   async signup(email: string, password: string) {
     try {
       await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+      console.log(this.afAuth.user);
       this.router.navigate(['']);
     } catch (error) {
       let errorCode = error.code;

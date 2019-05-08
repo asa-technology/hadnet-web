@@ -52,7 +52,7 @@ const getBusinessById = (id) => {
 const getBusinessByUser = (userId) => {
     Business.findOne({
         where: {
-            id_user: userId,
+            idUser: userId,
         }
     })
     .then((result) => {
@@ -78,7 +78,7 @@ const getBusinessByUser = (userId) => {
 const getUserById = (id) => {
     return User.findOne({
         where: {
-            firebase_id: id,
+            firebaseId: id,
         }
     }).then((user) => {
         return user;
@@ -103,7 +103,7 @@ const addReview = (reviewObj) => {
 const getReviewsByBusiness = (businessId) => {
     return Review.findAll({
         where: {
-            id_business: businessId,
+            idBusiness: businessId,
         }
     })
     .then((result) => {
@@ -132,7 +132,7 @@ const getFeaturedImage = (imageId) => {
 //get all images for a business
 const getAllImagesByBusiness = (businessId) => {
     return Image.findAll({
-        where: {in_business: businessId}
+        where: {inBusiness: businessId}
     })
     .then((result) => {
         return result;
