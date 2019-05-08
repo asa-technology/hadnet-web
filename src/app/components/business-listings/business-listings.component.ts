@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./business-listings.component.css']
 })
 export class BusinessListingsComponent implements OnInit {
+  title:string;
   businessListings;
   constructor(private businessListingService: BusinessListingService, 
               private imageService: GetBusinessImagesService,
@@ -36,6 +37,9 @@ export class BusinessListingsComponent implements OnInit {
   goToProfile(business) {
     this.businessProfileService.changeProfile(business);
     this.router.navigate(['/', 'business-profile']);
+  }
+  onSubmit(){
+    console.log(this.title);
   }
 
 }
