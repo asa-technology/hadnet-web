@@ -10,7 +10,7 @@ router.get('/:zip', (req, res) => {
         params: {
             'api_key': process.env.SAM_API_KEY,
             'qterms': `(minorityOwned:true)+AND+(samAddress.zip:${zip})`,
-            'start': 1,
+            'start': 10,
             'length': 4,
         },
     })
@@ -44,20 +44,29 @@ router.get('/:zip', (req, res) => {
                 legalBusinessName: listing.legalBusinessName,
             };
             const streetNum = listing.samAddress.line1.split(' ')[0];
+            console.log(streetNum);
             const streetAdd = listing.samAddress.line1.split(' ')
             streetAdd.shift();
-            const street = streetAdd.join(' ');
-            axios.get('https://api.tomtom.com/search/2/structuredGeocode.json', {
-                countryCode: 'USA',
-                streetNumber: streetNum,
-                streetName: encodeURI(street),
-                municipality: 'New%20Orleans',
-                countrySubdivision: 'Louisiana',
-                postalCode:`${listing.samAddress.zip}-${listing.samAddress.zipPlus4}`,
-                extendedPostalCodesFor:'Addr',
-                key: process.env.MAPS_API_KEY,
+            const street = encodeURI(streetAdd.join(' ').trim());
+            axios.get(`https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=USA&streetNumber=${streetNum}&streetName=${street}&municipality=New%20Orleans&countrySubdivision=Louisiana&postalCode=${listing.samAddress.zip}&extendedPostalCodesFor=Addr&key=${process.env.MAPS_API_KEY}`
+            )
+            .then((results) => {
+                const latitude = results.data.results[0].position.lat;
+                const longitude = results.data.results[0].position.lon;
+                console.log(latitude, longitude);
+                businessEntry.latitude = latitude;
+                businessEntry.longitude = longitude;
+                if (listing.businessTypes.includes('OY')){
+                    addBusiness(businessEntry)
+                    .then((result) => {
+                        //console.log(result);
+                    })
+                }
             })
-            
+            .catch((error) => {
+                console.log(error);
+            })
+            /*
             if (listing.businessTypes.includes('OY')){
                 addBusiness(businessEntry)
                 .then((result) => {
@@ -67,6 +76,7 @@ router.get('/:zip', (req, res) => {
             console.log(businessEntry.name)
             console.log(businessEntry.address, businessEntry.phoneNumber, businessEntry.email)
             console.log(listing.businessTypes)
+            */
         })
     })
     .catch((err) => {
