@@ -43,26 +43,25 @@ const Model = Sequelize.Model;
         unique: true,
         allowNull: false,
       } ,
-      display_name: {
+      displayName: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      account_type: {
+      accountType: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      firebase_id: {
+      firebaseId: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      url_image: {
+      urlImage: {
         type: Sequelize.STRING,
         allowNull: false, 
       },
   },{
     sequelize,
     modelName: 'user',
-    underscored: true,
   });
 
   //USER
@@ -83,7 +82,6 @@ const Model = Sequelize.Model;
   }, {
     sequelize,
     modelName: 'businesstype',
-    underscored: true,
   });
 
   //BUSINESSTYPE
@@ -100,7 +98,6 @@ const Model = Sequelize.Model;
   }, {
     sequelize,
     modelName: 'listingtype',
-    underscored: true,
   });
 
   //LISTINGTYPE
@@ -112,21 +109,20 @@ const Model = Sequelize.Model;
       type: Sequelize.STRING,
       allowNull: false,
     },
-    phone_number: Sequelize.STRING,
+    phoneNumber: Sequelize.STRING,
     email: Sequelize.STRING,
-    url_homepage: Sequelize.STRING,
+    urlHomepage: Sequelize.STRING,
     address: {
       type: Sequelize.STRING,
       allowNull: false,
     },
     latitude: Sequelize.FLOAT,
     longitude: Sequelize.FLOAT,
-    average_rating: Sequelize.INTEGER,
-    legal_business_name: Sequelize.STRING,
+    averageRating: Sequelize.INTEGER,
+    legalBusinessName: Sequelize.STRING,
   },{
     sequelize,
     modelName: 'business',
-    underscored: true,
   });
 
   //BUSINESS
@@ -154,12 +150,11 @@ const Model = Sequelize.Model;
       type: Sequelize.STRING,
       allowNull: false,
     },
-    image_url: Sequelize.STRING,
+    imageUrl: Sequelize.STRING,
     date_expire: Sequelize.DATEONLY,
   },{
     sequelize,
     modelName: 'communitylisting',
-    underscored: true,
   });
   
   //COMMUNITY_LISTING
@@ -182,7 +177,6 @@ const Model = Sequelize.Model;
   },{
     sequelize,
     modelName: 'review',
-    underscored: true,
   });
 
   //REVIEW
@@ -201,7 +195,6 @@ const Model = Sequelize.Model;
   },{
     sequelize,
     modelName: 'image',
-    underscored: true,
   });
 
   //IMAGE
@@ -210,24 +203,24 @@ const Model = Sequelize.Model;
 
 
   // Business foreign keys
-  BusinessType.hasOne(Business, {foreignKey: 'id_business_type'});
+  BusinessType.hasOne(Business, {foreignKey: 'idBusinessType'});
   Image.hasOne(Business, {
-    foreignKey: 'id_featured_image',
+    foreignKey: 'idFeaturedImage',
     constraints: false,
   });
-  User.hasOne(Business, {foreignKey: 'id_user'});
+  User.hasOne(Business, {foreignKey: 'idUser'});
 
   //CommunityListing foreign keys
-  User.hasOne(CommunityListing, {foreignKey: 'id_user'});
-  Business.hasOne(CommunityListing, {foreignKey: 'id_business'});
-  ListingType.hasOne(CommunityListing, {foreignKey: 'id_listing_type'});
+  User.hasOne(CommunityListing, {foreignKey: 'idUser'});
+  Business.hasOne(CommunityListing, {foreignKey: 'idBusiness'});
+  ListingType.hasOne(CommunityListing, {foreignKey: 'idListingType'});
 
   //Review foreign keys
-  User.hasOne(Review, {foreignKey: 'id_user'});
-  Business.hasOne(Review, {foreignKey: 'id_business'});
+  User.hasOne(Review, {foreignKey: 'idUser'});
+  Business.hasOne(Review, {foreignKey: 'idBusiness'});
 
   //Image foreign keys
-  Business.hasOne(Image, {foreignKey: 'id_business'})
+  Business.hasOne(Image, {foreignKey: 'idBusiness'})
   sequelize.sync();
 
 
