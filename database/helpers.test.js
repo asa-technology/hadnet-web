@@ -1,6 +1,6 @@
 const { getAllBusinessesFromText } = require('./helpers');
 
-getAllBusinessesFromText()
+getAllBusinessesFromText(['L'])
   .then(res => {
     console.log(res);
 

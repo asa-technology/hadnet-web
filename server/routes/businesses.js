@@ -78,13 +78,15 @@ router.post('/isVerfied', (req, res) => {
   }).then(result =>{
     // array of pieces of text that have been captured in picture
     var readText = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
+    console.log(readText);
     let x = result.data.responses[0].textAnnotations[0].description;
-    console.log('this is readTExt:', readText);
     return getAllBusinessesFromText(x)
     .then((businesses)=>{
       console.log('businesses line 85 businesses.js: ', businesses);
+      return businesses;
       // current verification status
-      let verificationStatus = false;
+      // send back list of verified businesses 'this is a list of verified businesses,
+      // are any of these the businesses you were looking for?'
     //   businesses.map((business)=>{
     //     return business.legalBusinessName.toUpperCase().split(' ');
     //   })
