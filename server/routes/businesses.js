@@ -77,7 +77,7 @@ router.post('/isVerfied', (req, res) => {
       }
     ]
   }).then(result =>{
-    sconsole.log(result);
+    console.log(result.data.responses[0].textAnnotations[0].description);
   }).catch(error=>{
     console.error(error, 'this is the error');
   })
