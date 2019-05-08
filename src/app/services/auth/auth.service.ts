@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +31,6 @@ export class AuthService {
         accountType: type,
         urlImage: "https://i.imgur.com/BNtJWJM.png"
       }
-      console.log(userObj);
       this.http.post<any>('/api/user', userObj).subscribe();
       this.router.navigate(['']);
     } catch (error) {
@@ -65,6 +64,14 @@ export class AuthService {
     try {
       let provider = new firebase.auth.FacebookAuthProvider();
       await this.afAuth.auth.signInWithPopup(provider)
+      const userObj = {
+        email: this.user.email,
+        displayName: this.user.displayName,
+        firebaseId: this.user.uid,
+        accountType: "User",
+        urlImage: this.user.photoURL
+      }
+      this.http.post<any>('/api/user', userObj).subscribe();
       this.router.navigate(['']);
     } catch(error) {
       alert("Error! " + error.message);
