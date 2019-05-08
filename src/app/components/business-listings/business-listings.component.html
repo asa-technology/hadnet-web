@@ -11,13 +11,15 @@
   <div class="row">
     <div class="col">
       <ul *ngFor="let businessListing of businessListings" class="list-group">
-        <li class="list-group-item">
+        <li (click)="checkListing(businessListing)" class="list-group-item">
           <div class="row">
             <div class="col-4">
-              <img class="img-fluid" src="{{businessListing.ftImg.url}}">
+              <img class="img-fluid" *ngIf="businessListing.ftImg.url as url; else elseBlock" src="{{url}}">
+              <ng-template #elseBlock><img class="img-fluid" src="https://i.imgur.com/BNtJWJM.png"></ng-template>
+
             </div>
             <div class="col-8">
-                <h5 (click)="checkListing(businessListing)">{{ businessListing.name }}</h5>
+                <h5>{{ businessListing.name }}</h5>
                 <p style="font-size: 14px;">
                   <span class="font-weight-bold">Average Rating: </span>{{ businessListing.average_rating }}<br>
                   <span class="font-weight-bold">Email: </span>{{ businessListing.email }}<br>

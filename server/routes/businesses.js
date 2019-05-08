@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
   console.log('Grabbing all businesses');
   getAllBusinesses()
   .then((results) => {
-    console.log(results)
     res.send(results);
   })
   /****************TODO****************
