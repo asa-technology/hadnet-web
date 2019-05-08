@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { db } = require('../../database/index');
+const { addUser } = require('../../database/helpers');
 
 // mock data
 const { users } = require('../../database/mock-user-data');
@@ -35,12 +36,11 @@ router.get('/:id', (req, res) => {
 // add user
 router.post('/', (req, res) => {
   const user = req.body;
-  console.log(`added user: ${user.display_name} to db`);
-
-  /****************TODO****************
-   * add business to database
-   */
-  res.send(`added user: ${user.display_name} to db`)
+  console.log(`Adding user: ${user.display_name} to db`);
+  addUser(user)
+    .then(result => {
+      res.sendStatus(201);
+    })
 })
 
 
