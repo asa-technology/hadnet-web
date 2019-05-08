@@ -6,10 +6,13 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-
+  accountType: string = "User";
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
 
+  changeAcctType(type: string) {
+    this.accountType = type;
+  }
 }

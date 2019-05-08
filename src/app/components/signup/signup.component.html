@@ -13,14 +13,28 @@
               <input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
               <span class="focus-input100"></span>
             </div>
+
+            <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter display name">
+              <input type="text" class="form-control mb-2" placeholder="Display Name" #userDisplayName required autofocus>
+              <span class="focus-input100"></span>
+            </div>
     
             <div class="wrap-input100 validate-input m-b-20" data-validate = "Please enter password">
               <input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
               <span class="focus-input100"></span>
             </div>
-    
+
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" (click)="changeAcctType('User')" name="options" value="User" checked> User
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" (click)="changeAcctType('Business')" name="options" value="Business"> Business
+              </label>
+            </div><br>
+
             <div class="container-login100-form-btn">
-              <button class="btn btn-info btn-block" (click)="authService.signup(userEmail.value, userPassword.value)">
+              <button class="btn btn-info btn-block" (click)="authService.signup(userEmail.value, userPassword.value, userDisplayName.value, accountType)">
                 Sign Up
               </button>
             </div>

@@ -20,7 +20,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "/home/adam/.nvm/versions/node/v8.15.0/bin/node",
-      "name": "Launch Program",
+      "name": "Server",
       "program": "${workspaceFolder}/server/app.js"
     }
   ]
