@@ -13,7 +13,7 @@ router.get('/business/:id', (req, res) => {
    */
   console.log(`Grabbing all reviews for business id: ${businessId}`)
   const businessReviews = reviews.filter((review) => {
-    return (review.id_business === businessId);
+    return (review.idBusiness === businessId);
   });
   console.log(businessReviews)
   res.send(businessReviews);
@@ -27,7 +27,7 @@ router.get('/user/:id', (req,res) => {
    */
   console.log(`Grabbing all reviews for user id: ${userId}`);
   const userReviews = reviews.filter((review) => {
-    return (review.id_user === userId);
+    return (review.idUser === userId);
   })
   res.send(userReviews);
 })

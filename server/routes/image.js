@@ -10,7 +10,11 @@ router.get('/:id', (req, res) =>{
         console.log(`Grabbing image at id: ${id + 1}`)
         res.send(images[id])
     } else {
-        res.sendStatus(404);
+        res.send({
+            id: null,
+            url: 'https://i.imgur.com/BNtJWJM.png',
+            idBusiness: null,
+        });
     }
 })
 
@@ -18,12 +22,16 @@ router.get('/business/:id', (req, res) => {
   //gotta re-dynamic this endpoint, changed the first if statement to automatically send back display businesses image
     const businessId = parseInt(req.params.id)
     const businessImages = images.filter((image) => {
-        return  (image.id_business === businessId)
+        return  (image.idBusiness === businessId)
     })
     if (businessImages){
         res.send(businessImages);
     } else {
-        res.sendStatus(404);
+        res.send({
+            id: null,
+            url: 'https://i.imgur.com/BNtJWJM.png',
+            idBusiness: null,
+        });
     }
 })
 
