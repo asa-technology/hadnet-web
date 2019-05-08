@@ -25,7 +25,7 @@ export class IsThisBlackOwnedComponent implements OnInit {
   constructor(private googleTextService: GoogleTextService) { }
 
 
-  
+
   public errors: WebcamInitError[] = [];
 
   // latest snapshot
@@ -51,10 +51,10 @@ public webcamImageInfo: any;
       this.loading = false;
       this.businessNotFound = true;
       this.toggleWebcam();
-    }, 3000)
+    }, 3000);
     setTimeout(() => {
       this.businessNotFound = false;
-    }, 10000)
+    }, 10000);
   }
 
   public toggleWebcam(): void {
@@ -73,12 +73,12 @@ public webcamImageInfo: any;
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.info('received webcam image', webcamImage);
+    console.log('received webcam image', webcamImage);
     this.webcamImage = webcamImage;
     this.webcamImageInfo = this.webcamImage.imageAsBase64;
-   this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((image)=>{
-      console.log(image);
-    })
+    this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((image) => {
+      console.log(image, 'response from server');
+    });
   }
 
   public cameraWasSwitched(deviceId: string): void {
