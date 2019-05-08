@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { db } = require('../../database/index');
-const { getAllBusinesses } = require('../../database/helpers');
+const { getAllBusinessesFromText, getAllBusinesses } = require('../../database/helpers');
 require('dotenv').config();
 // mock data
 const { businesses } = require('../../database/mock-business-data');
@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
   console.log('Grabbing all businesses');
   getAllBusinesses()
   .then((results) => {
-    console.log(results)
     res.send(results);
   })
   /****************TODO****************
@@ -70,33 +69,34 @@ router.post('/isVerfied', (req, res) => {
         },
         "features":[
           {
-            "type":'TEXT_DETECTION',
+            "type":'DOCUMENT_TEXT_DETECTION',
             "maxResults":5
           }
         ]
       }
     ]
   }).then(result =>{
-    // need to regex out all potential special characters this google api might generate,
-    // and find a better way to plot this function out so that it doesn't take
-    // a long time to execute
-
     // array of pieces of text that have been captured in picture
-    let readText = result.data.responses[0].textAnnotations[0].description.split(' ');
-    console.log(readText);
-    // current verification status
-    return getAllBusinesses().then((businesses)=>{
+    var readText = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
+    let x = result.data.responses[0].textAnnotations[0].description;
+    console.log('this is readTExt:', readText);
+    return getAllBusinessesFromText(x)
+    .then((businesses)=>{
+      console.log('businesses line 85 businesses.js: ', businesses);
+      // current verification status
       let verificationStatus = false;
-      businesses.map((business)=>{
-        return business.legalBusinessName.toUpperCase().split(' ');
-      })
-      .filter((businessesToBeComparedToReadText)=>{
-          return businessesToBeComparedToReadText.includes(...readText);
+    //   businesses.map((business)=>{
+    //     return business.legalBusinessName.toUpperCase().split(' ');
+    //   })
+    //   .filter((businessesToBeComparedToReadText)=>{
+    //     for(let i = 0; i < readText.length; i++){
+    //       return businessesToBeComparedToReadText.includes(readText[i]);
+    //     }
+    //   }).length > 0 ? verificationStatus = true : null;
+    //   let obj = { verificationStatus: verificationStatus, text: readText };
+    //   return obj;
+    // })
 
-      }).length > 0 ? verificationStatus = true : null;
-      let obj = { verificationStatus: verificationStatus, text: readText };
-      return obj;
-    })
   })
   .then(verificationStatus => {
     console.log(verificationStatus)
@@ -106,7 +106,7 @@ router.post('/isVerfied', (req, res) => {
     res.send('failure to verify, or text was misinterpreted, line 102 businesses.js server')
   })
 });
+});
 
 
 module.exports = router;
-
