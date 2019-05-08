@@ -34,14 +34,14 @@ router.get('/:zip', (req, res) => {
             const listing = result.data['sam_data'].registration;
             const businessEntry = {
                 name: listing.legalBusinessName,
-                phone_number: listing.electronicBusinessPoc.usPhone,
+                phoneNumber: listing.electronicBusinessPoc.usPhone,
                 email: listing.electronicBusinessPoc.email,
-                url_homepage: null,
+                urlHomepage: null,
                 address: `${listing.samAddress.line1} ${listing.samAddress.city}, ${listing.samAddress.stateorProvince} ${listing.samAddress.zip}-${listing.samAddress.zipPlus4}`,
                 latitude: null,
                 longitude: null,
-                average_rating: 0,
-                legal_business_name: listing.legalBusinessName,
+                averageRating: 0,
+                legalBusinessName: listing.legalBusinessName,
             };
             
             if (listing.businessTypes.includes('OY')){
@@ -51,7 +51,7 @@ router.get('/:zip', (req, res) => {
                 })
             }
             console.log(businessEntry.name)
-            console.log(businessEntry.address, businessEntry.phone_number, businessEntry.email)
+            console.log(businessEntry.address, businessEntry.phoneNumber, businessEntry.email)
             console.log(listing.businessTypes)
         })
     })

@@ -35,12 +35,12 @@ router.get('/:id', (req, res) => {
 // add user
 router.post('/', (req, res) => {
   const user = req.body;
-  console.log(`added user: ${user.display_name} to db`);
+  console.log(`added user: ${user.displayName} to db`);
 
   /****************TODO****************
    * add business to database
    */
-  res.send(`added user: ${user.display_name} to db`)
+  res.send(`added user: ${user.displayName} to db`)
 })
 
 
