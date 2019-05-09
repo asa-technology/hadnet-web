@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   user: User;
+  localUser;
+  usersBusiness = null;
   constructor(public afAuth: AngularFireAuth, public router: Router, public http: HttpClient) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
@@ -32,6 +34,7 @@ export class AuthService {
         urlImage: 'https://i.imgur.com/BNtJWJM.png'
       }
       this.http.post<any>('/api/user', userObj).subscribe();
+      await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
       this.router.navigate(['']);
     } catch (error) {
       const errorCode = error.code;
@@ -48,18 +51,22 @@ export class AuthService {
   async login(email: string, password: string) {
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+      await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
+      await this.http.get(`/api/business/userid/${this.localUser.id}`).subscribe(business => this.usersBusiness = business);
       this.router.navigate(['']);
     } catch (e) {
       alert('Error! ' + e.message);
     }
   }
-  
+
   async logout() {
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
+    this.localUser = null;
+    this.usersBusiness = null;
     this.router.navigate(['login']);
   }
-  
+
   async fbLogin() {
     try {
       const provider = new firebase.auth.FacebookAuthProvider();
@@ -72,21 +79,11 @@ export class AuthService {
         urlImage: this.user.photoURL
       }
       this.http.post<any>('/api/user', userObj).subscribe();
+      await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
+      await this.http.get(`/api/business/userid/${this.localUser.id}`).subscribe(business => this.usersBusiness = business);
       this.router.navigate(['']);
     } catch(error) {
       alert('Error! ' + error.message);
-    }
-  }
-  
-  async googleLogin() {
-    try {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      await this.afAuth.auth.signInWithPopup(provider)
-      this.router.navigate(['']);
-    } catch(error) {
-      alert("Error! " + error.message);
     }
   }
 
@@ -99,7 +96,11 @@ export class AuthService {
     return this.user;
   }
 
+  get currentUsersBusiness() {
+    return this.usersBusiness;
+  }
+
   canClaimBusiness() {
-    
+    return !this.usersBusiness;
   }
 }

@@ -1,10 +1,9 @@
 const router = require('express').Router();
-const { db } = require('../../database/index');
-const { getAllBusinessesFromText, getAllBusinesses } = require('../../database/helpers');
+const axios = require('axios');
+const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser } = require('../../database/helpers');
 require('dotenv').config();
 // mock data
 const { businesses } = require('../../database/mock-business-data');
-const axios = require('axios');
 
 
 // gets all businesses
@@ -18,6 +17,12 @@ router.get('/', (req, res) => {
    * get all businesses from database
   */
   // res.send(businesses);
+});
+
+router.get('/userid/:id', (req, res) => {
+  const userId = req.params.id;
+  getBusinessByUser(userId)
+    .then(results => res.send(results));
 });
 
 

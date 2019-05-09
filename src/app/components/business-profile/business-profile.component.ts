@@ -4,6 +4,7 @@ import { BusinessListingService } from '../../services/business-listings/busines
 import { GetBusinessImagesService } from '../../services/business-images-and-ratings/get-business-images.service';
 import { BusinessProfileService } from '../../services/business-profile/business-profile.service';
 import { BusinessImage } from '../../models/BusinessImage';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-business-profile',
@@ -18,7 +19,8 @@ export class BusinessProfileComponent implements OnInit {
   businessImage: string;
 
   constructor(private getBusinessImagesService: GetBusinessImagesService,
-              private businessProfileService: BusinessProfileService ) { }
+              private businessProfileService: BusinessProfileService,
+              private authService: AuthService ) { }
 
   ngOnInit() {
     this.businessListing = this.businessProfileService.currentProfile;
