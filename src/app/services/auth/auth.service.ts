@@ -100,6 +100,10 @@ export class AuthService {
     return this.usersBusiness;
   }
 
+  hasBusiness() {
+    return !!this.usersBusiness;
+  }
+
   canClaimBusiness() {
     return !this.usersBusiness;
   }
