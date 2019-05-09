@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+
 const  {
   User,
   BusinessType,
@@ -40,7 +41,7 @@ const getAllBusinessesFromText = (queryArray) => {
       name: {
         [Op.like]: {
           [Op.any]: queryArray,
-        }
+        },
       },
     },
   })
@@ -94,6 +95,16 @@ const addUser = (userObj) => {
       console.log(err)
     });
 };
+
+// Add user to database
+const addUser = userObj => User.create(userObj)
+  .then((result) => {
+    console.log('entered user into db');
+    return result;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Get user by firebase id
 const getUserById = (id) => {
@@ -175,4 +186,4 @@ module.exports = {
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
-}
+};
