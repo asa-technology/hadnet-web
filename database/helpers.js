@@ -9,6 +9,7 @@ const {
   Image,
 } = require('./index.js');
 
+
 // Add business to database
 const addBusiness = businessObj => Business.create(businessObj)
   .then((result) => {
