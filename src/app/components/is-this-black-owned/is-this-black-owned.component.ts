@@ -3,7 +3,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {GoogleTextService} from '../../services/google-text.service';
-
+import {BusinessProfileService} from '../../services/business-profile/business-profile.service'
 
 @Component({
   selector: 'app-is-this-black-owned',
@@ -22,7 +22,9 @@ export class IsThisBlackOwnedComponent implements OnInit {
   public loading = false;
   public businessFound = false;
   public businessNotFound = false;
-  constructor(private googleTextService: GoogleTextService) { }
+  public business: any; // business object returned from google api/geolocation
+  public showBusinessSummary = false; // decidual factor for whether or not businessSummary view opens
+  constructor(private googleTextService: GoogleTextService, private businessProfileService: BusinessProfileService) { }
 
 
 
@@ -44,17 +46,21 @@ public webcamImageInfo: any;
   }
 
   public triggerSnapshot(): void {
-    this.loading = true;
-    this.toggleWebcam();
+   // this.loading = true;
+    // this.toggleWebcam();
     this.trigger.next();
-    setTimeout(() => {
-      this.loading = false;
-      this.businessNotFound = true;
-      this.toggleWebcam();
-    }, 3000);
-    setTimeout(() => {
-      this.businessNotFound = false;
-    }, 10000);
+    this.loading = false;
+    this.businessNotFound = false;
+    this.toggleWebcam();
+    // this.trigger.next();
+    // setTimeout(() => {
+    //   this.loading = false;
+    //   this.businessNotFound = true;
+    //   this.toggleWebcam();
+    // }, 3000);
+    // setTimeout(() => {
+    //   this.businessNotFound = false;
+    // }, 10000);
   }
 
   public toggleWebcam(): void {
@@ -86,7 +92,11 @@ public webcamImageInfo: any;
         }
         return closestBiz;
       });
-      console.log(closestBusiness, 'response from server');
+      this.business = closestBusiness;
+      this.showWebcam = false;
+      this.allowCameraSwitch = false;
+      this.showBusiness();
+      console.log(this.business, 'response from server');
     });
   }
     // getClosestBusiness takes in a businesses lat and long,
@@ -107,6 +117,26 @@ public webcamImageInfo: any;
   }
     return distance;
   }
+public changeBusinessProfile(biz) {
+this.businessProfileService.changeProfile(biz);
+}
+  // function that reopens camera instantly when user clicks 'take another picture'
+  // this will allow user to re-take picture if they didn't get the results they were expecting
+  public returnToCameraView() {
+    this.showWebcam = true;
+    this.allowCameraSwitch = true;
+    this.showBusinessSummary = false;
+  }
+  // funciton that sets this.showWebcam and this.show{ webcam's button } to false and sets
+  // showBusiness to render the searched for business's summary
+
+  public showBusiness() {
+    if (this.business) {
+      this.businessFound = true;
+      this.showBusinessSummary = true;
+    }
+  }
+
 
   public cameraWasSwitched(deviceId: string): void {
     console.log('active device: ' + deviceId);
