@@ -22,6 +22,7 @@ export class IsThisBlackOwnedComponent implements OnInit {
   public loading = false;
   public businessFound = false;
   public businessNotFound = false;
+  public closestBiz: any;
   constructor(private googleTextService: GoogleTextService) { }
 
 
@@ -77,50 +78,46 @@ public webcamImageInfo: any;
     this.webcamImage = webcamImage;
     this.webcamImageInfo = this.webcamImage.imageAsBase64;
     this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((businesses) => {
-      console.log(businesses, 'response from server');
-      // if(navigator.geolocation){
-      //   navigator.geolocation.getCurrentPosition((position) => {
-      //     let lat = position.coords.latitude;
-      //     let long = position.coords.longitude;
-      //     console.log(lat, 'this is lat');
-      //     console.log(long, 'this is long');
-      //   });
-      // }
+      // run an each loop over businesses lats/longs, returning the business with the
+      // lowest distance from current user's location
+      console.log(businesses);
+      const closestBusiness: any = businesses.reduce((closestBiz: any, business: any) => {
+       if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)) {
+          return business;
+        }
+        return closestBiz;
+      });
+      if(closestBusiness){
+        this.businessFound = true;
+        this.toggleWebcam();
+        this.closestBiz = closestBusiness;
+      }
+      this.toggleWebcam();
+      console.log(closestBusiness, 'response from server');
     });
   }
-
-
-
-
-  public getClosestBusinessDistance(busLat: any, busLong: any) {
+    // getClosestBusiness takes in a businesses lat and long,
+  public getClosestBusiness(businessLat: any, businessLong: any) {
+    let userCurrentLat: number;
+    let userCurrentLong: number;
+    let distance: number;
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        let userLat = position.coords.latitude * Math.PI / 180;
-        let userLong = position.coords.longitude * Math.PI / 180;
-        busLat = busLat * Math.PI / 180;
-        busLong = busLong * Math.PI / 180;
-        console.log(userLat, 'this is lat');
-        console.log(userLong, 'this is long');
-        let x = (busLong - userLong) * Math.cos((userLat + busLat) / 2);
-        let y = (busLat - userLat);
-        return Math.sqrt(x * x + y * y) * 6371;
-      });
-    }
+    navigator.geolocation.getCurrentPosition((position) => {
+      userCurrentLat = position.coords.latitude * Math.PI / 180;
+      userCurrentLong = position.coords.longitude * Math.PI / 180;
+      businessLat = businessLat * Math.PI / 180;
+      businessLong = businessLong * Math.PI / 180;
+      const x: number = (businessLong - userCurrentLong) * Math.cos((userCurrentLat + businessLat) / 2);
+      const y: number = (businessLong - userCurrentLat);
+      distance = Math.sqrt(x * x + y * y) * 6371;
+    });
+  }
+    return distance;
   }
 
-  public getClosestBusiness(businesses: any): void {
-    let minDif = 99999;
-    let closest;
-  
-    for (let i = 0; i < businesses.length; i++) {
-    let dif = this.getClosestBusinessDistance(businesses[i][1], businesses[i][2]);
-      if (dif < minDif) {
-        closest = i;
-        minDif = dif;
-      }
-    }
-    alert(businesses[closest]);
-  }
+
+
+
 
 
 

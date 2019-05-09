@@ -28,9 +28,10 @@
 
 </div>
 
-<!-- <div class="snapshot" *ngIf="webcamImage">
-  <img [src]="webcamImage.imageAsDataUrl"/>
-</div> -->
+<div class="closestBusiness" *ngIf="businessFound" trigger="toggleWebcam();">
+Is this the business you are trying to locate ...<br>
+{{ closestBiz.name }}
+</div>
 
 <h4 *ngIf="errors.length > 0">Messages:</h4>
 <ul *ngFor="let error of errors">

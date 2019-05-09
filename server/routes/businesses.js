@@ -1,10 +1,10 @@
 const router = require('express').Router();
+const axios = require('axios');
 const { db } = require('../../database/index');
 const { getAllBusinessesFromText, getAllBusinesses } = require('../../database/helpers');
 require('dotenv').config();
 // mock data
 const { businesses } = require('../../database/mock-business-data');
-const axios = require('axios');
 
 
 // gets all businesses
