@@ -48,7 +48,21 @@ export class BusinessListingsComponent implements OnInit {
     this.router.navigate(['/', 'business-profile']);
   }
   onSubmit() {
-    this.searchService.searchForBusiness(this.title)
+    this.searchService.searchForBusiness(this.title).subscribe( searchResults => {
+      this.businessListings = searchResults;
+      this.businessListings.forEach((business) => {
+        this.imageService.getImageById(business.id)
+          .subscribe((image) => {
+            if (image) {
+              business.ftImg = image;
+            } else {
+              business.ftImg = {
+                url: 'https://i.imgur.com/BNtJWJM.png'
+              };
+            }
+          });
+      });
+    })
   }
 
 }
