@@ -20,23 +20,21 @@ export class BusinessListingsComponent implements OnInit {
 
   ngOnInit() {
     this.businessListingService.getBusinessListings().subscribe( businessListings => {
-      this.businessListings = businessListings
+      this.businessListings = businessListings;
       console.log(this.businessListings);
       this.businessListings.forEach((business) => {
         this.imageService.getImageById(business.id)
           .subscribe((image) => {
             if (image) {
-              business.ftImg = image
+              business.ftImg = image;
             } else {
               business.ftImg = {
-                url: "https://i.imgur.com/BNtJWJM.png"
-              }
+                url: 'https://i.imgur.com/BNtJWJM.png'
+              };
             }
           });
-      })
+      });
     });
-    
-    
   }
 
   checkListing(business) {
@@ -47,7 +45,7 @@ export class BusinessListingsComponent implements OnInit {
     this.businessProfileService.changeProfile(business);
     this.router.navigate(['/', 'business-profile']);
   }
-  onSubmit(){
+  onSubmit() {
     console.log(this.title);
   }
 
