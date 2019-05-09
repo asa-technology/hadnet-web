@@ -39,14 +39,30 @@ router.get('/:id', (req, res) => {
 router.get('/search/:query', (req, res) => {
   const { query } = req.params;
   console.log(query);
+  let origArray;
+  let uppArray;
+  let lowArray;
   let queryArray;
   if (query.includes(' ')) {
-    queryArray = query.split(' ').map((queryWord) => {
-      return `%${queryWord}%, %${queryWord.toUpperCase()}%, %${queryWord.toLowerCase()}%`;
+    origArray = query.split(' ').map((queryWord) => {
+      return `%${queryWord}%`;
     });
-    queryArray.push(`%${query}%, %${query.toLowerCase()}%, %${query.toUpperCase()}%`);
+    origArray.push(`%${query}%`);
+
+    uppArray = query.split(' ').map((uppWord) => {
+      return `%${uppWord.toUpperCase()}%`;
+    });
+    uppArray.push(`%${query.toUpperCase()}%`);
+
+    lowArray = query.split(' ').map((lowWord) => {
+      return `%${lowWord.toLowerCase()}%`;
+    });
+    lowArray.push(`%${query.toLowerCase()}%`);
+    queryArray = origArray.concat(uppArray).concat(lowArray);
   } else {
-    queryArray = [`%${query}%, %${query.toLowerCase()}%, %${query.toUpperCase()}% `];
+    queryArray = [`%${query}%`];
+    queryArray.push(`%${query.toLowerCase()}%`);
+    queryArray.push(`%${query.toUpperCase()}%`);
   }
   getAllBusinessesFromText(queryArray)
     .then((businessesArray) => {
