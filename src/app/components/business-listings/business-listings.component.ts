@@ -36,6 +36,7 @@ export class BusinessListingsComponent implements OnInit {
       })
     });
     
+    
   }
 
   checkListing(business) {

@@ -8,7 +8,7 @@ const  {
     Review,
     Image,
  } = require ('./index.js');
-
+ 
  // Add business to database
 const addBusiness = (businessObj) => {
     return Business.create(businessObj)
@@ -62,6 +62,7 @@ const getBusinessByUser = (userId) => {
         console.log(err)
     });  
 }
+
 
  // Add user to database
  const addUser = (userObj) => {
