@@ -1,5 +1,9 @@
 const { Op } = require('sequelize');
+<<<<<<< HEAD
 const  {
+=======
+const {
+>>>>>>> da0b3b80411f2c59f4de97de02eeb1da6beda2b5
   User,
   BusinessType,
   ListingType,
@@ -7,6 +11,7 @@ const  {
   CommunityListing,
   Review,
   Image,
+<<<<<<< HEAD
 } = require ('./index.js');
  
 // Add business to database
@@ -35,12 +40,40 @@ const getAllBusinesses = () => {
 
 const getAllBusinessesFromText = (queryArray) => {
   console.log('db helpers array', queryArray);
+=======
+} = require('./index.js');
+
+// Add business to database
+const addBusiness = businessObj => Business.create(businessObj)
+  .then((result) => {
+    console.log('entered business into db');
+    return result;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+
+// Get all businesses
+const getAllBusinesses = () => Business.findAll()
+  .then(results => results)
+  .catch((err) => {
+    console.log(err);
+  });
+
+const getAllBusinessesFromText = (queryArray) => {
+  console.log(queryArray);
+>>>>>>> da0b3b80411f2c59f4de97de02eeb1da6beda2b5
   return Business.findAll({
     where: {
       name: {
         [Op.like]: {
           [Op.any]: queryArray,
+<<<<<<< HEAD
         }
+=======
+        },
+>>>>>>> da0b3b80411f2c59f4de97de02eeb1da6beda2b5
       },
     },
   })
@@ -52,6 +85,7 @@ const getAllBusinessesFromText = (queryArray) => {
 
 
 // Get business by id
+<<<<<<< HEAD
 const getBusinessById = (id) => {
   return Business.findOne({
     where: {
@@ -65,6 +99,17 @@ const getBusinessById = (id) => {
       console.log(err)
     });
 }
+=======
+const getBusinessById = id => Business.findOne({
+  where: {
+    id,
+  },
+})
+  .then(business => business)
+  .catch((err) => {
+    console.log(err);
+  });
+>>>>>>> da0b3b80411f2c59f4de97de02eeb1da6beda2b5
 
 // get business by user id
 
@@ -72,6 +117,7 @@ const getBusinessByUser = (userId) => {
   Business.findOne({
     where: {
       idUser: userId,
+<<<<<<< HEAD
     }
   })
     .then((result) => {
@@ -92,10 +138,28 @@ const addUser = (userObj) => {
     })
     .catch((err) => {
       console.log(err)
+=======
+    },
+  })
+    .then(result => result)
+    .catch((err) => {
+      console.log(err);
+>>>>>>> da0b3b80411f2c59f4de97de02eeb1da6beda2b5
     });
 };
 
+// Add user to database
+const addUser = userObj => User.create(userObj)
+  .then((result) => {
+    console.log('entered user into db');
+    return result;
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 // Get user by firebase id
+<<<<<<< HEAD
 const getUserById = (id) => {
   return User.findOne({
     where: {
@@ -162,6 +226,54 @@ const getAllImagesByBusiness = (businessId) => {
       console.log(err);
     });
 }
+=======
+const getUserById = id => User.findOne({
+  where: {
+    firebaseId: id,
+  },
+}).then(user => user)
+  .catch((err) => {
+    console.log(err);
+  });
+
+// add review
+const addReview = reviewObj => Review.create(reviewObj)
+  .then(result => result)
+  .catch((err) => {
+    console.log(err);
+  });
+
+// get all the reviews of a certain business by that businesses id
+const getReviewsByBusiness = businessId => Review.findAll({
+  where: {
+    idBusiness: businessId,
+  },
+})
+  .then(result => result)
+  .catch((err) => {
+    console.log(err);
+  });
+
+// get featured image
+const getFeaturedImage = imageId => Image.findOne({
+  where: {
+    id: imageId,
+  },
+})
+  .then(result => result)
+  .catch((err) => {
+    console.log(err);
+  });
+
+// get all images for a business
+const getAllImagesByBusiness = businessId => Image.findAll({
+  where: { inBusiness: businessId },
+})
+  .then(result => result)
+  .catch((err) => {
+    console.log(err);
+  });
+>>>>>>> da0b3b80411f2c59f4de97de02eeb1da6beda2b5
 
 module.exports = {
   addBusiness,
@@ -175,4 +287,8 @@ module.exports = {
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> da0b3b80411f2c59f4de97de02eeb1da6beda2b5
