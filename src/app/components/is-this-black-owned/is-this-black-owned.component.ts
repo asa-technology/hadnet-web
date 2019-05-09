@@ -78,8 +78,53 @@ public webcamImageInfo: any;
     this.webcamImageInfo = this.webcamImage.imageAsBase64;
     this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((businesses) => {
       console.log(businesses, 'response from server');
+      // if(navigator.geolocation){
+      //   navigator.geolocation.getCurrentPosition((position) => {
+      //     let lat = position.coords.latitude;
+      //     let long = position.coords.longitude;
+      //     console.log(lat, 'this is lat');
+      //     console.log(long, 'this is long');
+      //   });
+      // }
     });
   }
+
+
+
+
+  public getClosestBusinessDistance(busLat: any, busLong: any) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        let userLat = position.coords.latitude * Math.PI / 180;
+        let userLong = position.coords.longitude * Math.PI / 180;
+        busLat = busLat * Math.PI / 180;
+        busLong = busLong * Math.PI / 180;
+        console.log(userLat, 'this is lat');
+        console.log(userLong, 'this is long');
+        let x = (busLong - userLong) * Math.cos((userLat + busLat) / 2);
+        let y = (busLat - userLat);
+        return Math.sqrt(x * x + y * y) * 6371;
+      });
+    }
+  }
+
+  public getClosestBusiness(businesses: any): void {
+    let minDif = 99999;
+    let closest;
+  
+    for (let i = 0; i < businesses.length; i++) {
+    let dif = this.getClosestBusinessDistance(businesses[i][1], businesses[i][2]);
+      if (dif < minDif) {
+        closest = i;
+        minDif = dif;
+      }
+    }
+    alert(businesses[closest]);
+  }
+
+
+
+
 
   public cameraWasSwitched(deviceId: string): void {
     console.log('active device: ' + deviceId);
