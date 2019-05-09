@@ -36,6 +36,28 @@ router.get('/:id', (req, res) => {
   }
 });
 
+router.get('/search/:query', (req, res) => {
+  const { query } = req.params;
+  console.log(query);
+  let queryArray;
+  if (query.includes(' ')) {
+    queryArray = query.split(' ').map((queryWord) => {
+      return `%${queryWord}%, %${queryWord.toUpperCase()}%, %${queryWord.toLowerCase()}%`;
+    });
+    queryArray.push(`%${query}%, %${query.toLowerCase()}%, %${query.toUpperCase()}%`);
+  } else {
+    queryArray = [`%${query}%, %${query.toLowerCase()}%, %${query.toUpperCase()}% `];
+  }
+  getAllBusinessesFromText(queryArray)
+    .then((businessesArray) => {
+      res.send(businessesArray);
+      console.log(businessesArray);
+    })
+    .catch((error) => {
+      res.send('no matches founc');
+      console.error(error);
+    })
+})
 
 // adds business
 router.post('/', (req, res) => {

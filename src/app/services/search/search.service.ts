@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SearchService {
-searchBusinessEndpoint = 'api/businesses/search';
+searchBusinessEndpoint = 'api/business/search';
   constructor(private http: HttpClient) { }
   searchForBusiness(query: any): Observable <any> {
     return this.http.get<any>(`${this.searchBusinessEndpoint}/${query}`);
