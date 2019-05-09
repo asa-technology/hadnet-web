@@ -32,27 +32,22 @@ const getAllBusinesses = () => {
     });
 }
 
-
 const getAllBusinessesFromText = (queryArray) => {
   console.log(queryArray);
     return Business.findAll({
       where: {
         name: {
           [Op.like]: {
-            [Op.any]: queryArray.map(query => `%${query}%`),
-        },
+            [Op.any]: queryArray,
+          }
       },
     },
   })
-    .then((businessInfo) => {
-      console.log('businessinfo: ', businessInfo);
-      return businessInfo;
-    })
-    .catch((err)=>{
-      console.log('error line 66 helpers.js database');
-    })
-
-}
+    .then(businessInfo => businessInfo)
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 
 // Get business by id
@@ -177,5 +172,4 @@ module.exports = {
     getFeaturedImage,
     getAllImagesByBusiness,
     getAllBusinessesFromText,
-
 }
