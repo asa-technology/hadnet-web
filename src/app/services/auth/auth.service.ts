@@ -3,13 +3,13 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   user: User;
-  constructor(public afAuth: AngularFireAuth, public router: Router, public http: HttpClient) { 
+  constructor(public afAuth: AngularFireAuth, public router: Router, public http: HttpClient) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
@@ -17,29 +17,29 @@ export class AuthService {
       } else {
         localStorage.setItem('user', null);
       }
-    })
+    });
   }
 
-  async signup(email: string, password: string, displayName: string, type: string) {
+  async signup(email: string, password: string, displayName: string) {
     try {
       await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-      await this.user.updateProfile({ displayName })
+      await this.user.updateProfile({ displayName });
       const userObj = {
         email: this.user.email,
         displayName: this.user.displayName,
         firebaseId: this.user.uid,
-        accountType: type,
-        urlImage: "https://i.imgur.com/BNtJWJM.png"
+        accountType: 'User',
+        urlImage: 'https://i.imgur.com/BNtJWJM.png'
       }
       this.http.post<any>('/api/user', userObj).subscribe();
       this.router.navigate(['']);
     } catch (error) {
-      let errorCode = error.code;
-      let errorMessage = error.message;
+      const errorCode = error.code;
+      const errorMessage = error.message;
       if (errorCode === 'auth/weak-password') {
-        alert('Error! The password is too weak.')
+        alert('Error! The password is too weak.');
       } else {
-        alert("Error! " + errorMessage)
+        alert('Error! ' + errorMessage);
       }
       console.log(error);
     }
@@ -50,37 +50,37 @@ export class AuthService {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password);
       this.router.navigate(['']);
     } catch (e) {
-      alert("Error! " + e.message);
+      alert('Error! ' + e.message);
     }
   }
   
   async logout() {
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
-    this.router.navigate(['login'])
+    this.router.navigate(['login']);
   }
   
   async fbLogin() {
     try {
-      let provider = new firebase.auth.FacebookAuthProvider();
+      const provider = new firebase.auth.FacebookAuthProvider();
       await this.afAuth.auth.signInWithPopup(provider)
       const userObj = {
         email: this.user.email,
         displayName: this.user.displayName,
         firebaseId: this.user.uid,
-        accountType: "User",
+        accountType: 'User',
         urlImage: this.user.photoURL
       }
       this.http.post<any>('/api/user', userObj).subscribe();
       this.router.navigate(['']);
     } catch(error) {
-      alert("Error! " + error.message);
+      alert('Error! ' + error.message);
     }
   }
   
   async googleLogin() {
     try {
-      let provider = new firebase.auth.GoogleAuthProvider();
+      const provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope('profile');
       provider.addScope('email');
       await this.afAuth.auth.signInWithPopup(provider)
@@ -97,5 +97,9 @@ export class AuthService {
 
   get currentUser() {
     return this.user;
+  }
+
+  canClaimBusiness() {
+    
   }
 }
