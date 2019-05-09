@@ -7,6 +7,12 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "DB test",
+      "program": "${workspaceFolder}/database/helpers.test.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Launch Program",
       "program": "${workspaceFolder}/server/app.js"
     },

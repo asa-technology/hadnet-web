@@ -32,6 +32,24 @@ const getAllBusinesses = () => {
     });
 }
 
+const getAllBusinessesFromText = (queryArray) => {
+  console.log(queryArray);
+    return Business.findAll({
+      where: {
+        name: {
+          [Op.like]: {
+            [Op.any]: queryArray,
+          }
+      },
+    },
+  })
+    .then(businessInfo => businessInfo)
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
 // Get business by id
 const getBusinessById = (id) => {
     return Business.findOne({
@@ -60,7 +78,7 @@ const getBusinessByUser = (userId) => {
     })
     .catch((err) => {
         console.log(err)
-    });  
+    });
 }
 
  // Add user to database
@@ -96,7 +114,7 @@ const addReview = (reviewObj) => {
     })
     .catch((err) => {
         console.log(err)
-    });  
+    });
 }
 
 // get all the reviews of a certain business by that businesses id
@@ -111,7 +129,7 @@ const getReviewsByBusiness = (businessId) => {
     })
     .catch((err) => {
         console.log(err)
-    });  
+    });
 }
 
 //get featured image
@@ -126,7 +144,7 @@ const getFeaturedImage = (imageId) => {
     })
     .catch((err) => {
         console.log(err)
-    });  
+    });
 }
 
 //get all images for a business
@@ -139,7 +157,7 @@ const getAllImagesByBusiness = (businessId) => {
     })
     .catch((err) => {
         console.log(err)
-    });  
+    });
 }
 
 module.exports = {
@@ -153,5 +171,5 @@ module.exports = {
     getReviewsByBusiness,
     getFeaturedImage,
     getAllImagesByBusiness,
-
+    getAllBusinessesFromText,
 }
