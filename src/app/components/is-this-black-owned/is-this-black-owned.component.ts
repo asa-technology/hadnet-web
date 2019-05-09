@@ -77,8 +77,35 @@ public webcamImageInfo: any;
     this.webcamImage = webcamImage;
     this.webcamImageInfo = this.webcamImage.imageAsBase64;
     this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((businesses) => {
-      console.log(businesses, 'response from server');
+      // run an each loop over businesses lats/longs, returning the business with the
+      // lowest distance from current user's location
+      console.log(businesses);
+      const closestBusiness: any = businesses.reduce((closestBiz: any, business: any) => {
+        if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)){
+          return business;
+        }
+        return closestBiz;
+      });
+      console.log(closestBusiness, 'response from server');
     });
+  }
+    // getClosestBusiness takes in a businesses lat and long,
+  public getClosestBusiness(businessLat: any, businessLong: any) {
+    let userCurrentLat: number;
+    let userCurrentLong: number;
+    let distance: number;
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      userCurrentLat = position.coords.latitude * Math.PI / 180;
+      userCurrentLong = position.coords.longitude * Math.PI / 180;
+      businessLat = businessLat * Math.PI / 180;
+      businessLong = businessLong * Math.PI / 180;
+      const x: number = (businessLong - userCurrentLong) * Math.cos((userCurrentLat + businessLat) / 2);
+      const y: number = (businessLong - userCurrentLat);
+      distance = Math.sqrt(x * x + y * y) * 6371;
+    });
+  }
+    return distance;
   }
 
   public cameraWasSwitched(deviceId: string): void {
