@@ -3,7 +3,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
 import {GoogleTextService} from '../../services/google-text.service';
-import {BusinessProfileService} from '../../services/business-profile/business-profile.service'
+import {BusinessProfileService} from '../../services/business-profile/business-profile.service';
 
 @Component({
   selector: 'app-is-this-black-owned',
@@ -46,17 +46,19 @@ public webcamImageInfo: any;
   }
 
   public triggerSnapshot(): void {
-   // this.loading = true;
+    //this.loading = true;
     // this.toggleWebcam();
     this.trigger.next();
-    this.loading = false;
+    // this.loading = false;
     this.businessNotFound = false;
-    this.toggleWebcam();
+    this.loading = true;
+    this.showWebcam = false;
+    // this.toggleWebcam();
     // this.trigger.next();
     // setTimeout(() => {
-    //   this.loading = false;
-    //   this.businessNotFound = true;
-    //   this.toggleWebcam();
+    //   // this.loading = false;
+    //    this.businessNotFound = false;
+    //   // this.toggleWebcam();
     // }, 3000);
     // setTimeout(() => {
     //   this.businessNotFound = false;
@@ -85,18 +87,42 @@ public webcamImageInfo: any;
     this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((businesses) => {
       // run an each loop over businesses lats/longs, returning the business with the
       // lowest distance from current user's location
-      console.log(businesses);
-      const closestBusiness: any = businesses.reduce((closestBiz: any, business: any) => {
-       if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)) {
+         if (businesses !== 'Business Not Found, Please Try Again') {
+        const closestBusiness: any = businesses.reduce((closestBiz: any, business: any) => {
+        if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)){
           return business;
         }
         return closestBiz;
       });
-      this.business = closestBusiness;
-      this.showWebcam = false;
-      this.allowCameraSwitch = false;
-      this.showBusiness();
-      console.log(this.business, 'response from server');
+        this.loading = false;
+        this.business = closestBusiness;
+        // this.showWebcam = false;
+        this.allowCameraSwitch = false;
+        this.businessNotFound = false;
+        this.showBusiness();
+        console.log(this.business, 'response from server');
+      } else {
+        // this.businessFound = false;
+        this.businessNotFound = true;
+        setTimeout(() => {
+          this.businessNotFound = false;
+        }, 3000);
+        setTimeout(() => {
+          // this.loading = false;
+           // this.businessFound = true;
+           this.loading = false;
+           this.showWebcam = true;
+          // this.toggleWebcam();
+        }, 500);
+      //   console.log('try again please');
+      //   this.businessFound = false;
+      //   this.loading = true;
+      //   setTimeout(() => {
+      //     this.loading = false;
+      //     this.businessFound = true;
+      //   }, 500);
+      //   this.showWebcam = true;
+       }
     });
   }
     // getClosestBusiness takes in a businesses lat and long,
