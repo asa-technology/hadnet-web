@@ -9,7 +9,6 @@ const {
   Image,
 } = require('./index.js');
 
-
 // Add business to database
 const addBusiness = businessObj => Business.create(businessObj)
   .then((result) => {
@@ -45,6 +44,13 @@ const getAllBusinessesFromText = (queryArray) => {
     });
 };
 
+const setBusinessOwner = (userId, businessId) => {
+  return Business.update({ idUser: userId }, { where: { id: businessId } });
+};
+
+const updateUser = (uid, changes) => {
+  return User.update(changes, { where: { uid } });
+};
 
 // Get business by id
 const getBusinessById = id => Business.findOne({
@@ -60,15 +66,17 @@ const getBusinessById = id => Business.findOne({
 // get business by user id
 
 const getBusinessByUser = (userId) => {
-  Business.findOne({
+  return Business.findOne({
     where: {
       idUser: userId,
     },
   })
-    .then(result => result)
-    .catch((err) => {
-      console.log(err);
-    });
+  .then(result => {
+    return result
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 };
 
 // Add user to database
@@ -80,13 +88,14 @@ const addUser = userObj => User.create(userObj)
   .catch((err) => {
     console.log(err);
   });
-
 // Get user by firebase id
 const getUserById = id => User.findOne({
   where: {
     firebaseId: id,
   },
-}).then(user => user)
+  }).then(user => {
+    return user
+  })
   .catch((err) => {
     console.log(err);
   });
@@ -99,6 +108,13 @@ const getUserByUserId = id => User.findOne({
   .catch((err) => {
     console.log(err);
   });
+
+const getBusinessByFirebaseId = (uid) => {
+  return getUserById(uid)
+    .then(result => {
+      return getBusinessByUser(result.id)
+    });
+};
 
 // add review
 const addReview = reviewObj => Review.create(reviewObj)
@@ -139,6 +155,7 @@ const getAllImagesByBusiness = businessId => Image.findAll({
   });
 
 // adds community listing to communityListings table.
+// takes in a userId
 // takes in a title for listing,
 // a body of text,
 // an imageURL, (either a default if none selected, or user input url/uploaded image)
@@ -177,21 +194,6 @@ const searchForCommunityListings = (communityListingsQuery) => {
     .catch(err => console.log('error line 161 db helpers:', err));
 };
 
-// CommunityListing.init({
-    //   title: {
-    //     type: Sequelize.STRING,
-    //     allowNull: false,
-    //   },
-    //   body: {
-    //     type: Sequelize.STRING,
-    //     allowNull: false,
-    //   },
-    //   imageUrl: Sequelize.STRING,
-    //   date_expire: Sequelize.DATEONLY,
-    // }, {
-    //   sequelize,
-    //   modelName: 'communitylisting',
-    // });
 
 module.exports = {
   addBusiness,
@@ -210,4 +212,6 @@ module.exports = {
   removeCommunityListing,
   getAllCommunityListings,
   searchForCommunityListings,
+  getBusinessByFirebaseId,
+  setBusinessOwner,
 };

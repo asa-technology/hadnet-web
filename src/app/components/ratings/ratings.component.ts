@@ -63,6 +63,7 @@ export class RatingsComponent implements OnInit {
     }
     this.ratingsService.sendUserReview(review).subscribe((response) => {
       console.log(response);
+      this.reviews = [response];
     });
     console.log(review);
     console.log('Review submitted!');
