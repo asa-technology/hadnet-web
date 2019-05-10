@@ -45,6 +45,9 @@ const getAllBusinessesFromText = (queryArray) => {
     });
 };
 
+const setBusinessOwner = (userId, businessId) => {
+  return Business.update({ idUser: userId }, { where: { id: businessId }});
+};
 
 // Get business by id
 const getBusinessById = id => Business.findOne({
@@ -137,4 +140,5 @@ module.exports = {
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
+  setBusinessOwner,
 };

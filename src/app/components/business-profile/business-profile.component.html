@@ -24,7 +24,7 @@
   </div>
   <div class="row h-auto">
     <div class="col">
-      <button *ngIf="authService.canClaimBusiness()" class="btn btn-secondary btn-block">Claim this business</button>
+      <button *ngIf="authService.canClaimBusiness()" (click)="claimBusiness(businessListing)" class="btn btn-secondary btn-block">Claim this business</button>
     </div>
   </div>
   <div class="row h-50">

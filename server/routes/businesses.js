@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser } = require('../../database/helpers');
+const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser, setBusinessOwner } = require('../../database/helpers');
 require('dotenv').config();
 // mock data
 const { businesses } = require('../../database/mock-business-data');
@@ -55,13 +55,15 @@ router.post('/', (req, res) => {
 
 
 // update business at specific id
-router.patch('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const { id } = req.params;
-
-  /** **************TODO****************
-   * update business at id in database
-   */
-  res.send('updated business');
+  const idNum = parseInt(id, 10);
+  const user = req.body;
+  setBusinessOwner(user.id, idNum)
+    .then(() => {
+      res.sendStatus(201);
+    });
+  console.log(`User ${user.id} claimed business at id ${id}`);
 });
 
 // verifies a business by checking if image data name matches any buisness name in the table

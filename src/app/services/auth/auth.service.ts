@@ -96,6 +96,10 @@ export class AuthService {
     return this.user;
   }
 
+  get currentLocalUser() {
+    return this.localUser;
+  }
+
   get currentUsersBusiness() {
     return this.usersBusiness;
   }

@@ -5,6 +5,7 @@ import { GetBusinessImagesService } from '../../services/business-images-and-rat
 import { BusinessProfileService } from '../../services/business-profile/business-profile.service';
 import { BusinessImage } from '../../models/BusinessImage';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-business-profile',
@@ -20,7 +21,8 @@ export class BusinessProfileComponent implements OnInit {
 
   constructor(private getBusinessImagesService: GetBusinessImagesService,
               private businessProfileService: BusinessProfileService,
-              private authService: AuthService ) { }
+              private authService: AuthService,
+              private http: HttpClient ) { }
 
   ngOnInit() {
     this.businessListing = this.businessProfileService.currentProfile;
@@ -31,5 +33,15 @@ export class BusinessProfileComponent implements OnInit {
       console.log(images[0]);
       this.businessImage = images.url;
       });
+  }
+
+  async claimBusiness(business) {
+    try {
+      const localUser = this.authService.currentLocalUser;
+      await this.http.put<any>(`/api/business/${business.id}`, localUser).subscribe();
+    } catch (error) {
+      alert(error);
+    }
+
   }
 }
