@@ -138,6 +138,61 @@ const getAllImagesByBusiness = businessId => Image.findAll({
     console.log(err);
   });
 
+// adds community listing to communityListings table.
+// takes in a title for listing,
+// a body of text,
+// an imageURL, (either a default if none selected, or user input url/uploaded image)
+// date of listing expiration is going to be the day after the event is supposed to take place
+
+const addCommunityListing = communityListingInfo => CommunityListing.create(communityListingInfo);
+
+// takes in the id of a user who posted the listing, and the title of the listing
+const removeCommunityListing = (idUser, title) => {
+  CommunityListing.destroy({
+    where: { idUser, title },
+  })
+    .then(result => console.log(result, 'was removed from database, function on line 154 helpers.js database'))
+    .catch(err => console.log('error line 155 helpers.js database: ', err));
+};
+
+// returns all community listings
+const getAllCommunityListings = () => {
+  return CommunityListing.findAll()
+    .then(result => result)
+    .catch(err => console.log('error line 153 db helers:', err));
+};
+
+// queries community listings by title, maybe should also query based on body text??
+const searchForCommunityListings = (communityListingsQuery) => {
+  return CommunityListing.findAll({
+    where: {
+      title: {
+        [Op.like]: {
+          [Op.any]: communityListingsQuery,
+        },
+      },
+    },
+  })
+    .then(result => result)
+    .catch(err => console.log('error line 161 db helpers:', err));
+};
+
+// CommunityListing.init({
+    //   title: {
+    //     type: Sequelize.STRING,
+    //     allowNull: false,
+    //   },
+    //   body: {
+    //     type: Sequelize.STRING,
+    //     allowNull: false,
+    //   },
+    //   imageUrl: Sequelize.STRING,
+    //   date_expire: Sequelize.DATEONLY,
+    // }, {
+    //   sequelize,
+    //   modelName: 'communitylisting',
+    // });
+
 module.exports = {
   addBusiness,
   getBusinessById,
@@ -151,4 +206,8 @@ module.exports = {
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
+  addCommunityListing,
+  removeCommunityListing,
+  getAllCommunityListings,
+  searchForCommunityListings,
 };
