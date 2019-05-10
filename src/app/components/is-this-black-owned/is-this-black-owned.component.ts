@@ -87,7 +87,7 @@ public webcamImageInfo: any;
       // lowest distance from current user's location
       console.log(businesses);
       const closestBusiness: any = businesses.reduce((closestBiz: any, business: any) => {
-        if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)){
+       if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)) {
           return business;
         }
         return closestBiz;
@@ -136,6 +136,14 @@ this.businessProfileService.changeProfile(biz);
       this.showBusinessSummary = true;
     }
   }
+
+
+
+
+
+
+
+
 
 
   public cameraWasSwitched(deviceId: string): void {
