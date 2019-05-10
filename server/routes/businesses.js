@@ -1,8 +1,9 @@
 require('dotenv').config();
 const router = require('express').Router();
 const axios = require('axios');
+const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser, setBusinessOwner, getUserById, getBusinessByFirebaseId } = require('../../database/helpers');
+require('dotenv').config();
 const { db } = require('../../database/index');
-const { getAllBusinessesFromText, getAllBusinesses } = require('../../database/helpers');
 // mock data
 const { businesses } = require('../../database/mock-business-data');
 
@@ -18,6 +19,24 @@ router.get('/', (req, res) => {
    * get all businesses from database
   */
   // res.send(businesses);
+});
+
+router.get('/userid/:id', (req, res) => {
+  const userId = req.params.id;
+  getBusinessByUser(userId)
+    .then(results => res.send(results));
+});
+
+router.get('/firebaseId/:uid', (req, res) => {
+  const { uid } = req.params;
+  console.log('Grabbing businesses associated with UID: ' + uid);
+  getBusinessByFirebaseId(uid)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
 
 
@@ -46,29 +65,19 @@ router.get('/search/:query', (req, res) => {
   let decapArray;
   let queryArray;
   if (query.includes(' ')) {
-    origArray = query.split(' ').map((queryWord) => {
-      return `%${queryWord}%`;
-    });
+    origArray = query.split(' ').map(queryWord => `%${queryWord}%`);
     origArray.push(`%${query}%`);
 
-    uppArray = query.split(' ').map((uppWord) => {
-      return `%${uppWord.toUpperCase()}%`;
-    });
+    uppArray = query.split(' ').map(uppWord => `%${uppWord.toUpperCase()}%`);
     uppArray.push(`%${query.toUpperCase()}%`);
 
-    capArray = query.split(' ').map((capWord) => {
-      return `%${capWord.charAt(0).toUpperCase()}${capWord.slice(1)}%`;
-    });
+    capArray = query.split(' ').map(capWord => `%${capWord.charAt(0).toUpperCase()}${capWord.slice(1)}%`);
     capArray.push(`%${query.charAt(0).toUpperCase()}${query.slice(1)}%`);
 
-    decapArray = query.split(' ').map((decapWord) => {
-      return `%${decapWord.charAt(0)}${decapWord.slice(1).toLowerCase()}%`;
-    });
+    decapArray = query.split(' ').map(decapWord => `%${decapWord.charAt(0)}${decapWord.slice(1).toLowerCase()}%`);
     decapArray.push(`%${query.charAt(0)}${query.slice(1).toLowerCase()}%`);
 
-    lowArray = query.split(' ').map((lowWord) => {
-      return `%${lowWord.toLowerCase()}%`;
-    });
+    lowArray = query.split(' ').map(lowWord => `%${lowWord.toLowerCase()}%`);
     lowArray.push(`%${query.toLowerCase()}%`);
     queryArray = origArray.concat(uppArray).concat(lowArray).concat(capArray).concat(decapArray);
   } else {
@@ -86,8 +95,8 @@ router.get('/search/:query', (req, res) => {
     .catch((error) => {
       res.send('no matches founc');
       console.error(error);
-    })
-})
+    });
+});
 
 // adds business
 router.post('/', (req, res) => {
@@ -102,13 +111,13 @@ router.post('/', (req, res) => {
 
 
 // update business at specific id
-router.patch('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const { id } = req.params;
-
-  /** **************TODO****************
-   * update business at id in database
-   */
-  res.send('updated business');
+  const idNum = parseInt(id, 10);
+  const { uid } = req.body;
+  getUserById(uid)
+    .then(result => setBusinessOwner(result.id, idNum))
+    .then(() => res.sendStatus(201));
 });
 
 // verifies a business by checking if image data name matches any buisness name in the table
@@ -128,23 +137,22 @@ router.post('/isVerfied', (req, res) => {
       },
     ],
   }).then((result) => {
-    // array of pieces of text that have been captured in picture
-    // const readText = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
-    let x = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
-    if (Array.isArray(x)) {
-      x = x.map((query) => {
-        return `%${query}%`;
-      });
-    } else if (x) {
-      x = `%${x}%`;
+    if (result.data.responses[0].textAnnotations) {
+      let x = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
+      if (Array.isArray(x)) {
+        x = x.map(query => `%${query}%`);
+      } else if (x) {
+        x = `%${x}%`;
+      }
+      x.pop();
+      return getAllBusinessesFromText(x);
     }
-    x.pop();
-    return getAllBusinessesFromText(x)
-      .then(business => res.send(business))
-      .catch((error) => {
-        res.send('failure to verify, or text was misinterpreted, line 102 businesses.js server');
-      });
-  });
+    return 'Business Not Found, Please Try Again';
+  })
+    .then(business => res.json(business))
+    .catch((error) => {
+      console.log('error, line 148 businesses.js database: ', error);
+    });
 });
 
 

@@ -23,7 +23,7 @@
               <input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
               <span class="focus-input100"></span>
             </div>
-
+<!-- 
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn btn-secondary active">
                 <input type="radio" (click)="changeAcctType('User')" name="options" value="User" checked> User
@@ -31,10 +31,10 @@
               <label class="btn btn-secondary">
                 <input type="radio" (click)="changeAcctType('Business')" name="options" value="Business"> Business
               </label>
-            </div><br>
+            </div><br> -->
 
             <div class="container-login100-form-btn">
-              <button class="btn btn-info btn-block" (click)="authService.signup(userEmail.value, userPassword.value, userDisplayName.value, accountType)">
+              <button class="btn btn-info btn-block" (click)="authService.signup(userEmail.value, userPassword.value, userDisplayName.value)">
                 Sign Up
               </button>
             </div>

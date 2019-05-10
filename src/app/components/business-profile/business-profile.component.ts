@@ -4,6 +4,9 @@ import { BusinessListingService } from '../../services/business-listings/busines
 import { GetBusinessImagesService } from '../../services/business-images-and-ratings/get-business-images.service';
 import { BusinessProfileService } from '../../services/business-profile/business-profile.service';
 import { BusinessImage } from '../../models/BusinessImage';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-business-profile',
@@ -18,7 +21,10 @@ export class BusinessProfileComponent implements OnInit {
   businessImage: string;
 
   constructor(private getBusinessImagesService: GetBusinessImagesService,
-              private businessProfileService: BusinessProfileService ) { }
+              private businessProfileService: BusinessProfileService,
+              private authService: AuthService,
+              private http: HttpClient,
+              private router: Router ) { }
 
   ngOnInit() {
     this.businessListing = this.businessProfileService.currentProfile;
@@ -29,5 +35,26 @@ export class BusinessProfileComponent implements OnInit {
       console.log(images[0]);
       this.businessImage = images.url;
       });
+  }
+
+  async claimBusiness(business) {
+    try {
+      const user = this.authService.currentUser;
+      await this.http.put<any>(`/api/business/${business.id}`, user).subscribe();
+      await this.http.put<any>(`/api/user/${user.uid}`, { account_type: 'Business' });
+      await this.authService.refreshUserBusiness();
+      this.router.navigate(['']);
+    } catch (error) {
+      alert(error);
+    }
+
+  }
+
+  businessCanBeClaimed() {
+    if (this.authService.canClaimBusiness() && !this.businessListing.idUser) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

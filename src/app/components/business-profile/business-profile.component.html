@@ -1,13 +1,13 @@
 <div class="container-fluid text-center" style="overflow-y: scroll; height: 830px">
   <div class="row h-auto">
     <div class="col px-0">
-      <img class="business-img img" src="{{ businessImage }}">
+      <img class="business-img img w-auto" src="{{ businessImage }}">
     </div>
   </div>
   <hr>
   <div class="row h-auto">
     <div class="col shadow bg-secondary">
-      <h3 class="display-4 text-white font-weight-bold"> {{ businessListing.name }} </h3>
+      <h3 style="font-size:8vw;" class="display-4 text-white font-weight-bold"> {{ businessListing.name }} </h3>
     </div>
   </div>
   <div class="row h-auto">
@@ -21,6 +21,11 @@
         <span class="font-weight-bold">Email: </span>{{ businessListing.email }}<br>
         <span class="font-weight-bold">Address: </span>{{ businessListing.address }}<br> 
       </p>
+    </div>
+  </div>
+  <div class="row h-auto">
+    <div class="col">
+      <button *ngIf="businessCanBeClaimed()" (click)="claimBusiness(businessListing)" class="btn btn-secondary btn-block">Claim this business</button>
     </div>
   </div>
   <hr>
