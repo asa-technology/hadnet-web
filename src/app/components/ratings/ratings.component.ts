@@ -24,17 +24,19 @@ export class RatingsComponent implements OnInit {
               private profileService: BusinessProfileService,) { }
 
   ngOnInit() {
+    const profile = this.profileService.currentProfile
     // the id of 1 needs to be dynamic, it'll happen through data binding but no time
-    this.getBusinessRatingsService.getBusinessRatings(1) // needs to be the business's id
+    this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
     .subscribe((reviews) => {
+      console.log(reviews);
       this.reviews = reviews;
       // return usernames from the id's held on these reviews
-      this.getUsersWhoReviewedService.getUsersWhoReviewed(7)
+      this.getUsersWhoReviewedService.getUsersWhoReviewed(this.reviews[0].idUser)
       .subscribe((user) => {
           console.log(user);
-          console.log(user[0]);
-          this.userProfilePic = user[0].urlImage;
-          this.userDisplayName = user[0].displayName;
+          console.log(user);
+          this.userProfilePic = user.urlImage;
+          this.userDisplayName = user.displayName;
         });
     });
   }
