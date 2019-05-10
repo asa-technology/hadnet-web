@@ -49,6 +49,10 @@ const setBusinessOwner = (userId, businessId) => {
   return Business.update({ idUser: userId }, { where: { id: businessId }});
 };
 
+const updateUser = (uid, changes) => {
+  return User.update(changes, { where: { uid } });
+}
+
 // Get business by id
 const getBusinessById = id => Business.findOne({
   where: {
@@ -70,33 +74,31 @@ const getBusinessByUser = (userId) => {
   });
 };
 
-const getBusinessByFirebaseId = (uid) => {
-  return Business.findOne({
-    where: {
-      uid,
-    }
-  });
-};
 
 // Add user to database
 const addUser = userObj => User.create(userObj)
-  .then((result) => {
+.then((result) => {
     console.log('entered user into db');
     return result;
   })
   .catch((err) => {
     console.log(err);
   });
-
+  
 // Get user by firebase id
 const getUserById = id => User.findOne({
   where: {
     firebaseId: id,
   },
 }).then(user => user)
-  .catch((err) => {
-    console.log(err);
-  });
+.catch((err) => {
+  console.log(err);
+});
+
+const getBusinessByFirebaseId = (uid) => {
+  return getUserById(uid)
+    .then(result => getBusinessByUser(result.id));
+};
 
 // add review
 const addReview = reviewObj => Review.create(reviewObj)
@@ -150,4 +152,5 @@ module.exports = {
   getAllBusinessesFromText,
   setBusinessOwner,
   getBusinessByFirebaseId,
+  updateUser,
 };

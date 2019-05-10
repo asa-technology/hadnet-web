@@ -52,7 +52,7 @@ export class AuthService {
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password);
       await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
-      await this.http.get(`/api/business/userid/${this.localUser.id}`).subscribe(business => this.usersBusiness = business);
+      await this.refreshUserBusiness()
       this.router.navigate(['']);
     } catch (e) {
       alert('Error! ' + e.message);
@@ -78,11 +78,11 @@ export class AuthService {
         accountType: 'User',
         urlImage: this.user.photoURL
       }
-      await this.http.post<any>('/api/user', userObj).subscribe();
+      this.http.post<any>('/api/user', userObj).subscribe();
       await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
-      await this.http.get(`/api/business/firebaseId/${this.user.uid}`).subscribe(business => this.usersBusiness = business);
+      await this.refreshUserBusiness();
       this.router.navigate(['']);
-    } catch(error) {
+    } catch (error) {
       alert('Error! ' + error.message);
       console.error(error);
     }
@@ -103,6 +103,10 @@ export class AuthService {
 
   get currentUsersBusiness() {
     return this.usersBusiness;
+  }
+
+  refreshUserBusiness() {
+    return this.http.get(`/api/business/firebaseId/${this.user.uid}`).subscribe(business => this.usersBusiness = business);
   }
 
   hasBusiness() {

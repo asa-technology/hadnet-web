@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { db } = require('../../database/index');
-const { addUser, getUserById } = require('../../database/helpers');
+const { addUser, getUserById, updateUser } = require('../../database/helpers');
 
 // mock data
 const { users } = require('../../database/mock-user-data');
@@ -47,14 +47,17 @@ router.post('/', (req, res) => {
 });
 
 
-// update user at specified id
-router.patch('/:id', (req, res) => {
-  const id = req.params.id - 1;
-
-  /** **************TODO****************
-   * update business at id in database
-   */
-  res.send('updated user');
+// update user at specified firebase uid
+router.put('/:uid', (req, res) => {
+  const { uid } = req.params;
+  const changes = req.body;
+  updateUser(uid, changes)
+    .then(() => {
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
 
 

@@ -39,6 +39,8 @@ export class BusinessProfileComponent implements OnInit {
     try {
       const user = this.authService.currentUser;
       await this.http.put<any>(`/api/business/${business.id}`, user).subscribe();
+      await this.http.put<any>(`/api/user/${user.uid}`, { account_type: 'Business' });
+      await this.authService.refreshUserBusiness();
     } catch (error) {
       alert(error);
     }
