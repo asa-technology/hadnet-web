@@ -164,6 +164,14 @@ this.businessProfileService.changeProfile(biz);
   }
 
 
+
+
+
+
+
+
+
+
   public cameraWasSwitched(deviceId: string): void {
     console.log('active device: ' + deviceId);
     this.deviceId = deviceId;

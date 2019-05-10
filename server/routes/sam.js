@@ -10,7 +10,7 @@ router.get('/:zip', (req, res) => {
     params: {
       'api_key': process.env.SAM_API_KEY,
       'qterms': `(minorityOwned:true)+AND+(samAddress.zip:${zip})`,
-      'start': 10,
+      'start': 1,
       'length': 4,
     },
   })
