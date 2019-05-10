@@ -6,6 +6,7 @@ import { BusinessProfileService } from '../../services/business-profile/business
 import { BusinessImage } from '../../models/BusinessImage';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-business-profile',
@@ -22,7 +23,8 @@ export class BusinessProfileComponent implements OnInit {
   constructor(private getBusinessImagesService: GetBusinessImagesService,
               private businessProfileService: BusinessProfileService,
               private authService: AuthService,
-              private http: HttpClient ) { }
+              private http: HttpClient,
+              private router: Router ) { }
 
   ngOnInit() {
     this.businessListing = this.businessProfileService.currentProfile;
@@ -41,6 +43,7 @@ export class BusinessProfileComponent implements OnInit {
       await this.http.put<any>(`/api/business/${business.id}`, user).subscribe();
       await this.http.put<any>(`/api/user/${user.uid}`, { account_type: 'Business' });
       await this.authService.refreshUserBusiness();
+      this.router.navigate(['']);
     } catch (error) {
       alert(error);
     }
