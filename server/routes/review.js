@@ -1,5 +1,9 @@
 const router = require('express').Router();
 const { db } = require('../../database/index');
+const { 
+  addReview,
+  getUserById,
+} = require('../../database/helpers')
 
 const { reviews } = require('../../database/mock-reviews');
 
@@ -33,7 +37,11 @@ router.get('/user/:id', (req,res) => {
 })
 
 router.post('/', (req, res) => {
+  console.log('hit');
   const review = req.body;
+  addReview(review);
+
+  res.send(review);
 
   /****************TODO****************
    * add review to specified business
