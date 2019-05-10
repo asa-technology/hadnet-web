@@ -49,4 +49,12 @@ export class BusinessProfileComponent implements OnInit {
     }
 
   }
+
+  businessCanBeClaimed() {
+    if (this.authService.canClaimBusiness() && !this.businessListing.idUser) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

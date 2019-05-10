@@ -14,8 +14,7 @@ const addBusiness = businessObj => Business.create(businessObj)
   .then((result) => {
     console.log('entered business into db');
     return result;
-
-})
+  })
   .catch((err) => {
     console.log(err);
   });
@@ -71,33 +70,50 @@ const getBusinessByUser = (userId) => {
     where: {
       idUser: userId,
     },
+  })
+  .then(result => {
+    return result
+  })
+  .catch((err) => {
+    console.log(err);
   });
 };
 
-
 // Add user to database
 const addUser = userObj => User.create(userObj)
-.then((result) => {
+  .then((result) => {
     console.log('entered user into db');
     return result;
   })
   .catch((err) => {
     console.log(err);
   });
-  
 // Get user by firebase id
 const getUserById = id => User.findOne({
   where: {
     firebaseId: id,
   },
+  }).then(user => {
+    return user
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+const getUserByUserId = id => User.findOne({
+  where: {
+    id: id,
+  },
 }).then(user => user)
-.catch((err) => {
-  console.log(err);
-});
+  .catch((err) => {
+    console.log(err);
+  });
 
 const getBusinessByFirebaseId = (uid) => {
   return getUserById(uid)
-    .then(result => getBusinessByUser(result.id));
+    .then(result => {
+      return getBusinessByUser(result.id)
+    });
 };
 
 // add review
@@ -145,12 +161,12 @@ module.exports = {
   getBusinessByUser,
   addUser,
   getUserById,
+  getUserByUserId,
   addReview,
   getReviewsByBusiness,
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
-  setBusinessOwner,
   getBusinessByFirebaseId,
-  updateUser,
+  setBusinessOwner,
 };

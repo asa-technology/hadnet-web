@@ -1,7 +1,9 @@
+require('dotenv').config();
 const router = require('express').Router();
 const axios = require('axios');
 const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser, setBusinessOwner, getUserById, getBusinessByFirebaseId } = require('../../database/helpers');
 require('dotenv').config();
+const { db } = require('../../database/index');
 // mock data
 const { businesses } = require('../../database/mock-business-data');
 
@@ -27,6 +29,7 @@ router.get('/userid/:id', (req, res) => {
 
 router.get('/firebaseId/:uid', (req, res) => {
   const { uid } = req.params;
+  console.log('Grabbing businesses associated with UID: ' + uid);
   getBusinessByFirebaseId(uid)
     .then((results) => {
       res.send(results);
@@ -52,6 +55,48 @@ router.get('/:id', (req, res) => {
   }
 });
 
+router.get('/search/:query', (req, res) => {
+  const { query } = req.params;
+  console.log(query);
+  let origArray;
+  let uppArray;
+  let lowArray;
+  let capArray;
+  let decapArray;
+  let queryArray;
+  if (query.includes(' ')) {
+    origArray = query.split(' ').map(queryWord => `%${queryWord}%`);
+    origArray.push(`%${query}%`);
+
+    uppArray = query.split(' ').map(uppWord => `%${uppWord.toUpperCase()}%`);
+    uppArray.push(`%${query.toUpperCase()}%`);
+
+    capArray = query.split(' ').map(capWord => `%${capWord.charAt(0).toUpperCase()}${capWord.slice(1)}%`);
+    capArray.push(`%${query.charAt(0).toUpperCase()}${query.slice(1)}%`);
+
+    decapArray = query.split(' ').map(decapWord => `%${decapWord.charAt(0)}${decapWord.slice(1).toLowerCase()}%`);
+    decapArray.push(`%${query.charAt(0)}${query.slice(1).toLowerCase()}%`);
+
+    lowArray = query.split(' ').map(lowWord => `%${lowWord.toLowerCase()}%`);
+    lowArray.push(`%${query.toLowerCase()}%`);
+    queryArray = origArray.concat(uppArray).concat(lowArray).concat(capArray).concat(decapArray);
+  } else {
+    queryArray = [`%${query}%`];
+    queryArray.push(`%${query.toLowerCase()}%`);
+    queryArray.push(`%${query.toUpperCase()}%`);
+    queryArray.push(`%${query.charAt(0).toUpperCase()}${query.slice(1)}%`);
+    queryArray.push(`%${query.charAt(0)}${query.slice(1).toLowerCase()}%`);
+  }
+  getAllBusinessesFromText(queryArray)
+    .then((businessesArray) => {
+      res.send(businessesArray);
+      console.log(businessesArray);
+    })
+    .catch((error) => {
+      res.send('no matches founc');
+      console.error(error);
+    });
+});
 
 // adds business
 router.post('/', (req, res) => {
@@ -92,23 +137,22 @@ router.post('/isVerfied', (req, res) => {
       },
     ],
   }).then((result) => {
-    // array of pieces of text that have been captured in picture
-    // const readText = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
-    let x = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
-    if (Array.isArray(x)) {
-      x = x.map((query) => {
-        return `%${query}%`;
-      });
-    } else if (x) {
-      x = `%${x}%`;
+    if (result.data.responses[0].textAnnotations) {
+      let x = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
+      if (Array.isArray(x)) {
+        x = x.map(query => `%${query}%`);
+      } else if (x) {
+        x = `%${x}%`;
+      }
+      x.pop();
+      return getAllBusinessesFromText(x);
     }
-    x.pop();
-    return getAllBusinessesFromText(x)
-      .then(business => res.send(business))
-      .catch((error) => {
-        res.send('failure to verify, or text was misinterpreted, line 102 businesses.js server');
-      });
-  });
+    return 'Business Not Found, Please Try Again';
+  })
+    .then(business => res.json(business))
+    .catch((error) => {
+      console.log('error, line 148 businesses.js database: ', error);
+    });
 });
 
 
