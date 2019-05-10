@@ -1,6 +1,10 @@
 const router = require('express').Router();
 const { db } = require('../../database/index');
-const { addUser } = require('../../database/helpers');
+const { 
+  addUser,
+  getUserById,
+  getUserByUserId,
+} = require('../../database/helpers');
 
 // mock data
 const { users } = require('../../database/mock-user-data');
@@ -19,17 +23,14 @@ router.get('/', (req, res) => {
 
 // gets user at specified id
 router.get('/:id', (req, res) => {
-  const id = req.params.id - 1;
-  //for presentation: autoserv user comment hardcoded for username
-  /****************TODO****************
-   * get user by id from database
-   */
-  if(users[id]){
-    console.log(`Grabbing user at id: ${id + 1}`);
-    res.send([users[id]]); // we need to send back an array of users if it's for reviews
-  } else {
-    res.sendStatus(404);
-  }
+  const id = req.params.id;
+  getUserByUserId(id)
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((err) => {
+      res.sendStatus(404);
+    })
 });
 
 

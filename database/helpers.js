@@ -91,6 +91,15 @@ const getUserById = id => User.findOne({
     console.log(err);
   });
 
+const getUserByUserId = id => User.findOne({
+  where: {
+    id: id,
+  },
+}).then(user => user)
+  .catch((err) => {
+    console.log(err);
+  });
+
 // add review
 const addReview = reviewObj => Review.create(reviewObj)
   .then(result => result)
@@ -136,6 +145,7 @@ module.exports = {
   getBusinessByUser,
   addUser,
   getUserById,
+  getUserByUserId,
   addReview,
   getReviewsByBusiness,
   getFeaturedImage,
