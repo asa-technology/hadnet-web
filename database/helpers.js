@@ -9,13 +9,13 @@ const {
   Image,
 } = require('./index.js');
 
+
 // Add business to database
 const addBusiness = businessObj => Business.create(businessObj)
   .then((result) => {
     console.log('entered business into db');
     return result;
-
-})
+  })
   .catch((err) => {
     console.log(err);
   });
@@ -53,7 +53,6 @@ const updateUser = (uid, changes) => {
   return User.update(changes, { where: { uid } });
 }
 
-// Get business by id
 const getBusinessById = id => Business.findOne({
   where: {
     id,
@@ -64,36 +63,46 @@ const getBusinessById = id => Business.findOne({
     console.log(err);
   });
 
-// get business by user id
-
 const getBusinessByUser = (userId) => {
-  return Business.findOne({
+  Business.findOne({
     where: {
       idUser: userId,
     },
-  });
-};
-
+  })
+    .then(result => result)
+    .catch((err) => {
+      console.log(err);
+    });
+  };
 
 // Add user to database
 const addUser = userObj => User.create(userObj)
-.then((result) => {
+  .then((result) => {
     console.log('entered user into db');
     return result;
   })
   .catch((err) => {
     console.log(err);
   });
-  
+
 // Get user by firebase id
 const getUserById = id => User.findOne({
   where: {
     firebaseId: id,
   },
 }).then(user => user)
-.catch((err) => {
-  console.log(err);
-});
+  .catch((err) => {
+    console.log(err);
+  });
+
+const getUserByUserId = id => User.findOne({
+  where: {
+    id: id,
+  },
+}).then(user => user)
+  .catch((err) => {
+    console.log(err);
+  });
 
 const getBusinessByFirebaseId = (uid) => {
   return getUserById(uid)
@@ -145,6 +154,7 @@ module.exports = {
   getBusinessByUser,
   addUser,
   getUserById,
+  getUserByUserId,
   addReview,
   getReviewsByBusiness,
   getFeaturedImage,
