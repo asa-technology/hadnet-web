@@ -9,41 +9,47 @@ router.get('/', (req, res) => {
   res.send(communityListings);
 });
 
+// postman request structure, for testing :
+// choosing not to use businessId, because businesses that even want to add listings need userId's anyway. - Sam
+// {
+//   "idUser": "2",
+//   "title": "Come hang out at this fundraiser!",
+//   "body": "We will have food and drinks, everything sold is to support a good cause!",
+//     "imageUrl": "https://makitweb.com/demo/broken_image/images/noimage.png",
+//     "date_expire": "2019-05-12"
+// }
+
 // adds community listing
 router.post('/addCommunityListing', (req, res) => {
+  console.log(req.body);
   // req body requires a userid, title, body, image url, expiration date
   const defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png';
-  const communityListing = {
-    userId: req.body.userId,
-    title: req.body.title,
-    body: req.body.listingBody,
-    imageUrl: req.body.imageUrl || defaultImageUrl,
-    expirationDate: req.body.expirationDate,
-  };
-  return addCommunityListing(communityListing)
+  return addCommunityListing(req.body, req.body.imageUrl || defaultImageUrl)
     .then(communityListingAdded => res.send(communityListingAdded)) // sends back info regarding listing that was posted
-    .catch(err => console.log('server/community, error line 17: ', err), res.send('my condolences, friend. that didnt quite work'));
+    .catch(err => console.log('server/community, error line 29: ', err) /**  res.send('my condolences, friend. that didnt quite work') */);
 });
 // removes specific community listing, takes in a user's id and a listing's title
 router.delete('/removeCommunityListing', (req, res) => {
-  removeCommunityListing(req.idUser, req.title)
+  console.log(req);
+  removeCommunityListing(req.body.idUser, req.body.id)
     .then(removedCommunityListing => res.send(removedCommunityListing))
-    .catch(err => console.log('server/community, error line 23: ', err), res.send('nope'));
+    .catch(err => console.log('server/community, error line 36: ', err));
 });
 
 // returns all community listings
 router.get('/getAllCommunityListings', (req, res) => {
   return getAllCommunityListings()
     .then(allCommunityListings => res.send(allCommunityListings))
-    .catch(err => console.log('server/community, error line 30: ', err), res.send('nope'));
+    .catch(err => console.log('server/community, error line 43: ', err));
 });
 
 // takes in a community listing title,
 // returns array of all listings including the query in their title
 router.get('/searchForCommunityListings', (req, res) => {
-  return searchForCommunityListings(req.communityListingQuery)
+  console.log(req.query.title);
+  return searchForCommunityListings([`%${req.query.title}%`]) // must be an array
     .then(communityListingSearchResults => res.send(communityListingSearchResults))
-    .catch(err => console.log('server/community, error line 36: ', err), res.send('nope'));
+    .catch(err => console.log('server/community, error line 52: ', err));
 });
 
 module.exports = router;

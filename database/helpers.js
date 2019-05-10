@@ -161,22 +161,26 @@ const getAllImagesByBusiness = businessId => Image.findAll({
 // an imageURL, (either a default if none selected, or user input url/uploaded image)
 // date of listing expiration is going to be the day after the event is supposed to take place
 
-const addCommunityListing = communityListingInfo => CommunityListing.create(communityListingInfo);
+const addCommunityListing = (communityListingInfo, defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png') => {
+  const communityListing = Object.create(communityListingInfo);
+  communityListing.imageUrl = defaultImageUrl;
+  return CommunityListing.create(communityListing);
+};
 
 // takes in the id of a user who posted the listing, and the title of the listing
-const removeCommunityListing = (idUser, title) => {
-  CommunityListing.destroy({
-    where: { idUser, title },
+const removeCommunityListing = (idUser, id) => {
+  return CommunityListing.destroy({
+    where: { idUser, id }, // just added user, so that we can specify which listing to remove
   })
     .then(result => console.log(result, 'was removed from database, function on line 154 helpers.js database'))
-    .catch(err => console.log('error line 155 helpers.js database: ', err));
+    .catch(err => console.log('error line 176 helpers.js database: ', err));
 };
 
 // returns all community listings
 const getAllCommunityListings = () => {
   return CommunityListing.findAll()
     .then(result => result)
-    .catch(err => console.log('error line 153 db helers:', err));
+    .catch(err => console.log('error line 183 db helers:', err));
 };
 
 // queries community listings by title, maybe should also query based on body text??
@@ -191,7 +195,7 @@ const searchForCommunityListings = (communityListingsQuery) => {
     },
   })
     .then(result => result)
-    .catch(err => console.log('error line 161 db helpers:', err));
+    .catch(err => console.log('error line 198 db helpers:', err));
 };
 
 
