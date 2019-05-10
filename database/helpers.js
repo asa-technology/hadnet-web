@@ -70,6 +70,14 @@ const getBusinessByUser = (userId) => {
   });
 };
 
+const getBusinessByFirebaseId = (uid) => {
+  return Business.findOne({
+    where: {
+      uid,
+    }
+  });
+};
+
 // Add user to database
 const addUser = userObj => User.create(userObj)
   .then((result) => {
@@ -141,4 +149,5 @@ module.exports = {
   getAllImagesByBusiness,
   getAllBusinessesFromText,
   setBusinessOwner,
+  getBusinessByFirebaseId,
 };

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser, setBusinessOwner } = require('../../database/helpers');
+const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser, setBusinessOwner, getUserById, getBusinessByFirebaseId } = require('../../database/helpers');
 require('dotenv').config();
 // mock data
 const { businesses } = require('../../database/mock-business-data');
@@ -23,6 +23,17 @@ router.get('/userid/:id', (req, res) => {
   const userId = req.params.id;
   getBusinessByUser(userId)
     .then(results => res.send(results));
+});
+
+router.get('/firebaseId/:uid', (req, res) => {
+  const { uid } = req.params;
+  getBusinessByFirebaseId(uid)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
 
 
@@ -58,12 +69,10 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const { id } = req.params;
   const idNum = parseInt(id, 10);
-  const user = req.body;
-  setBusinessOwner(user.id, idNum)
-    .then(() => {
-      res.sendStatus(201);
-    });
-  console.log(`User ${user.id} claimed business at id ${id}`);
+  const { uid } = req.body;
+  getUserById(uid)
+    .then(result => setBusinessOwner(result.id, idNum))
+    .then(() => res.sendStatus(201));
 });
 
 // verifies a business by checking if image data name matches any buisness name in the table

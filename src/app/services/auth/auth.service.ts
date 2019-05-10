@@ -78,12 +78,13 @@ export class AuthService {
         accountType: 'User',
         urlImage: this.user.photoURL
       }
-      this.http.post<any>('/api/user', userObj).subscribe();
+      await this.http.post<any>('/api/user', userObj).subscribe();
       await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
-      await this.http.get(`/api/business/userid/${this.localUser.id}`).subscribe(business => this.usersBusiness = business);
+      await this.http.get(`/api/business/firebaseId/${this.user.uid}`).subscribe(business => this.usersBusiness = business);
       this.router.navigate(['']);
     } catch(error) {
       alert('Error! ' + error.message);
+      console.error(error);
     }
   }
 

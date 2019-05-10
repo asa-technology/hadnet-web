@@ -37,8 +37,8 @@ export class BusinessProfileComponent implements OnInit {
 
   async claimBusiness(business) {
     try {
-      const localUser = this.authService.currentLocalUser;
-      await this.http.put<any>(`/api/business/${business.id}`, localUser).subscribe();
+      const user = this.authService.currentUser;
+      await this.http.put<any>(`/api/business/${business.id}`, user).subscribe();
     } catch (error) {
       alert(error);
     }
