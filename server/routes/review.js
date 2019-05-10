@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
       addReview(reviewObj)
         .then((result) => {
           console.log('review added to db')
-          res.send('entered into db');
+          res.send(result);
         });
     });
 
