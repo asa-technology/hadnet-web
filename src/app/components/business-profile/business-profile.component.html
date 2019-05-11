@@ -21,8 +21,9 @@
     </div>
   </div>
   <div class="row h-auto">
-    <div class="col-12">
-      <br><span class="font-weight-bold">Average Rating: </span>{{ businessRating }}
+    <div class="col-12" style="text-align: left">
+      <br>
+      <span class="font-weight-bold">Average Rating: </span><span [innerHtml]='businessRating | rating'></span>
     </div>
     <div class="col-12 business-data" style="text-align: left">
       <!-- <p> verification status *** </p> -->
