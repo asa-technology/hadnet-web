@@ -19,6 +19,12 @@ export class BusinessProfileComponent implements OnInit {
   businessPhoneNumber: string;
   businessRating: string;
   businessImage: string;
+  editorToggle: {} = {
+    name: false,
+    phone: false,
+    email: false,
+    address: false,
+  };
 
   constructor(private getBusinessImagesService: GetBusinessImagesService,
               private businessProfileService: BusinessProfileService,
@@ -47,11 +53,26 @@ export class BusinessProfileComponent implements OnInit {
     } catch (error) {
       alert(error);
     }
+  }
+
+  toggleEdit(field) {
+    this.editorToggle[field] = !this.editorToggle[field];
+  }
+
+  updateBusiness(business: {}, field: string, change: string) {
 
   }
 
   businessCanBeClaimed() {
     if (this.authService.canClaimBusiness() && !this.businessListing.idUser) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isCurrentUsersBusiness() {
+    if (this.authService.localUser.id === this.businessListing.idUser) {
       return true;
     } else {
       return false;

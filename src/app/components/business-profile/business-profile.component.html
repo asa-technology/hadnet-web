@@ -6,7 +6,7 @@
   </div>
   <div class="row h-auto">
     <div class="col shadow bg-secondary">
-      <h3 style="font-size:8vw;" class="display-4 text-white font-weight-bold"> {{ businessListing.name }} </h3>
+      <h3 *ngIf="!editorToggle.name" style="font-size:5vw;" class="display-4 text-white font-weight-bold"> {{ businessListing.name }} </h3>
     </div>
   </div>
   <div class="row h-auto">
@@ -16,9 +16,20 @@
     <div class="col-12 business-data">
       <!-- <p> verification status *** </p> -->
       <p>
-        <span class="font-weight-bold">Phone: </span>{{ businessPhoneNumber }}<br>
-        <span class="font-weight-bold">Email: </span>{{ businessListing.email }}<br>
-        <span class="font-weight-bold">Address: </span>{{ businessListing.address }}<br> 
+        <span *ngIf="!editorToggle.phone">
+          <i class="fas fa-phone-square"></i>&nbsp;&nbsp;{{ businessPhoneNumber }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('phone')" class="fas fa-edit"></i>
+        </span><br>
+        <span *ngIf="editorToggle.phone">
+          Input field here.
+        </span><br>
+        
+        <span *ngIf="!editorToggle.email">
+          <i class="fas fa-envelope"></i>&nbsp;{{ businessListing.email | lowercase }}&nbsp;&nbsp;<i class="fas fa-edit"></i>
+        </span><br>
+        
+        <span *ngIf="!editorToggle.address">
+          <i class="fas fa-location-arrow"></i>&nbsp;{{ businessListing.address }}&nbsp;&nbsp;<i class="fas fa-edit"></i>
+        </span><br> 
       </p>
     </div>
   </div>
