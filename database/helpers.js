@@ -45,7 +45,7 @@ const getAllBusinessesFromText = (queryArray) => {
 };
 
 const setBusinessOwner = (userId, businessId) => {
-  return Business.update({ idUser: userId }, { where: { id: businessId }});
+  return Business.update({ idUser: userId }, { where: { id: businessId } });
 };
 
 const updateBusiness = (businessId, changes) => {
@@ -158,6 +158,51 @@ const getAllImagesByBusiness = businessId => Image.findAll({
     console.log(err);
   });
 
+// adds community listing to communityListings table.
+// takes in a userId
+// takes in a title for listing,
+// a body of text,
+// an imageURL, (either a default if none selected, or user input url/uploaded image)
+// date of listing expiration is going to be the day after the event is supposed to take place
+
+const addCommunityListing = (communityListingInfo, defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png') => {
+  const communityListing = Object.create(communityListingInfo);
+  communityListing.imageUrl = defaultImageUrl;
+  return CommunityListing.create(communityListing);
+};
+
+// takes in the id of a user who posted the listing, and the title of the listing
+const removeCommunityListing = (idUser, id) => {
+  return CommunityListing.destroy({
+    where: { idUser, id }, // just added user, so that we can specify which listing to remove
+  })
+    .then(result => console.log(result, 'was removed from database, function on line 154 helpers.js database'))
+    .catch(err => console.log('error line 176 helpers.js database: ', err));
+};
+
+// returns all community listings
+const getAllCommunityListings = () => {
+  return CommunityListing.findAll()
+    .then(result => result)
+    .catch(err => console.log('error line 183 db helers:', err));
+};
+
+// queries community listings by title, maybe should also query based on body text??
+const searchForCommunityListings = (communityListingsQuery) => {
+  return CommunityListing.findAll({
+    where: {
+      title: {
+        [Op.like]: {
+          [Op.any]: communityListingsQuery,
+        },
+      },
+    },
+  })
+    .then(result => result)
+    .catch(err => console.log('error line 198 db helpers:', err));
+};
+
+
 module.exports = {
   addBusiness,
   getBusinessById,
@@ -171,6 +216,10 @@ module.exports = {
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
+  addCommunityListing,
+  removeCommunityListing,
+  getAllCommunityListings,
+  searchForCommunityListings,
   getBusinessByFirebaseId,
   setBusinessOwner,
   updateUser,

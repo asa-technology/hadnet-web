@@ -110,7 +110,6 @@ export class AuthService {
   refreshUserBusiness() {
     return this.http.get(`/api/business/firebaseId/${this.user.uid}`).subscribe(business => {
       this.usersBusiness = business;
-      debugger;
     });
   }
 
