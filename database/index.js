@@ -1,6 +1,7 @@
 require('dotenv').config();
 const Sequelize = require('sequelize');
 const express = require('express');
+
 const app = express();
 
 const {
@@ -27,22 +28,22 @@ sequelize.authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
   })
-  .catch(err => {
+  .catch((err) => {
     console.error('Unable to connect to the database:', err);
   });
 
-const Model = Sequelize.Model;
+const { Model } = Sequelize;
 
-//*******///////TABLES///////*******//
+//* ******///////TABLES///////*******//
 
-//User table stores all data for Auth
-class User extends Model {};
+// User table stores all data for Auth
+class User extends Model {}
 User.init({
-  email:{
+  email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
-  } ,
+  },
   displayName: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -57,23 +58,23 @@ User.init({
   },
   urlImage: {
     type: Sequelize.STRING,
-    allowNull: false, 
+    allowNull: false,
   },
-},{
+}, {
   sequelize,
   modelName: 'user',
 });
 
-//USER
-//email: string
-//display_name: string
-//account_type (business/user): string
-//google_id: integer
-//url_image: string
+// USER
+// email: string
+// display_name: string
+// account_type (business/user): string
+// google_id: integer
+// url_image: string
 
 
-//BusinessType holds our business types
-class BusinessType extends Model {};
+// BusinessType holds our business types
+class BusinessType extends Model {}
 BusinessType.init({
   type: {
     type: Sequelize.STRING,
@@ -84,28 +85,28 @@ BusinessType.init({
   modelName: 'businesstype',
 });
 
-//BUSINESSTYPE
-//type: string
+// BUSINESSTYPE
+// type: string
 
 
 // ListingType holds our listings for the communtiy listing board
-class ListingType extends Model {};
+class ListingType extends Model {}
 ListingType.init({
   type: {
     type: Sequelize.STRING,
     allowNull: false,
-  }
+  },
 }, {
   sequelize,
   modelName: 'listingtype',
 });
 
-//LISTINGTYPE
-//type: string
+// LISTINGTYPE
+// type: string
 
-class Business extends Model {};
+class Business extends Model {}
 Business.init({
-  name:{
+  name: {
     type: Sequelize.STRING,
     allowNull: false,
   },
@@ -120,27 +121,27 @@ Business.init({
   longitude: Sequelize.FLOAT,
   averageRating: Sequelize.INTEGER,
   legalBusinessName: Sequelize.STRING,
-},{
+}, {
   sequelize,
   modelName: 'business',
 });
 
-//BUSINESS
-//name: string
-//id_business_type --> foreign key
-//phone_number: integer
-//email: string
-//url_homepage: string
-//address: string
-//id_featured_image --> foreign key
-//latitude: integer
-//longitude: integer
-//id_user: integer --> foreign key
-//average_rating: integer
-//legal_business_name: string
+// BUSINESS
+// name: string
+// id_business_type --> foreign key
+// phone_number: integer
+// email: string
+// url_homepage: string
+// address: string
+// id_featured_image --> foreign key
+// latitude: integer
+// longitude: integer
+// id_user: integer --> foreign key
+// average_rating: integer
+// legal_business_name: string
 
-//CommunityListing holds all of community listings
-class CommunityListing extends Model {};
+// CommunityListing holds all of community listings
+class CommunityListing extends Model {}
 CommunityListing.init({
   title: {
     type: Sequelize.STRING,
@@ -152,82 +153,80 @@ CommunityListing.init({
   },
   imageUrl: Sequelize.STRING,
   date_expire: Sequelize.DATEONLY,
-},{
+}, {
   sequelize,
   modelName: 'communitylisting',
 });
-  
-//COMMUNITY_LISTING
-//id_user --> foreign key
-//id_business --> foreign key
-//title: string
-//body: string
-//image_url: string
-//id_listing_type: --> foreign key
-//date_expire: date
+
+// COMMUNITY_LISTING
+// id_user --> foreign key
+// id_business --> foreign key
+// title: string
+// body: string
+// image_url: string
+// id_listing_type: --> foreign key
+// date_expire: date
 
 
-//Review will hold all review data
-class Review extends Model {};
+// Review will hold all review data
+class Review extends Model {}
 Review.init({
-  text:{
+  text: {
     type: Sequelize.STRING,
     allowNull: false,
   },
   ratingNumber: Sequelize.INTEGER,
-},{
+}, {
   sequelize,
   modelName: 'review',
 });
 
-//REVIEW
-//id_user --> foreign key
-//id_business --foreign key
-//text: string
-//rating_number: integer
+// REVIEW
+// id_user --> foreign key
+// id_business --foreign key
+// text: string
+// rating_number: integer
 
-//Image will hold all image urls
+// Image will hold all image urls
 class Image extends Model {}
 Image.init({
-  url:{
+  url: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-},{
+}, {
   sequelize,
   modelName: 'image',
 });
 
-//IMAGE
-//url: string
-//id_business --> foreign key
+// IMAGE
+// url: string
+// id_business --> foreign key
 
 
 // Business foreign keys
-BusinessType.hasOne(Business, {foreignKey: 'idBusinessType'});
+BusinessType.hasOne(Business, { foreignKey: 'idBusinessType' });
 Image.hasOne(Business, {
   foreignKey: 'idFeaturedImage',
   constraints: false,
 });
-User.hasOne(Business, {foreignKey: 'idUser'});
+User.hasOne(Business, { foreignKey: 'idUser' });
 
-//CommunityListing foreign keys
-User.hasOne(CommunityListing, {foreignKey: 'idUser'});
-Business.hasOne(CommunityListing, {foreignKey: 'idBusiness'});
-ListingType.hasOne(CommunityListing, {foreignKey: 'idListingType'});
+// CommunityListing foreign keys
+User.hasOne(CommunityListing, { foreignKey: 'idUser' });
+Business.hasOne(CommunityListing, { foreignKey: 'idBusiness' });
+ListingType.hasOne(CommunityListing, { foreignKey: 'idListingType' });
 
-//Review foreign keys
-User.hasOne(Review, {foreignKey: 'idUser'});
-Business.hasOne(Review, {foreignKey: 'idBusiness'});
+// Review foreign keys
+User.hasOne(Review, { foreignKey: 'idUser' });
+Business.hasOne(Review, { foreignKey: 'idBusiness' });
 
-//Image foreign keys
-Business.hasOne(Image, {foreignKey: 'idBusiness'})
+// Image foreign keys
+Business.hasOne(Image, { foreignKey: 'idBusiness' });
 sequelize.sync();
 
 
-
-
-//*******///////HELPER FUNCTIONS///////*******//
+//* ******///////HELPER FUNCTIONS///////*******//
 
 
 module.exports = {
@@ -239,4 +238,4 @@ module.exports = {
   CommunityListing,
   Review,
   Image,
-}
+};
