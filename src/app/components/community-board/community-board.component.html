@@ -2,9 +2,24 @@
   <div class="container">
  
     <h1 class="display-3">Community Board</h1>
-    <div class="float-right"><button>Add Event</button></div>
     
-    <p class="lead">This is where each event listing should go</p>
-  
+    <form #eventForm="ngForm" (ngSubmit)="addListing(eventTitle,eventBody,eventImage,eventExpire)">
+    <div class="lead">
+      <div class="form-group">
+      <input id="eventTitle"  name="title" [(ngModel)]= "eventTitle" class="form-control" type="text" placeholder="Title">
+    </div>
+    <div class="form-group">
+      <input id="eventBody" name="body" [(ngModel)]= "eventBody" class="form-control" type="text" placeholder="Description">
+      </div>
+      <div class="form-group">
+      <input id="eventImage"  name="image" [(ngModel)]= "eventImage" class="form-control" type="text" placeholder="Image Url">
+      </div>
+      <div class="form-group">
+      <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year/mm/dd">
+      </div>
+    </div>
+      <div class="float-right"><button type="submit" class="btn btn-dark">Add Event</button></div>
+    </form>
+    {{eventForm.value | json}}
   </div>
 </div>

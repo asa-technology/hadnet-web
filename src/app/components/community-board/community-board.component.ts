@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommunityListingsService } from '../../services/community-listings/community-listings.service';
+import { CommunityListing } from 'src/app/models/CommunityListing';
 @Component({
   selector: 'app-community-board',
   templateUrl: './community-board.component.html',
   styleUrls: ['./community-board.component.css']
 })
 export class CommunityBoardComponent implements OnInit {
+  event: CommunityListing[];
+
 
   constructor(private communityListingsService: CommunityListingsService) { }
 
@@ -43,5 +46,8 @@ export class CommunityBoardComponent implements OnInit {
     console.log(title);
     return this.communityListingsService.searchForCommunityListings(title)
     .subscribe(searchResults => console.log(searchResults));
+  }
+  eventForm() {
+
   }
 }
