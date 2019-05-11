@@ -35,7 +35,7 @@ export class BusinessListingsComponent implements OnInit {
         } else {
           this.imageService.getFeaturedImage(business.idFeaturedImage)
             .subscribe((image) => {
-                business.ftImg = image; 
+                business.ftImg = image;
             });
         }
       });
