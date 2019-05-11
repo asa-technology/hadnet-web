@@ -8,13 +8,19 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./community-board.component.css']
 })
 export class CommunityBoardComponent implements OnInit {
-  event: CommunityListing[];
+  allListings: CommunityListing[];
+  title: any;
+  body: any;
+  dateExpire: any;
+  idUser: any;
+  imageUrl: any;
 
 
   constructor(private communityListingsService: CommunityListingsService, private getUserId: AuthService
     ) { }
 
   ngOnInit() {
+this.getAllListings();
     // testing all the functions
     // this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12', 1, 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
     // this.searchForListings('bb');
@@ -23,11 +29,11 @@ export class CommunityBoardComponent implements OnInit {
   }
 
     // dateExpire needs a format of '2019-05-12'
-  addListing(title, body, dateExpire, idUser, imageUrl) {
+  addListing(title, body, dateExpire, imageUrl) {
     //console.log(title, body);
     const currentUser = this.getUserId.currentLocalUser;
     return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, currentUser)
-    .subscribe(addedListing => console.log(addedListing, 'this is addedListing'));
+    .subscribe(addedListing => this.getAllListings());
   }
 
   removeListing(listingId, idUser) {
@@ -42,7 +48,7 @@ export class CommunityBoardComponent implements OnInit {
   getAllListings() {
     // assign this to state and *ngFor over all this data to display community listings
     return this.communityListingsService.getAllCommunityListings()
-    .subscribe(allListings => console.log(allListings));
+    .subscribe(allListings => this.allListings = allListings);
   }
 
   searchForListings(title) {
@@ -51,6 +57,12 @@ export class CommunityBoardComponent implements OnInit {
     .subscribe(searchResults => console.log(searchResults));
   }
   eventForm() {
+
+  }
+  addEvent(title, body, dateExpire, imageUrl): void {
+
+    this.addListing(title, body, dateExpire, imageUrl);
+
 
   }
 }

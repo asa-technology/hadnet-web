@@ -18,8 +18,17 @@
       <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year/mm/dd">
       </div>
     </div>
-      <div class="float-right"><button type="submit" class="btn btn-dark">Add Event</button></div>
+      <div class="float-right"><button type="submit" (click)="addEvent(eventTitle, eventBody, eventExpire, eventImage)" class="btn btn-dark">Add Event</button></div>
     </form>
-    {{eventForm.value | json}}
+    <div *ngIf="allListings">
+        <div *ngFor="let listing of allListings" class="card text-white bg-dark mb-3 d-inline-block" style="max-width: 20rem;">
+            <div class="card-header">{{listing.title}}</div>
+            <div class="card-body">
+              <p class="card-text">{{listing.body}}<br><img class="card-image" src={{listing.imageUrl}}><br>{{listing.date_expire}}</p>
+            </div>
+          </div>
+    </div>
+  
+    <!-- {{eventForm.value | json}} -->
   </div>
 </div>
