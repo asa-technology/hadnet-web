@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-community-board',
   templateUrl: './community-board.component.html',
@@ -11,5 +12,4 @@ export class CommunityBoardComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

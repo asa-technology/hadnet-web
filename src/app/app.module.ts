@@ -59,4 +59,3 @@ import { CommunityBoardComponent } from './components/community-board/community-
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
