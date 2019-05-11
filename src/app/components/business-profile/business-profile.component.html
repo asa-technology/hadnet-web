@@ -6,30 +6,67 @@
   </div>
   <div class="row h-auto">
     <div class="col shadow bg-secondary">
-      <h3 *ngIf="!editorToggle.name" style="font-size:5vw;" class="display-4 text-white font-weight-bold"> {{ businessListing.name }} </h3>
+      <span *ngIf="!editorToggle.name">
+        <h3 style="font-size:5vw;" class="display-4 text-white font-weight-bold"> {{ businessListing.name | titlecase }} </h3><i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('name')" class="fas fa-edit"></i>
+      </span>
+      <span *ngIf="editorToggle.name">
+        <div class='input-group'>
+          <input class="form-control form-control-lg" type="text" value="{{ businessListing.name }}" #nameEdit>
+          <div class="input-group-append">
+            <button class="btn btn-secondary btn-lg" type="button" (click)="updateBusiness(businessListing, 'name', nameEdit.value)">Submit</button>
+          </div>
+        </div>
+      </span>
     </div>
   </div>
   <div class="row h-auto">
     <div class="col-12">
       <br><span class="font-weight-bold">Average Rating: </span>{{ businessRating }}
     </div>
-    <div class="col-12 business-data">
+    <div class="col-12 business-data" style="text-align: left">
       <!-- <p> verification status *** </p> -->
       <p>
         <span *ngIf="!editorToggle.phone">
           <i class="fas fa-phone-square"></i>&nbsp;&nbsp;{{ businessPhoneNumber }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('phone')" class="fas fa-edit"></i>
-        </span><br>
+          <br>
+        </span>
         <span *ngIf="editorToggle.phone">
-          Input field here.
-        </span><br>
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="text" value="{{ businessPhoneNumber }}" #phoneEdit>
+            <div class="input-group-append">
+              <button class="btn btn-secondary btn-sm" type="button" (click)="updateBusiness(businessListing, 'phone', phoneEdit.value)">Submit</button>
+            </div>
+          </div>
+          <br>
+        </span>
         
         <span *ngIf="!editorToggle.email">
-          <i class="fas fa-envelope"></i>&nbsp;{{ businessListing.email | lowercase }}&nbsp;&nbsp;<i class="fas fa-edit"></i>
-        </span><br>
+          <i class="fas fa-envelope"></i>&nbsp;{{ businessListing.email | lowercase }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('email')" class="fas fa-edit"></i>
+          <br>
+        </span>
+        <span *ngIf="editorToggle.email">
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="text" value="{{ businessListing.email}}" #emailEdit>
+            <div class="input-group-append">
+              <button class="btn btn-secondary btn-sm" type="button" (click)="updateBusiness(businessListing, 'email', emailEdit.value)">Submit</button>
+            </div>
+          </div>
+          <br>
+        </span>
         
         <span *ngIf="!editorToggle.address">
-          <i class="fas fa-location-arrow"></i>&nbsp;{{ businessListing.address }}&nbsp;&nbsp;<i class="fas fa-edit"></i>
-        </span><br> 
+          <i class="fas fa-location-arrow"></i>&nbsp;{{ businessListing.address | titlecase }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('address')" class="fas fa-edit"></i>
+          <br>
+        </span>
+        <span *ngIf="editorToggle.address">
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="text" value="{{ businessListing.address }}" #addressEdit>
+            <div class="input-group-append">
+              <button class="btn btn-secondary btn-sm" type="button" (click)="updateBusiness(businessListing, 'address', addressEdit.value)">Submit</button>
+            </div>
+          </div>
+          <br>
+        </span>
       </p>
     </div>
   </div>

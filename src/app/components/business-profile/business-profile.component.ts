@@ -59,8 +59,9 @@ export class BusinessProfileComponent implements OnInit {
     this.editorToggle[field] = !this.editorToggle[field];
   }
 
-  updateBusiness(business: {}, field: string, change: string) {
-
+  updateBusiness(business: BusinessListing, field: string, change: string) {
+    console.log(`Changing business #${business.id}, field: ${field}, change: ${change}`);
+    this.toggleEdit(field);
   }
 
   businessCanBeClaimed() {
