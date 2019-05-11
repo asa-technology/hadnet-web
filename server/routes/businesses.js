@@ -117,8 +117,8 @@ router.put('/claim/:id', (req, res) => {
 });
 
 router.put('/update/:id', (req, res) => {
-  const { id } = req.params;
-  const { changes } = req.body;
+  const id = parseInt(req.params.id, 10);
+  const changes = req.body;
   updateBusiness(id, changes)
     .then(() => res.sendStatus(201))
     .catch(error => console.error(error));

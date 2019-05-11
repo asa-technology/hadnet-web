@@ -25,6 +25,7 @@ export class BusinessProfileComponent implements OnInit {
     email: false,
     address: false,
   };
+  somethingChanged = false;
 
   constructor(private getBusinessImagesService: GetBusinessImagesService,
               private businessProfileService: BusinessProfileService,
@@ -59,9 +60,18 @@ export class BusinessProfileComponent implements OnInit {
     this.editorToggle[field] = !this.editorToggle[field];
   }
 
-  updateBusiness(business: BusinessListing, field: string, change: string) {
-    console.log(`Changing business #${business.id}, field: ${field}, change: ${change}`);
-    this.toggleEdit(field);
+  async updateBusiness(business: BusinessListing, field: string, change: string) {
+    try {
+      console.log(`Changing business #${business.id}, field: ${field}, change: ${change}`);
+      const changeObj = {};
+      changeObj[field] = change;
+      await this.http.put(`/api/business/update/${business.id}`, changeObj, { responseType: 'text' }).subscribe();
+      this.somethingChanged = true;
+      setTimeout(() => this.somethingChanged = false, 5000);
+      this.toggleEdit(field);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   businessCanBeClaimed() {

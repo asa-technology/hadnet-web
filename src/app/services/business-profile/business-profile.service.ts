@@ -10,10 +10,17 @@ export class BusinessProfileService {
   constructor(private http: HttpClient) { }
 
   getProfileById(id) {
-    this.http.get(`/api/business/${id}`)
+    return this.http.get(`/api/business/${id}`)
       .subscribe((business) => {
         this.businessProfile = business;
       })
+  }
+
+  async refreshProfile() {
+    return this.http.get(`/api/business/${this.businessProfile.id}`)
+      .subscribe((business) => {
+        this.businessProfile = business;
+      });
   }
 
   changeProfile(business) {

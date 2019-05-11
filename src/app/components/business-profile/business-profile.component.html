@@ -21,6 +21,9 @@
     </div>
   </div>
   <div class="row h-auto">
+    <div *ngIf="somethingChanged" class='alert alert-info' role="alert">
+      Edit submitted! Note: It may take a few minutes for your changes to appear.
+    </div>
     <div class="col-12" style="text-align: left">
       <br>
       <span class="font-weight-bold">Average Rating: </span><span [innerHtml]='businessRating | rating'></span>
