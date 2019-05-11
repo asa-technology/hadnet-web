@@ -19,6 +19,13 @@ export class BusinessProfileComponent implements OnInit {
   businessPhoneNumber: string;
   businessRating: string;
   businessImage: string;
+  editorToggle: {} = {
+    name: false,
+    phone: false,
+    email: false,
+    address: false,
+  };
+  somethingChanged = false;
 
   constructor(private getBusinessImagesService: GetBusinessImagesService,
               private businessProfileService: BusinessProfileService,
@@ -40,18 +47,43 @@ export class BusinessProfileComponent implements OnInit {
   async claimBusiness(business) {
     try {
       const user = this.authService.currentUser;
-      await this.http.put<any>(`/api/business/${business.id}`, user).subscribe();
+      await this.http.put<any>(`/api/business/claim/${business.id}`, user).subscribe();
       await this.http.put<any>(`/api/user/${user.uid}`, { account_type: 'Business' });
       await this.authService.refreshUserBusiness();
       this.router.navigate(['']);
     } catch (error) {
       alert(error);
     }
+  }
 
+  toggleEdit(field) {
+    this.editorToggle[field] = !this.editorToggle[field];
+  }
+
+  async updateBusiness(business: BusinessListing, field: string, change: string) {
+    try {
+      console.log(`Changing business #${business.id}, field: ${field}, change: ${change}`);
+      const changeObj = {};
+      changeObj[field] = change;
+      await this.http.put(`/api/business/update/${business.id}`, changeObj, { responseType: 'text' }).subscribe();
+      this.somethingChanged = true;
+      setTimeout(() => this.somethingChanged = false, 5000);
+      this.toggleEdit(field);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   businessCanBeClaimed() {
     if (this.authService.canClaimBusiness() && !this.businessListing.idUser) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isCurrentUsersBusiness() {
+    if (this.authService.localUser.id === this.businessListing.idUser) {
       return true;
     } else {
       return false;

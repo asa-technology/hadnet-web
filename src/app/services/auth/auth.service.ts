@@ -16,6 +16,7 @@ export class AuthService {
       if (user) {
         this.user = user;
         this.refreshUserBusiness();
+        this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(localUser => this.localUser = localUser);
         localStorage.setItem('user', JSON.stringify(this.user));
       } else {
         localStorage.setItem('user', null);
