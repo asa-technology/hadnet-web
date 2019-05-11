@@ -28,16 +28,16 @@ export class BusinessListingsComponent implements OnInit {
       this.businessListings = businessListings;
       console.log(this.businessListings);
       this.businessListings.forEach((business) => {
-        this.imageService.getImageById(business.id)
-          .subscribe((image) => {
-            if (image) {
-              business.ftImg = image;
-            } else {
-              business.ftImg = {
-                url: 'https://i.imgur.com/BNtJWJM.png'
-              };
-            }
-          });
+        if (business.idFeaturedImage === null){
+          business.ftImg = {
+            url: 'https://i.imgur.com/BNtJWJM.png'
+          };
+        } else {
+          this.imageService.getFeaturedImage(business.idFeaturedImage)
+            .subscribe((image) => {
+                business.ftImg = image; 
+            });
+        }
       });
       this.loading = false;
     });

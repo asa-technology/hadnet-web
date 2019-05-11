@@ -37,11 +37,15 @@ export class BusinessProfileComponent implements OnInit {
     this.businessListing = this.businessProfileService.currentProfile;
     this.businessPhoneNumber = `${this.businessListing.phoneNumber}`;
     this.businessRating = `${this.businessListing.averageRating}`;
-    this.getBusinessImagesService.getImageById(this.businessListing.id)
-      .subscribe((images) => {
-      console.log(images[0]);
-      this.businessImage = images.url;
-      });
+    if (this.businessListing.idFeaturedImage === null){
+      this.businessImage = 'https://i.imgur.com/BNtJWJM.png'
+    } else{
+      this.getBusinessImagesService.getFeaturedImage(this.businessListing.idFeaturedImage)
+        .subscribe((image) => {
+          console.log('this ==> ', image)
+            this.businessImage = image.url;
+        });
+    }
   }
 
   async claimBusiness(business) {
