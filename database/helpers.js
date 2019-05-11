@@ -48,9 +48,13 @@ const setBusinessOwner = (userId, businessId) => {
   return Business.update({ idUser: userId }, { where: { id: businessId }});
 };
 
+const updateBusiness = (businessId, changes) => {
+  return Business.update(changes, { where: { id: businessId } });
+};
+
 const updateUser = (uid, changes) => {
   return User.update(changes, { where: { uid } });
-}
+};
 
 // Get business by id
 const getBusinessById = id => Business.findOne({
@@ -169,4 +173,6 @@ module.exports = {
   getAllBusinessesFromText,
   getBusinessByFirebaseId,
   setBusinessOwner,
+  updateUser,
+  updateBusiness,
 };
