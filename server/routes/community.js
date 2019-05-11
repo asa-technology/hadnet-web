@@ -30,8 +30,8 @@ router.post('/addCommunityListing', (req, res) => {
 });
 // removes specific community listing, takes in a user's id and a listing's title
 router.delete('/removeCommunityListing', (req, res) => {
-  console.log(req);
-  removeCommunityListing(req.body.idUser, req.body.id)
+  console.log(req.query);
+  removeCommunityListing(req.query.idUser, req.query.id)
     .then(removedCommunityListing => res.send(removedCommunityListing))
     .catch(err => console.log('server/community, error line 36: ', err));
 });
@@ -46,10 +46,40 @@ router.get('/getAllCommunityListings', (req, res) => {
 // takes in a community listing title,
 // returns array of all listings including the query in their title
 router.get('/searchForCommunityListings', (req, res) => {
-  console.log(req.query.title);
-  return searchForCommunityListings([`%${req.query.title}%`]) // must be an array
+  const query = req.query.title;
+  let origArray;
+  let uppArray;
+  let lowArray;
+  let capArray;
+  let decapArray;
+  let queryArray;
+  if (query.includes(' ')) {
+    origArray = query.split(' ').map(queryWord => `%${queryWord}%`);
+    origArray.push(`%${query}%`);
+
+    uppArray = query.split(' ').map(uppWord => `%${uppWord.toUpperCase()}%`);
+    uppArray.push(`%${query.toUpperCase()}%`);
+
+    capArray = query.split(' ').map(capWord => `%${capWord.charAt(0).toUpperCase()}${capWord.slice(1)}%`);
+    capArray.push(`%${query.charAt(0).toUpperCase()}${query.slice(1)}%`);
+
+    decapArray = query.split(' ').map(decapWord => `%${decapWord.charAt(0)}${decapWord.slice(1).toLowerCase()}%`);
+    decapArray.push(`%${query.charAt(0)}${query.slice(1).toLowerCase()}%`);
+
+    lowArray = query.split(' ').map(lowWord => `%${lowWord.toLowerCase()}%`);
+    lowArray.push(`%${query.toLowerCase()}%`);
+    queryArray = origArray.concat(uppArray).concat(lowArray).concat(capArray).concat(decapArray);
+  } else {
+    queryArray = [`%${query}%`];
+    queryArray.push(`%${query.toLowerCase()}%`);
+    queryArray.push(`%${query.toUpperCase()}%`);
+    queryArray.push(`%${query.charAt(0).toUpperCase()}${query.slice(1)}%`);
+    queryArray.push(`%${query.charAt(0)}${query.slice(1).toLowerCase()}%`);
+  }
+  return searchForCommunityListings(queryArray) // [`%${req.query.title}%`] // must be an array
     .then(communityListingSearchResults => res.send(communityListingSearchResults))
     .catch(err => console.log('server/community, error line 52: ', err));
 });
+
 
 module.exports = router;
