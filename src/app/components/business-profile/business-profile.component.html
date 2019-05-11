@@ -28,7 +28,7 @@
       <!-- <p> verification status *** </p> -->
       <p>
         <span *ngIf="!editorToggle.phone">
-          <i class="fas fa-phone-square"></i>&nbsp;&nbsp;{{ businessPhoneNumber }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('phone')" class="fas fa-edit"></i>
+          <i class="fas fa-phone-square"></i>&nbsp;&nbsp;{{ businessPhoneNumber | formatPhone }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('phone')" class="fas fa-edit"></i>
           <br>
         </span>
         <span *ngIf="editorToggle.phone">
