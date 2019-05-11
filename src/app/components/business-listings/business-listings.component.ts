@@ -22,6 +22,7 @@ export class BusinessListingsComponent implements OnInit {
 
   ngOnInit() {
     this.businessListingService.getBusinessListings().subscribe( businessListings => {
+      // add filter here to filter business by proximity
       this.businessListings = businessListings;
       console.log(this.businessListings);
       this.businessListings.forEach((business) => {
