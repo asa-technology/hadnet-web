@@ -1,11 +1,16 @@
 require('dotenv').config();
 const router = require('express').Router();
 const axios = require('axios');
-const { getAllBusinessesFromText, getAllBusinesses, getBusinessByUser, setBusinessOwner, getUserById, getBusinessByFirebaseId } = require('../../database/helpers');
+const {
+  getAllBusinessesFromText,
+  getAllBusinesses,
+  getBusinessByUser,
+  setBusinessOwner,
+  getUserById,
+  getBusinessByFirebaseId,
+  updateBusiness,
+} = require('../../database/helpers');
 require('dotenv').config();
-const { db } = require('../../database/index');
-// mock data
-const { businesses } = require('../../database/mock-business-data');
 
 
 // gets all businesses
@@ -15,10 +20,6 @@ router.get('/', (req, res) => {
     .then((results) => {
       res.send(results);
     });
-  /** **************TODO****************
-   * get all businesses from database
-  */
-  // res.send(businesses);
 });
 
 router.get('/userid/:id', (req, res) => {
@@ -41,18 +42,13 @@ router.get('/firebaseId/:uid', (req, res) => {
 
 
 // gets business at specified id
+// this still uses mock data
 router.get('/:id', (req, res) => {
   const id = req.params.id - 1;
 
   /** **************TODO****************
    * get business by id from database
    */
-  if (businesses[id]) {
-    console.log(`Grabbing business at id: ${id}`);
-    res.send(businesses[id]);
-  } else {
-    res.sendStatus(404);
-  }
 });
 
 router.get('/search/:query', (req, res) => {
@@ -100,24 +96,32 @@ router.get('/search/:query', (req, res) => {
 
 // adds business
 router.post('/', (req, res) => {
-  const business = req.body;
-  console.log(`added business: ${business.name} to db`);
+  // const business = req.body;
+  // console.log(`added business: ${business.name} to db`);
 
-  /** **************TODO****************
-   * add business to database
-   */
-  res.send(`added business: ${business.name} to db`);
+  // /** **************TODO****************
+  //  * add business to database
+  //  */
+  // res.send(`added business: ${business.name} to db`);
 });
 
 
-// update business at specific id
-router.put('/:id', (req, res) => {
+// claim a business at specific id
+router.put('/claim/:id', (req, res) => {
   const { id } = req.params;
   const idNum = parseInt(id, 10);
   const { uid } = req.body;
   getUserById(uid)
     .then(result => setBusinessOwner(result.id, idNum))
     .then(() => res.sendStatus(201));
+});
+
+router.put('/update/:id', (req, res) => {
+  const { id } = req.params;
+  const { changes } = req.body;
+  updateBusiness(id, changes)
+    .then(() => res.sendStatus(201))
+    .catch(error => console.error(error));
 });
 
 // verifies a business by checking if image data name matches any buisness name in the table
