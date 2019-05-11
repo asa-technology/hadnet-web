@@ -15,6 +15,9 @@
   <hr>
   <div class="row">
     <div class="col">
+        <div class="spinner-border mt-3" *ngIf="loading" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
       <ul *ngFor="let businessListing of businessListings" class="list-group">
         <li (click)="checkListing(businessListing)" class="list-group-item">
           <div class="card">
@@ -30,7 +33,7 @@
                   <i class="fas fa-mobile-alt"></i> {{ businessListing.phoneNumber | formatPhone }}<br>
                   <i class="fas fa-map-marker-alt"></i> {{ businessListing.address | titlecase }}<br>
                 </p>
-            </div> 
+            </div>
           </div>
           <div class="row">
             <div class="col">
