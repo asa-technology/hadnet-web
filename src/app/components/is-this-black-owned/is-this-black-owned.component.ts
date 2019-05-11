@@ -39,9 +39,13 @@ public webcamImageInfo: any;
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
   public ngOnInit(): void {
+    this.loading = true; // loading camera
     WebcamUtil.getAvailableVideoInputs()
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+      })
+      .then(() => {
+        this.loading = false;
       });
   }
 
@@ -162,15 +166,6 @@ this.businessProfileService.changeProfile(biz);
       this.showBusinessSummary = true;
     }
   }
-
-
-
-
-
-
-
-
-
 
   public cameraWasSwitched(deviceId: string): void {
     console.log('active device: ' + deviceId);
