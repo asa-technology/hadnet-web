@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommunityListingsService } from '../../services/community-listings/community-listings.service';
 import { CommunityListing } from 'src/app/models/CommunityListing';
+import { AuthService } from 'src/app/services/auth/auth.service';
 @Component({
   selector: 'app-community-board',
   templateUrl: './community-board.component.html',
@@ -10,7 +11,8 @@ export class CommunityBoardComponent implements OnInit {
   event: CommunityListing[];
 
 
-  constructor(private communityListingsService: CommunityListingsService) { }
+  constructor(private communityListingsService: CommunityListingsService, private getUserId: AuthService
+    ) { }
 
   ngOnInit() {
     // testing all the functions
@@ -22,9 +24,10 @@ export class CommunityBoardComponent implements OnInit {
 
     // dateExpire needs a format of '2019-05-12'
   addListing(title, body, dateExpire, idUser, imageUrl) {
-    console.log(title, body);
-    return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, idUser)
-    .subscribe(addedListing => console.log(addedListing));
+    //console.log(title, body);
+    const currentUser = this.getUserId.currentLocalUser;
+    return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, currentUser)
+    .subscribe(addedListing => console.log(addedListing, 'this is addedListing'));
   }
 
   removeListing(listingId, idUser) {

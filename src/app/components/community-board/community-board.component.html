@@ -3,7 +3,7 @@
  
     <h1 class="display-3">Community Board</h1>
     
-    <form #eventForm="ngForm" (ngSubmit)="addListing(eventTitle,eventBody,eventImage,eventExpire)">
+    <form #eventForm="ngForm" (ngSubmit)="addListing(eventTitle,eventBody,eventImage,eventExpire,currentUser)">
     <div class="lead">
       <div class="form-group">
       <input id="eventTitle"  name="title" [(ngModel)]= "eventTitle" class="form-control" type="text" placeholder="Title">
