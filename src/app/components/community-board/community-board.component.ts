@@ -7,18 +7,16 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./community-board.component.css']
 })
 export class CommunityBoardComponent implements OnInit {
-  loggedIn: boolean;
+  communityBoardListingsArray: any;
   constructor(private communityListingsService: CommunityListingsService,
-              private authService: AuthService) { }
+              public authService: AuthService) { }
 
   ngOnInit() {
-    if (this.authService.currentLocalUser) {
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
+    this.getAllListings();
+    console.log(this.communityBoardListingsArray);
     // testing all the functions
-    // this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12', 1, 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
+    // this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12',
+    // 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
     // this.searchForListings('bb');
     // this.getAllListings();
     // this.removeListing(12, 2);
@@ -26,12 +24,10 @@ export class CommunityBoardComponent implements OnInit {
 
     // dateExpire needs a format of '2019-05-12'
   addListing(title, body, dateExpire, imageUrl) {
-    // console.log(this.authService.currentLocalUser);
-    // const idUser = this.authService.currentLocalUser.id;
-      console.log(title, body);
-      this.loggedIn = true;
-      return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, this.authService.currentLocalUser)
+      if (this.authService.isLoggedIn) {
+        return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, this.authService.currentLocalUser)
       .subscribe(addedListing => console.log(addedListing));
+      }
   }
 
   removeListing(listingId, idUser) {

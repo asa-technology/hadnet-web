@@ -134,6 +134,16 @@ const getUserByUserId = id => (
 );
 
 /**
+ * Grabs all users from the database.
+ * @return {promise}
+ */
+const getAllUsers = () => (
+  User.findAll()
+    .then(results => results)
+    .catch(err => console.log(err))
+);
+
+/**
  * Grabs a business from the database specified by the owner's firebase Id.
  * @param {string} uid - A string representing a user's firebase Id.
  * @return {promise}
@@ -161,6 +171,17 @@ const addReview = reviewObj => (
  */
 const getReviewsByBusiness = businessId => (
   Review.findAll({ where: { idBusiness: businessId } })
+    .then(result => result)
+    .catch(err => console.log(err))
+);
+
+/**
+ * Grabs all reviews made by a specific user, specified by user's Id.
+ * @param {number} userId - A number representing the user's Id.
+ * @return {promise}
+ */
+const getReviewsByUser = userId => (
+  Review.findAll({ where: { idUser: userId } })
     .then(result => result)
     .catch(err => console.log(err))
 );
@@ -197,7 +218,12 @@ const addCommunityListing = (communityListingInfo, defaultImageUrl = 'https://ma
   return CommunityListing.create(communityListing);
 };
 
-// takes in the id of a user who posted the listing, and the title of the listing
+/**
+ * Deletes a community listing in the database.
+ * @param {number} idUser - A number representing the review's author's user Id.
+ * @param {number} id - A number representing the review's Id.
+ * @return
+ */
 const removeCommunityListing = (idUser, id) => (
   CommunityListing.destroy({ where: { idUser, id } })
     .then(result => console.log(result, 'was removed from database'))
@@ -233,10 +259,12 @@ module.exports = {
   getAllBusinesses,
   getBusinessByUser,
   addUser,
+  getAllUsers,
   getUserById,
   getUserByUserId,
   addReview,
   getReviewsByBusiness,
+  getReviewsByUser,
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
