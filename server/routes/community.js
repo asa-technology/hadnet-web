@@ -39,9 +39,10 @@ router.delete('/removeCommunityListing', (req, res) => {
 });
 
 // returns all community listings
-router.get('/getAllCommunityListings', (req, res) => getAllCommunityListings()
-  .then(allCommunityListings => res.send(allCommunityListings))
-  .catch(err => console.log('server/community, error line 43: ', err)));
+router.get('/getAllCommunityListings', (req, res) => (
+  getAllCommunityListings()
+    .then(allCommunityListings => res.send(allCommunityListings))
+    .catch(err => console.log('server/community, error line 43: ', err))));
 
 // takes in a community listing title,
 // returns array of all listings including the query in their title

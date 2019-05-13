@@ -12,7 +12,6 @@ router.get('/:id', (req, res) => {
       } else {
         res.send(result);
       }
-      console.log(result);
       res.send(result);
     }).catch((err) => {
       console.log(err);
@@ -20,8 +19,7 @@ router.get('/:id', (req, res) => {
 })
 
 router.get('/business/:id', (req, res) => {
-  // gotta re-dynamic this endpoint, changed the first if statement
-  // to automatically send back display businesses image
+  // add functionality to get images by busimess id
   const businessId = parseInt(req.params.id, 10);
 });
 

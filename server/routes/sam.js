@@ -40,7 +40,6 @@ router.get('/:zip', (req, res) => {
           legalBusinessName: listing.legalBusinessName,
         };
         const streetNum = listing.samAddress.line1.split(' ')[0];
-        console.log(streetNum);
         const streetAdd = listing.samAddress.line1.split(' ');
         streetAdd.shift();
         const street = encodeURI(streetAdd.join(' ').trim());
@@ -55,7 +54,6 @@ router.get('/:zip', (req, res) => {
             if (listing.businessTypes.includes('OY')) {
               addBusiness(businessEntry)
                 .then((result) => {
-                  // console.log(result);
                 });
             }
           })
