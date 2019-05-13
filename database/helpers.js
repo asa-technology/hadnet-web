@@ -8,20 +8,32 @@ const {
   Image,
 } = require('./index.js');
 
-// Add business to database
+/**
+ * Takes in an object representing a business and adds it to the database.
+ * @param {object} businessObj - An object representing a business.
+ * @return {promise}
+ */
 const addBusiness = businessObj => (
   Business.create(businessObj)
     .then(result => result)
     .catch(err => console.log(err))
 );
 
-// Get all businesses
+/**
+ * Grabs all business listings from the database.
+ * @return {promise}
+ */
 const getAllBusinesses = () => (
   Business.findAll()
     .then(results => results)
     .catch(err => console.log(err))
 );
 
+/**
+ * Finds any businesses that match any of the words present in the queryArray.
+ * @param {string[]} queryArray - An array of strings to query businesses by.
+ * @return {promise}
+ */
 const getAllBusinessesFromText = queryArray => (
   Business.findAll({
     where: {
@@ -36,92 +48,149 @@ const getAllBusinessesFromText = queryArray => (
     .catch(err => console.log(err))
 );
 
+/**
+ * Sets the owner of a business using the id for the owner and the id for the business.
+ * @param {number} userId - The id of the user to set as the business's owner.
+ * @param {number} businessId - The id of the business to set the owner of.
+ * @return {promise}
+ */
 const setBusinessOwner = (userId, businessId) => (
   Business.update({ idUser: userId }, { where: { id: businessId } })
 );
 
+/**
+ * Updates a business (specified by businessId) using an object of changes.
+ * @param {number} businessId - The id of the business to be update.
+ * @param {object} changes - An object with key/value pairs of field-to-update/updated-value.
+ * @return {promise}
+ */
 const updateBusiness = (businessId, changes) => (
   Business.update(changes, { where: { id: businessId } })
 );
 
+/**
+ * Updates a user (specified by firebase uid) using an object of changes.
+ * @param {string} uid - A string representing the firebase uid of a user.
+ * @param {object} changes - An object with key/value pairs of field-to-update/updated-value.
+ * @return {promise}
+ */
 const updateUser = (uid, changes) => (
   User.update(changes, { where: { uid } })
 );
 
-// Get business by id
+/**
+ * Grabs a business specified by id.
+ * @param {number} id - A number representing the business's id.
+ * @return {promise}
+ */
 const getBusinessById = id => (
   Business.findOne({ where: { id } })
     .then(business => business)
     .catch(err => console.log(err))
 );
 
-// get business by user id
+/**
+ * Grabs a business specified by the owner's user id.
+ * @param {number} userId - A number representing a user id.
+ * @return {promise}
+ */
 const getBusinessByUser = userId => (
   Business.findOne({ where: { idUser: userId } })
     .then(result => result)
     .catch(err => console.log(err))
 );
 
-// Add user to database
+/**
+ * Adds a user to the database using information from a userObj.
+ * @param {object} userObj - An object containing the new user's information.
+ * @return {promise}
+ */
 const addUser = userObj => (
   User.create(userObj)
     .then(result => result)
     .catch(err => console.log(err))
 );
 
-// Get user by firebase id
-const getUserById = id => (
-  User.findOne({ where: { firebaseId: id } })
+/**
+ * Grabs a user from the database specified by the user's firebase Id.
+ * @param {string} uid - A string representing a user's firebase Id.
+ * @return {promise}
+ */
+const getUserById = uid => (
+  User.findOne({ where: { firebaseId: uid } })
     .then(user => user)
     .catch(err => console.log(err))
 );
 
+/**
+ * Grabs a user from the database specified by the user's database id.
+ * @param {number} id - A number representing a user's database id.
+ * @return {promise}
+ */
 const getUserByUserId = id => (
   User.findOne({ where: { id } })
     .then(user => user)
     .catch(err => console.log(err))
 );
 
+/**
+ * Grabs a business from the database specified by the owner's firebase Id.
+ * @param {string} uid - A string representing a user's firebase Id.
+ * @return {promise}
+ */
 const getBusinessByFirebaseId = uid => (
   getUserById(uid)
     .then(result => getBusinessByUser(result.id))
 );
 
-// add review
+/**
+ * Adds a review to the database.
+ * @param {object} reviewObj - An object containing the information for a review.
+ * @return {promise}
+ */
 const addReview = reviewObj => (
   Review.create(reviewObj)
     .then(result => result)
     .catch(err => console.log(err))
 );
 
-// get all the reviews of a certain business by that businesses id
+/**
+ * Grabs all the reviews for a specified business Id.
+ * @param {number} businessId - A number representing a business's Id.
+ * @return {promise}
+ */
 const getReviewsByBusiness = businessId => (
   Review.findAll({ where: { idBusiness: businessId } })
     .then(result => result)
     .catch(err => console.log(err))
 );
 
-// get featured image
+/**
+ * Grabs a single image specified by image's Id.
+ * @param {number} imageId - A number representing an image's Id.
+ * @return {promise}
+ */
 const getFeaturedImage = imageId => (
   Image.findOne({ where: { id: imageId } })
     .then(result => result)
     .catch(err => console.log(err))
 );
 
-// get all images for a business
+/**
+ * Grabs all images associated with a specified business Id.
+ * @param {number} businessId - A number representing a business's Id.
+ */
 const getAllImagesByBusiness = businessId => (
   Image.findAll({ where: { inBusiness: businessId } })
     .then(result => result)
     .catch(err => console.log(err))
 );
 
-// adds community listing to communityListings table.
-// takes in a userId
-// takes in a title for listing,
-// a body of text,
-// an imageURL, (either a default if none selected, or user input url/uploaded image)
-// date of listing expiration is going to be the day after the event is supposed to take place
-
+/**
+ * Adds a community listing to a database.
+ * @param {object} communityListingInfo - An object representing a community listing.
+ * @param {string} defaultImageUrl - A string representing an image URL for the listing.
+ */
 const addCommunityListing = (communityListingInfo, defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png') => {
   const communityListing = Object.create(communityListingInfo);
   communityListing.imageUrl = defaultImageUrl;
