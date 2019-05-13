@@ -13,7 +13,7 @@ import { BusinessProfileService } from '../../services/business-profile/business
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
-  reviews: BusinessRating[];
+  reviews;
   userProfilePic: string;
   userDisplayName: string;
   showReviewForm: boolean = false;
@@ -21,23 +21,22 @@ export class RatingsComponent implements OnInit {
               private getUsersWhoReviewedService: GetUsersWhoReviewedService,
               private authService: AuthService,
               private ratingsService: RatingsService,
-              private profileService: BusinessProfileService,) { }
+              private profileService: BusinessProfileService) { }
 
   ngOnInit() {
-    const profile = this.profileService.currentProfile
+    const profile = this.profileService.currentProfile;
     // the id of 1 needs to be dynamic, it'll happen through data binding but no time
     this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
     .subscribe((reviews) => {
-      console.log(reviews);
       this.reviews = reviews;
       // return usernames from the id's held on these reviews
-      this.getUsersWhoReviewedService.getUsersWhoReviewed(this.reviews[0].idUser)
-      .subscribe((user) => {
-          console.log(user);
-          console.log(user);
-          this.userProfilePic = user.urlImage;
-          this.userDisplayName = user.displayName;
-        });
+      this.reviews.forEach ((review) => {
+        this.getUsersWhoReviewedService.getUsersWhoReviewed(review.idUser)
+        .subscribe((user) => {
+            review.userImage = user.urlImage;
+            review.userName = user.displayName;
+          });
+      })
     });
   }
 
@@ -62,14 +61,20 @@ export class RatingsComponent implements OnInit {
 
     }
     this.ratingsService.sendUserReview(review).subscribe((response) => {
-      console.log(response);
       this.reviews = [response];
     });
-    console.log(review);
-    console.log('Review submitted!');
-    console.log('User: ', userInfo);
-    console.log('Rating: ', rating);
-    console.log('Review: ', reviewText);
+    this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
+    .subscribe((reviews) => {
+      this.reviews = reviews;
+      // return usernames from the id's held on these reviews
+      this.reviews.forEach ((review) => {
+        this.getUsersWhoReviewedService.getUsersWhoReviewed(review.idUser)
+        .subscribe((user) => {
+            review.userImage = user.urlImage;
+            review.userName = user.displayName;
+          });
+      });
+    });
     this.toggleForm();
   }
 

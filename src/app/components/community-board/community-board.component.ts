@@ -19,13 +19,6 @@ export class CommunityBoardComponent implements OnInit {
               public authService: AuthService) { }
 
   ngOnInit() {
-    // if (this.authService.currentLocalUser) {
-    //   this.loggedIn = true;
-    //   this.getAllListings();
-    // } else {
-    //   this.loggedIn = false;
-    //   this.getAllListings();
-    // }
     // testing all the functions
      //this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12', 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
     // this.searchForListings('bb');

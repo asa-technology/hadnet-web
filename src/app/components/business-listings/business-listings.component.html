@@ -19,16 +19,15 @@
             <span class="sr-only">Loading...</span>
           </div>
       <ul *ngFor="let businessListing of businessListings" class="list-group">
-        <li (click)="checkListing(businessListing)" class="list-group-item">
+        <li class="list-group-item">
           <div class="card">
             <div class="col-4">
-              <img class="img-fluid card-image-top" *ngIf="businessListing.ftImg.url as url; else elseBlock" src="{{url}}">
-              <ng-template #elseBlock><img class="img-fluid" src="https://i.imgur.com/BNtJWJM.png"></ng-template>
+              <img class="img-fluid card-image-top"  src="{{businessListing.ftImg.url}}">
             </div>
             <div class="card-body">
                 <h5 class='card-title'>{{ businessListing.name | titlecase }}</h5>
                 <p class='card-text' style="font-size: 14px;">
-                  <i class="fas fa-star"></i>{{ businessListing.average_rating }}<br>
+                  <span class="font-weight-bold">Average Rating: </span><span [innerHtml]='businessListing.averageRating | rating'></span><br>
                   <i class="far fa-envelope"></i> {{ businessListing.email | lowercase }}<br>
                   <i class="fas fa-mobile-alt"></i> {{ businessListing.phoneNumber | formatPhone }}<br>
                   <i class="fas fa-map-marker-alt"></i> {{ businessListing.address | titlecase }}<br>

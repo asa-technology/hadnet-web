@@ -23,7 +23,6 @@ export class MapViewComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude;
         this.long = position.coords.longitude;
-        console.log(this.lat, this.long);
         this.renderMap();
       });
     } else {
@@ -72,7 +71,6 @@ export class MapViewComponent implements OnInit {
         </div>`);
       businessMarker.on('click', () => {
         this.selectedBusiness = listing;
-        console.log(listing);
       });
     });
   });

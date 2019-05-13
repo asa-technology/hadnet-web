@@ -2,24 +2,27 @@
   <div class="row">
     <div class="col">
         <form class="login100-form validate-form">
-
+          <br>
             <div class="text-center p-t-55 p-b-30">
               <span class="txt1">
-                Sign Up with Email
+                <h4>Sign Up with Email</h4>
               </span>
             </div>
-    
+            <hr>
             <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter email: ex@abc.xyz">
+              <div>Email</div>
               <input type="text" class="form-control mb-2" placeholder="Email" #userEmail required autofocus>
               <span class="focus-input100"></span>
             </div>
 
             <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter display name">
-              <input type="text" class="form-control mb-2" placeholder="Display Name" #userDisplayName required autofocus>
+                <div>Display Name</div>
+              <input type="text" class="form-control mb-2" placeholder="Display Name" #userDisplayName required >
               <span class="focus-input100"></span>
             </div>
     
             <div class="wrap-input100 validate-input m-b-20" data-validate = "Please enter password">
+                <div>Password</div>
               <input type="password" class="form-control mb-2" placeholder="Password" #userPassword required>
               <span class="focus-input100"></span>
             </div>
@@ -34,7 +37,7 @@
             </div><br> -->
 
             <div class="container-login100-form-btn">
-              <button class="btn btn-info btn-block" (click)="authService.signup(userEmail.value, userPassword.value, userDisplayName.value)">
+              <button class="btn btn-dark btn-block" (click)="authService.signup(userEmail.value, userPassword.value, userDisplayName.value)">
                 Sign Up
               </button>
             </div>
