@@ -1,16 +1,20 @@
+/* eslint-disable no-console */
 const router = require('express').Router();
-const { db } = require('../../database/index');
-const { addUser, getUserById, getUserByUserId, updateUser } = require('../../database/helpers');
+const {
+  addUser, getUserById, getUserByUserId, updateUser, getAllUsers,
+} = require('../../database/helpers');
 
 
 // gets all users
 router.get('/', (req, res) => {
+  getAllUsers()
+    .then((users) => {
+      res.send(users);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
   console.log('Grabbing all users');
-
-  /** **************TODO****************
-  * get all users from database
-  */
-  res.send(users);
 });
 
 router.get('/firebaseId/:id', (req, res) => {
@@ -21,14 +25,14 @@ router.get('/firebaseId/:id', (req, res) => {
 
 // gets user at specified id
 router.get('/:id', (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
   getUserByUserId(id)
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
       res.sendStatus(404);
-    })
+    });
 });
 
 

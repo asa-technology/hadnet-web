@@ -1,37 +1,33 @@
+/* eslint-disable no-console */
 const router = require('express').Router();
 const axios = require('axios');
-const { db } = require('../../database/index');
-const { addBusiness } = require('../../database/helpers')
+const { addBusiness } = require('../../database/helpers');
 
 router.get('/:zip', (req, res) => {
-  zip = req.params.zip;
-  console.log('request made')
+  const { zip } = req.params;
+  console.log('request made');
   axios.get('https://api.data.gov/sam/v3/registrations', {
     params: {
-      'api_key': process.env.SAM_API_KEY,
-      'qterms': `(minorityOwned:true)+AND+(samAddress.zip:${zip})`,
-      'start': 1,
-      'length': 4,
+      api_key: process.env.SAM_API_KEY,
+      qterms: `(minorityOwned:true)+AND+(samAddress.zip:${zip})`,
+      start: 1,
+      length: 4,
     },
   })
     .then((results) => {
       const dataList = results.data.results;
-      const links = dataList.map((listing) => {
-        return listing.links[0].href
-      })
+      const links = dataList.map(listing => listing.links[0].href);
       console.log(links);
-      const promises = links.map((link) => {
-        return axios.get(link, {
-          params: {
-            'api_key': process.env.SAM_API_KEY,
-          }
-        })
-      })
-      return Promise.all(promises)
+      const promises = links.map(link => axios.get(link, {
+        params: {
+          api_key: process.env.SAM_API_KEY,
+        },
+      }));
+      return Promise.all(promises);
     })
     .then((results) => {
       results.forEach((result) => {
-        const listing = result.data['sam_data'].registration;
+        const listing = result.data.sam_data.registration;
         const businessEntry = {
           name: listing.legalBusinessName,
           phoneNumber: listing.electronicBusinessPoc.usPhone,
@@ -45,7 +41,7 @@ router.get('/:zip', (req, res) => {
         };
         const streetNum = listing.samAddress.line1.split(' ')[0];
         console.log(streetNum);
-        const streetAdd = listing.samAddress.line1.split(' ')
+        const streetAdd = listing.samAddress.line1.split(' ');
         streetAdd.shift();
         const street = encodeURI(streetAdd.join(' ').trim());
         axios.get(`https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=USA&streetNumber=${streetNum}&streetName=${street}&municipality=New%20Orleans&countrySubdivision=Louisiana&postalCode=${listing.samAddress.zip}&extendedPostalCodesFor=Addr&key=${process.env.MAPS_API_KEY}`
@@ -59,24 +55,13 @@ router.get('/:zip', (req, res) => {
             if (listing.businessTypes.includes('OY')) {
               addBusiness(businessEntry)
                 .then((result) => {
-                  //console.log(result);
+                  // console.log(result);
                 });
             }
           })
           .catch((error) => {
             console.log(error);
           });
-        /*
-            if (listing.businessTypes.includes('OY')){
-                addBusiness(businessEntry)
-                .then((result) => {
-                    console.log(result);
-                })
-            }
-            console.log(businessEntry.name)
-            console.log(businessEntry.address, businessEntry.phoneNumber, businessEntry.email)
-            console.log(listing.businessTypes)
-            */
       });
     })
     .catch((err) => {

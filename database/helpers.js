@@ -82,6 +82,12 @@ const getUserByUserId = id => (
     .catch(err => console.log(err))
 );
 
+const getAllUsers = () => (
+  User.findAll()
+    .then(results => results)
+    .catch(err => console.log(err))
+);
+
 const getBusinessByFirebaseId = uid => (
   getUserById(uid)
     .then(result => getBusinessByUser(result.id))
@@ -100,6 +106,13 @@ const getReviewsByBusiness = businessId => (
     .then(result => result)
     .catch(err => console.log(err))
 );
+
+// get all reviews from a certain user
+const getReviewsByUser = userId => (
+  Review.findAll({ where: { idUser: userId } })
+    .then(result => result)
+    .catch(err => console.log(err))
+)
 
 // get featured image
 const getFeaturedImage = imageId => (
@@ -164,10 +177,12 @@ module.exports = {
   getAllBusinesses,
   getBusinessByUser,
   addUser,
+  getAllUsers,
   getUserById,
   getUserByUserId,
   addReview,
   getReviewsByBusiness,
+  getReviewsByUser,
   getFeaturedImage,
   getAllImagesByBusiness,
   getAllBusinessesFromText,
