@@ -63,4 +63,3 @@ import { RatingPipe } from './pipes/rating.pipe';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-

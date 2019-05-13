@@ -1,12 +1,37 @@
 <div class="jumbotron jumbotron-fluid">
-  <div *ngIf="!authService.isLoggedIn">
-    <h1> please log in to add events </h1>
-    <a routerLink="/login"><button>log in to be able to add event</button></a>
-  </div>
-  <div class="container">
-
     <h1 class="display-3">Community Board</h1>
-    <div *ngIf="authService.isLoggedIn" class="float-right"><button>Add Event</button></div>
-    <p class="lead">This is where each event listing should go</p>
+  <div class="container">
+      <div *ngIf="!authService.isLoggedIn">
+          <a routerLink="/login"><button class="float-right" class="btn btn-light">log in to be able to add event</button></a>
+        </div>
+   
+    
+    <form *ngIf="authService.isLoggedIn" (ngSubmit)="addListing(eventTitle,eventBody,eventExpire,eventImage)" #eventForm="ngForm">
+    <div class="lead">
+      <div class="form-group">
+      <input id="eventTitle"  name="title" [(ngModel)]= "eventTitle" class="form-control" type="text" placeholder="Title">
+    </div>
+    <div class="form-group">
+      <input id="eventBody" name="body" [(ngModel)]= "eventBody" class="form-control" type="text" placeholder="Description">
+      </div>
+      <div class="form-group">
+      <input id="eventImage"  name="image" [(ngModel)]= "eventImage" class="form-control" type="text" placeholder="Image Url">
+      </div>
+      <div class="form-group">
+      <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year/mm/dd">
+      </div>
+    </div>
+      <div class="float-right"><button type="submit" class="btn btn-dark">Add Event</button></div>
+    </form>
+    <div *ngIf="allListings">
+        <div *ngFor="let listing of allListings" class="card text-white bg-dark mb-3 d-inline-block" style="max-width: 20rem;">
+            <div class="card-header">{{listing.title}}</div>
+            <div class="card-body">
+              <p class="card-text">{{listing.body}}<br><img class="card-image" src={{listing.imageUrl}}><br>{{listing.date_expire}}</p>
+            </div>
+          </div>
+    </div>
+  
+    <!-- {{eventForm.value | json}} -->
   </div>
 </div>

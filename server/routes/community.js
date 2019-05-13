@@ -26,9 +26,8 @@ router.post('/addCommunityListing', (req, res) => {
   // req body requires a userid, title, body, image url, expiration date
   const defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png';
   return addCommunityListing(req.body, req.body.imageUrl || defaultImageUrl)
-  // sends back info regarding listing that was posted
-    .then(communityListingAdded => res.send(communityListingAdded))
-    .catch(err => console.log('server/community, error line 29: ', err) /**  res.send('my condolences, friend. that didnt quite work') */);
+    .then(communityListingAdded => res.send(communityListingAdded)) // sends back info regarding listing that was posted
+    .catch(err => console.log('server/community, error line 29: ', err));/**  res.send('my condolences, friend. that didnt quite work') */
 });
 // removes specific community listing, takes in a user's id and a listing's title
 router.delete('/removeCommunityListing', (req, res) => {
