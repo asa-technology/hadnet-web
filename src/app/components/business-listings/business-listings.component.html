@@ -19,7 +19,7 @@
             <span class="sr-only">Loading...</span>
           </div>
       <ul *ngFor="let businessListing of businessListings" class="list-group">
-        <li (click)="checkListing(businessListing)" class="list-group-item">
+        <li class="list-group-item">
           <div class="card">
             <div class="col-4">
               <img class="img-fluid card-image-top"  src="{{businessListing.ftImg.url}}">

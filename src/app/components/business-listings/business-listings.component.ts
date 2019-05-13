@@ -31,7 +31,6 @@ export class BusinessListingsComponent implements OnInit {
     this.businessListingService.getBusinessListings().subscribe( businessListings => {
       // add filter here to filter business by proximity
       this.businessListings = businessListings;
-      console.log(this.businessListings);
 
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -55,18 +54,13 @@ export class BusinessListingsComponent implements OnInit {
                 });
             }
           });
-          this.businessListings.sort((a, b) => (a.proximity > b.proximity) ? 1 : -1)
+          this.businessListings.sort((a, b) => (a.proximity > b.proximity) ? 1 : -1);
           this.businessListings = this.businessListings.slice(0, 50);
           console.log(this.businessListings);
         });
       }
-      
       this.loading = false;
     });
-  }
-
-  checkListing(business) {
-    console.log(business);
   }
 
   goToProfile(business) {
