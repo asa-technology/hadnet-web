@@ -1,6 +1,6 @@
 
 <div class="list-group">
-  <h4 class="list-group-item list-group-item-action list-group-item-secondary">{{ selectedBusiness.name }}</h4>
+  <h4 class="list-group-item list-group-item-action list-group-item-secondary">{{ selectedBusiness.name | titlecase}}</h4>
   <div class="card-header">
     <span class="font-weight-bold">Average rating: </span><span [innerHtml]='selectedBusiness.averageRating | rating'></span><br>
     <i class="fas fa-map-marker-alt"></i>&nbsp;{{ selectedBusiness.address }}<br>
