@@ -14,7 +14,14 @@ const {
 require('dotenv').config();
 
 
-// gets all businesses
+/**
+ *********** relative endpoint for calls to these routes: '/api/business/' **********
+ */
+
+/**
+  * getAllBusinesses is called when a get request to '/' is made,
+  * returning an array of all the businesses in the businesses table.
+*/
 router.get('/', (req, res) => {
   console.log('Grabbing all businesses');
   getAllBusinesses()
@@ -23,12 +30,19 @@ router.get('/', (req, res) => {
     });
 });
 
+/**
+ * getBusinessByUser takes in a @param userId, which is the I.D. number of the current user
+ * this route is used to retrieve businesses that are associated with the current user's ID
+ */
 router.get('/userid/:id', (req, res) => {
   const userId = req.params.id;
   getBusinessByUser(userId)
     .then(results => res.send(results));
 });
 
+/**
+ * getBusinessByFirebaseId retrieves businesses associated with given @param uid {firebase ID}
+ */
 router.get('/firebaseId/:uid', (req, res) => {
   const { uid } = req.params;
   console.log(`Grabbing businesses associated with UID: ${uid}`);
@@ -52,9 +66,12 @@ router.get('/:id', (req, res) => {
    */
 });
 
+/**
+ * get requests to '/search/' parse the query attached to the req's params,
+ * search for the business using the @function getAllBusinessesFromText database helper function
+ */
 router.get('/search/:query', (req, res) => {
   const { query } = req.params;
-  console.log(query);
   let origArray;
   let uppArray;
   let lowArray;
@@ -107,7 +124,11 @@ router.post('/', (req, res) => {
 });
 
 
-// claim a business at specific id
+/**
+ * put requests to '/claim' take in a user I.D. as part of the request's params,
+ * a firebase I.D. in the request's body,
+ * and a businesses owner is set.
+*/
 router.put('/claim/:id', (req, res) => {
   const { id } = req.params;
   const idNum = parseInt(id, 10);
@@ -117,6 +138,9 @@ router.put('/claim/:id', (req, res) => {
     .then(() => res.sendStatus(201));
 });
 
+/**
+ * updateBusiness is called, using the request's body object as the arguments
+ */
 router.put('/update/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   const changes = req.body;
@@ -125,7 +149,14 @@ router.put('/update/:id', (req, res) => {
     .catch(error => console.error(error));
 });
 
-// verifies a business by checking if image data name matches any buisness name in the table
+/**
+ * post requests to '/isVerified' verifies a business by checking if image data name
+ * matches any buisness name in the business table
+ *
+ * if post request yields no results, 'Business Not Found, Please Try Again' is sent to the client,
+ * determining that the camera has to be reloaded, and the user is given the option of taking
+ * another picture of a business
+ */
 router.post('/isVerfied', (req, res) => {
   axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_IMAGE_VERIFY_KEY}`, {
     requests: [
