@@ -3,6 +3,20 @@ const router = require('express').Router();
 const axios = require('axios');
 const { addBusiness } = require('../../database/helpers');
 
+/**
+ ********* requests to these endpoints must be preceded by: '/api/sam' ********
+ */
+
+/**
+  * get requests to '/' take in a zip code as part of the request's params, and query the SAM
+  * API for minority owned businesses that share request's zip code.
+  *
+  * after results are returned, they are filtered based on field codes corresponding with
+  * African American owned businesses. This functionality seeds the database with verified
+  * businesses.
+  * The addresses associated with these businesses are used to retrieve coordinates to place
+  * businesses on the map view.
+  */
 router.get('/:zip', (req, res) => {
   const { zip } = req.params;
   console.log('request made');

@@ -4,8 +4,13 @@ const {
   addUser, getUserById, getUserByUserId, updateUser, getAllUsers,
 } = require('../../database/helpers');
 
+/**
+ ********* requests to these endpoints must be preceded by: '/api/user' ********
+ */
 
-// gets all users
+/**
+ *  get requests to '/' return all users in database
+ */
 router.get('/', (req, res) => {
   getAllUsers()
     .then((users) => {
@@ -17,13 +22,19 @@ router.get('/', (req, res) => {
   console.log('Grabbing all users');
 });
 
+/**
+ * get requests to '/firebaseId' take in a user I.D. and return information stored
+ * in users table in the database, associated with this user I.D.
+ */
 router.get('/firebaseId/:id', (req, res) => {
   const { id } = req.params;
   getUserById(id)
     .then(result => res.send(result));
 });
 
-// gets user at specified id
+/**
+ *  get requests to '/' return user information stored with associated user's I.D.
+ */
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   getUserByUserId(id)
@@ -36,7 +47,10 @@ router.get('/:id', (req, res) => {
 });
 
 
-// add user
+/**
+ * post requests to '/' add users to users table in the database, users info is
+ * given in post request's body
+ */
 router.post('/', (req, res) => {
   const user = req.body;
   console.log(`Adding user: ${user.displayName} to db`);
@@ -45,7 +59,9 @@ router.post('/', (req, res) => {
 });
 
 
-// update user at specified firebase uid
+/**
+ * put requests to '/' update user's information at associated, specified firebase uid
+ */
 router.put('/:uid', (req, res) => {
   const { uid } = req.params;
   const changes = req.body;

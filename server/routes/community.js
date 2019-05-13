@@ -4,7 +4,13 @@ const {
   addCommunityListing, removeCommunityListing, getAllCommunityListings, searchForCommunityListings,
 } = require('../../database/helpers');
 
+/**
+ ********* requests to these endpoints must be preceded by: '/api/community' ********
+ */
 
+/**
+ * this does nothing
+ */
 router.get('/', (req, res) => {
   console.log('Getting community data!');
 });
@@ -20,7 +26,9 @@ router.get('/', (req, res) => {
 //     "date_expire": "2019-05-12"
 // }
 
-// adds community listing
+/**
+ *  adds community listing to the communityListings table
+ */
 router.post('/addCommunityListing', (req, res) => {
   console.log(req.body);
   // req body requires a userid, title, body, image url, expiration date
@@ -30,7 +38,11 @@ router.post('/addCommunityListing', (req, res) => {
     .then(communityListingAdded => res.send(communityListingAdded))
     .catch(err => console.log('server/community, error line 29: ', err) /**  res.send('my condolences, friend. that didnt quite work') */);
 });
-// removes specific community listing, takes in a user's id and a listing's title
+
+/**
+ *  delete requests to '/removeCommunityListing'remove specific community listing,
+ *  takes in a user's id and a listing's title
+ */
 router.delete('/removeCommunityListing', (req, res) => {
   console.log(req.query);
   removeCommunityListing(req.query.idUser, req.query.id)
@@ -38,14 +50,18 @@ router.delete('/removeCommunityListing', (req, res) => {
     .catch(err => console.log('server/community, error line 36: ', err));
 });
 
-// returns all community listings
+/**
+ *  get requests to '/getAllCommunityListings' return all community listings in table
+ */
 router.get('/getAllCommunityListings', (req, res) => (
   getAllCommunityListings()
     .then(allCommunityListings => res.send(allCommunityListings))
     .catch(err => console.log('server/community, error line 43: ', err))));
 
-// takes in a community listing title,
-// returns array of all listings including the query in their title
+/**
+ * get requests to '/searchForCommunityListings' take in a community listing title,
+ * and return array of all listings including the query in their title.
+ */
 router.get('/searchForCommunityListings', (req, res) => {
   const query = req.query.title;
   let origArray;

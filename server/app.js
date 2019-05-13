@@ -18,6 +18,9 @@ const image = require('./routes/image.js');
 const sam = require('./routes/sam.js');
 
 // middleware
+/**
+ * increased bodyParser limit to 10mb in order to process large base64 images
+ */
 app.use(bodyParser.json({ limit: '10mb', extended: true }));
 // app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/hadnet')));

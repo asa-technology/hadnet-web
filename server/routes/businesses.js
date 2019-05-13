@@ -15,7 +15,7 @@ require('dotenv').config();
 
 
 /**
- *********** relative endpoint for calls to these routes: '/api/business/' **********
+ ********* requests to these endpoints must be preceded by: '/api/business' ********
  */
 
 /**
@@ -31,7 +31,7 @@ router.get('/', (req, res) => {
 });
 
 /**
- * getBusinessByUser takes in a @param userId, which is the I.D. number of the current user
+ * getBusinessByUser takes in a userId, which is the I.D. number of the current user
  * this route is used to retrieve businesses that are associated with the current user's ID
  */
 router.get('/userid/:id', (req, res) => {
@@ -41,7 +41,7 @@ router.get('/userid/:id', (req, res) => {
 });
 
 /**
- * getBusinessByFirebaseId retrieves businesses associated with given @param uid {firebase ID}
+ * getBusinessByFirebaseId retrieves businesses associated with given uid {firebase ID}
  */
 router.get('/firebaseId/:uid', (req, res) => {
   const { uid } = req.params;
@@ -58,6 +58,9 @@ router.get('/firebaseId/:uid', (req, res) => {
 
 // gets business at specified id
 // this still uses mock data
+/**
+ * no it doesn't
+ */
 router.get('/:id', (req, res) => {
   const { id } = req.params;
 
@@ -113,6 +116,9 @@ router.get('/search/:query', (req, res) => {
 });
 
 // adds business
+/**
+ * no it doesn't
+ */
 router.post('/', (req, res) => {
   // const business = req.body;
   // console.log(`added business: ${business.name} to db`);
