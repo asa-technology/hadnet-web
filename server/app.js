@@ -11,7 +11,6 @@ const path = require('path');
 const { db } = require('../database/index');
 
 // routers
-const auth = require('./routes/auth');
 const businesses = require('./routes/businesses');
 const community = require('./routes/community');
 const user = require('./routes/user.js');
