@@ -1,8 +1,7 @@
+/* eslint-disable no-console */
 const { Op } = require('sequelize');
 const {
   User,
-  BusinessType,
-  ListingType,
   Business,
   CommunityListing,
   Review,
@@ -10,26 +9,21 @@ const {
 } = require('./index.js');
 
 // Add business to database
-const addBusiness = businessObj => Business.create(businessObj)
-  .then((result) => {
-    console.log('entered business into db');
-    return result;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-
+const addBusiness = businessObj => (
+  Business.create(businessObj)
+    .then(result => result)
+    .catch(err => console.log(err))
+);
 
 // Get all businesses
-const getAllBusinesses = () => Business.findAll()
-  .then(results => results)
-  .catch((err) => {
-    console.log(err);
-  });
+const getAllBusinesses = () => (
+  Business.findAll()
+    .then(results => results)
+    .catch(err => console.log(err))
+);
 
-const getAllBusinessesFromText = (queryArray) => {
-  console.log(queryArray);
-  return Business.findAll({
+const getAllBusinessesFromText = queryArray => (
+  Business.findAll({
     where: {
       name: {
         [Op.like]: {
@@ -39,124 +33,87 @@ const getAllBusinessesFromText = (queryArray) => {
     },
   })
     .then(businessInfo => businessInfo)
-    .catch((err) => {
-      console.log(err);
-    });
-};
+    .catch(err => console.log(err))
+);
 
-const setBusinessOwner = (userId, businessId) => {
-  return Business.update({ idUser: userId }, { where: { id: businessId } });
-};
+const setBusinessOwner = (userId, businessId) => (
+  Business.update({ idUser: userId }, { where: { id: businessId } })
+);
 
-const updateBusiness = (businessId, changes) => {
-  return Business.update(changes, { where: { id: businessId } });
-};
+const updateBusiness = (businessId, changes) => (
+  Business.update(changes, { where: { id: businessId } })
+);
 
-const updateUser = (uid, changes) => {
-  return User.update(changes, { where: { uid } });
-};
+const updateUser = (uid, changes) => (
+  User.update(changes, { where: { uid } })
+);
 
 // Get business by id
-const getBusinessById = id => Business.findOne({
-  where: {
-    id,
-  },
-})
-  .then(business => business)
-  .catch((err) => {
-    console.log(err);
-  });
+const getBusinessById = id => (
+  Business.findOne({ where: { id } })
+    .then(business => business)
+    .catch(err => console.log(err))
+);
 
 // get business by user id
-
-const getBusinessByUser = (userId) => {
-  return Business.findOne({
-    where: {
-      idUser: userId,
-    },
-  })
-  .then(result => {
-    return result
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-};
+const getBusinessByUser = userId => (
+  Business.findOne({ where: { idUser: userId } })
+    .then(result => result)
+    .catch(err => console.log(err))
+);
 
 // Add user to database
-const addUser = userObj => User.create(userObj)
-  .then((result) => {
-    console.log('entered user into db');
-    return result;
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const addUser = userObj => (
+  User.create(userObj)
+    .then(result => result)
+    .catch(err => console.log(err))
+);
+
 // Get user by firebase id
-const getUserById = id => User.findOne({
-  where: {
-    firebaseId: id,
-  },
-  }).then(user => {
-    return user
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const getUserById = id => (
+  User.findOne({ where: { firebaseId: id } })
+    .then(user => user)
+    .catch(err => console.log(err))
+);
 
-const getUserByUserId = id => User.findOne({
-  where: {
-    id: id,
-  },
-}).then(user => user)
-  .catch((err) => {
-    console.log(err);
-  });
+const getUserByUserId = id => (
+  User.findOne({ where: { id } })
+    .then(user => user)
+    .catch(err => console.log(err))
+);
 
-const getBusinessByFirebaseId = (uid) => {
-  return getUserById(uid)
-    .then(result => {
-      return getBusinessByUser(result.id)
-    });
-};
+const getBusinessByFirebaseId = uid => (
+  getUserById(uid)
+    .then(result => getBusinessByUser(result.id))
+);
 
 // add review
-const addReview = reviewObj => Review.create(reviewObj)
-  .then(result => result)
-  .catch((err) => {
-    console.log(err);
-  });
+const addReview = reviewObj => (
+  Review.create(reviewObj)
+    .then(result => result)
+    .catch(err => console.log(err))
+);
 
 // get all the reviews of a certain business by that businesses id
-const getReviewsByBusiness = businessId => Review.findAll({
-  where: {
-    idBusiness: businessId,
-  },
-})
-  .then(result => result)
-  .catch((err) => {
-    console.log(err);
-  });
+const getReviewsByBusiness = businessId => (
+  Review.findAll({ where: { idBusiness: businessId } })
+    .then(result => result)
+    .catch(err => console.log(err))
+);
 
 // get featured image
-const getFeaturedImage = imageId => Image.findOne({
-  where: {
-    id: imageId,
-  },
-})
-  .then(result => result)
-  .catch((err) => {
-    console.log(err);
-  });
+const getFeaturedImage = imageId => (
+  Image.findOne({ where: { id: imageId } })
+    .then(result => result)
+    .catch(err => console.log(err))
+);
 
 // get all images for a business
-const getAllImagesByBusiness = businessId => Image.findAll({
-  where: { inBusiness: businessId },
-})
-  .then(result => result)
-  .catch((err) => {
-    console.log(err);
-  });
+const getAllImagesByBusiness = businessId => (
+  Image.findAll({ where: { inBusiness: businessId } })
+    .then(result => result)
+    .catch(err => console.log(err))
+);
 
 // adds community listing to communityListings table.
 // takes in a userId
@@ -172,24 +129,22 @@ const addCommunityListing = (communityListingInfo, defaultImageUrl = 'https://ma
 };
 
 // takes in the id of a user who posted the listing, and the title of the listing
-const removeCommunityListing = (idUser, id) => {
-  return CommunityListing.destroy({
-    where: { idUser, id }, // just added user, so that we can specify which listing to remove
-  })
-    .then(result => console.log(result, 'was removed from database, function on line 154 helpers.js database'))
-    .catch(err => console.log('error line 176 helpers.js database: ', err));
-};
+const removeCommunityListing = (idUser, id) => (
+  CommunityListing.destroy({ where: { idUser, id } })
+    .then(result => console.log(result, 'was removed from database'))
+    .catch(err => console.log('error line 176 helpers.js database: ', err))
+);
 
 // returns all community listings
-const getAllCommunityListings = () => {
-  return CommunityListing.findAll()
+const getAllCommunityListings = () => (
+  CommunityListing.findAll()
     .then(result => result)
-    .catch(err => console.log('error line 183 db helers:', err));
-};
+    .catch(err => console.log('error line 183 db helers:', err))
+);
 
 // queries community listings by title, maybe should also query based on body text??
-const searchForCommunityListings = (communityListingsQuery) => {
-  return CommunityListing.findAll({
+const searchForCommunityListings = communityListingsQuery => (
+  CommunityListing.findAll({
     where: {
       title: {
         [Op.like]: {
@@ -199,8 +154,8 @@ const searchForCommunityListings = (communityListingsQuery) => {
     },
   })
     .then(result => result)
-    .catch(err => console.log('error line 198 db helpers:', err));
-};
+    .catch(err => console.log('error line 198 db helpers:', err))
+);
 
 
 module.exports = {
