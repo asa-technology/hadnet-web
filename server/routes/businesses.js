@@ -10,6 +10,8 @@ const {
   getUserById,
   getBusinessByFirebaseId,
   updateBusiness,
+  getReviewsByBusiness,
+  updateBusinessRating,
 } = require('../../database/helpers');
 require('dotenv').config();
 
@@ -104,6 +106,27 @@ router.post('/', (req, res) => {
   //  * add business to database
   //  */
   // res.send(`added business: ${business.name} to db`);
+});
+
+router.put('/avgreviews', (req, res) => {
+  const { id } = req.body;
+  console.log('average review endpoint', id);
+  let avgRating;
+  getReviewsByBusiness(id)
+    .then((reviews) => {
+      if (reviews.length > 0) {
+        avgRating = reviews.reduce((total, review) => {
+          total += review.ratingNumber;
+          return total;
+        },0) / reviews.length;
+        updateBusinessRating(id, Math.floor(avgRating))
+          .then(() => res.sendStatus(201));
+      } else {
+        avgRating = 0;
+        updateBusinessRating(id, avgRating)
+          .then(() => res.sendStatus(201));
+      }
+    });
 });
 
 
