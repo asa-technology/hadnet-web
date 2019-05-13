@@ -9,12 +9,12 @@
             Login with Facebook
           </button>
         </div>
-
-        <div class="text-center">-----------------------<h6>Or</h6>-----------------------</div>
-
+        <hr>
+        <div class="text-center"><h5>Or</h5></div>
+        <hr>
         <div class="text-center p-t-55 p-b-30">
           <span class="txt1">
-            Login with email
+            <h4>Login with email</h4>
           </span>
         </div>
 
@@ -29,11 +29,12 @@
         </div>
 
         <div class="container-login100-form-btn">
-          <button class="btn btn-info btn-block" (click)="authService.login(userEmail.value, userPassword.value)">
+          <button class="btn btn-dark btn-block" (click)="authService.login(userEmail.value, userPassword.value)">
             Login
           </button>
-        </div>
+        </div><br>
         
+        <hr>
         <div class="text-center">
           <span class="txt2 p-b-10">
             Don’t have an account?
@@ -41,7 +42,7 @@
         </div>
 
         <div class="container-login100-form-btn">
-          <button routerLink="/signup" class="btn btn-info btn-block">
+          <button routerLink="/signup" class="btn btn-dark btn-block">
             Sign up now
           </button>
         </div>
