@@ -2,8 +2,10 @@
 <div class="list-group">
   <h4 class="list-group-item list-group-item-action list-group-item-secondary">{{ selectedBusiness.name }}</h4>
   <div class="card-header">
-    <i class="fas fa-map-marker-alt"></i> {{ selectedBusiness.address }}<br>
-    <i class="fas fa-mobile-alt"></i>  {{ selectedBusiness.phoneNumber | formatPhone }}<br>
+    <span class="font-weight-bold">Average rating: </span><span [innerHtml]='selectedBusiness.averageRating | rating'></span><br>
+    <i class="fas fa-map-marker-alt"></i>&nbsp;{{ selectedBusiness.address }}<br>
+    <i class="fas fa-mobile-alt"></i>&nbsp;{{ selectedBusiness.phoneNumber | formatPhone }}<br>
+    <i class="fas fa-envelope"></i>&nbsp;{{ selectedBusiness.email | lowercase }}<br><br>
     <button class="btn btn-dark btn-block" (click)="goToProfile(selectedBusiness)">Business Profile</button>
   </div>
 </div>
