@@ -142,7 +142,7 @@ public webcamImageInfo: any;
       businessLat = businessLat * Math.PI / 180;
       businessLong = businessLong * Math.PI / 180;
       const x: number = (businessLong - userCurrentLong) * Math.cos((userCurrentLat + businessLat) / 2);
-      const y: number = (businessLong - userCurrentLat);
+      const y: number = (businessLat - userCurrentLat);
       distance = Math.sqrt(x * x + y * y) * 6371;
     });
   }
