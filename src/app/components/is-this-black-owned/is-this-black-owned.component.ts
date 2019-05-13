@@ -50,23 +50,10 @@ public webcamImageInfo: any;
   }
 
   public triggerSnapshot(): void {
-    //this.loading = true;
-    // this.toggleWebcam();
     this.trigger.next();
-    // this.loading = false;
     this.businessNotFound = false;
     this.loading = true;
     this.showWebcam = false;
-    // this.toggleWebcam();
-    // this.trigger.next();
-    // setTimeout(() => {
-    //   // this.loading = false;
-    //    this.businessNotFound = false;
-    //   // this.toggleWebcam();
-    // }, 3000);
-    // setTimeout(() => {
-    //   this.businessNotFound = false;
-    // }, 10000);
   }
 
   public toggleWebcam(): void {
@@ -85,16 +72,15 @@ public webcamImageInfo: any;
   }
 
   public handleImage(webcamImage: WebcamImage): void {
-    console.log('received webcam image', webcamImage);
     this.webcamImage = webcamImage;
     this.webcamImageInfo = this.webcamImage.imageAsBase64;
     this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((businesses) => {
       // run an each loop over businesses lats/longs, returning the business with the
       // lowest distance from current user's location
          if (businesses !== 'Business Not Found, Please Try Again' && businesses.length !== 0) {
-        console.log(businesses.length);
         const closestBusiness: any = businesses.reduce((closestBiz: any, business: any) => {
-        if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)){
+        if (this.getClosestBusiness(business.latitude, business.longitude)
+        < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)) {
           return business;
         }
         return closestBiz;
@@ -105,28 +91,15 @@ public webcamImageInfo: any;
         this.allowCameraSwitch = false;
         this.businessNotFound = false;
         this.showBusiness();
-        console.log(this.business, 'response from server');
       } else {
-        // this.businessFound = false;
         this.businessNotFound = true;
         setTimeout(() => {
           this.businessNotFound = false;
         }, 3000);
         setTimeout(() => {
-          // this.loading = false;
-           // this.businessFound = true;
            this.loading = false;
            this.showWebcam = true;
-          // this.toggleWebcam();
         }, 500);
-      //   console.log('try again please');
-      //   this.businessFound = false;
-      //   this.loading = true;
-      //   setTimeout(() => {
-      //     this.loading = false;
-      //     this.businessFound = true;
-      //   }, 500);
-      //   this.showWebcam = true;
        }
     });
   }
@@ -169,7 +142,6 @@ this.businessProfileService.changeProfile(biz);
   }
 
   public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
     this.deviceId = deviceId;
   }
 

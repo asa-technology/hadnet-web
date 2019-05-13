@@ -56,7 +56,6 @@ export class BusinessListingsComponent implements OnInit {
           });
           this.businessListings.sort((a, b) => (a.proximity > b.proximity) ? 1 : -1);
           this.businessListings = this.businessListings.slice(0, 50);
-          console.log(this.businessListings);
         });
       }
       this.loading = false;

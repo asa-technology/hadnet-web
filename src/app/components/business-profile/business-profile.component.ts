@@ -42,7 +42,6 @@ export class BusinessProfileComponent implements OnInit {
     } else{
       this.getBusinessImagesService.getFeaturedImage(this.businessListing.idFeaturedImage)
         .subscribe((image) => {
-          console.log('this ==> ', image)
             this.businessImage = image.url;
         });
     }
@@ -66,7 +65,6 @@ export class BusinessProfileComponent implements OnInit {
 
   async updateBusiness(business: BusinessListing, field: string, change: string) {
     try {
-      console.log(`Changing business #${business.id}, field: ${field}, change: ${change}`);
       const changeObj = {};
       changeObj[field] = change;
       await this.http.put(`/api/business/update/${business.id}`, changeObj, { responseType: 'text' }).subscribe();

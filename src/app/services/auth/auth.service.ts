@@ -47,7 +47,6 @@ export class AuthService {
       } else {
         alert('Error! ' + errorMessage);
       }
-      console.log(error);
     }
   }
 
@@ -87,7 +86,6 @@ export class AuthService {
       this.router.navigate(['']);
     } catch (error) {
       alert('Error! ' + error.message);
-      console.error(error);
     }
   }
 
