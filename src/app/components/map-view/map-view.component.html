@@ -1,2 +1,8 @@
 <div id="map"></div>
+<div *ngIf="loading">
+  <div class="spinner-border mt-3" *ngIf="loading" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<hr>
 <app-home-selected-business [selectedBusiness]="selectedBusiness"></app-home-selected-business>

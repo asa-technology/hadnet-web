@@ -48,6 +48,10 @@ const setBusinessOwner = (userId, businessId) => {
   return Business.update({ idUser: userId }, { where: { id: businessId } });
 };
 
+const updateBusiness = (businessId, changes) => {
+  return Business.update(changes, { where: { id: businessId } });
+};
+
 const updateUser = (uid, changes) => {
   return User.update(changes, { where: { uid } });
 };
@@ -218,4 +222,6 @@ module.exports = {
   searchForCommunityListings,
   getBusinessByFirebaseId,
   setBusinessOwner,
+  updateUser,
+  updateBusiness,
 };

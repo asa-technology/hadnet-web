@@ -39,9 +39,13 @@ public webcamImageInfo: any;
   private nextWebcam: Subject<boolean|string> = new Subject<boolean|string>();
 
   public ngOnInit(): void {
+    this.loading = true; // loading camera
     WebcamUtil.getAvailableVideoInputs()
       .then((mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+      })
+      .then(() => {
+        this.loading = false;
       });
   }
 
@@ -87,7 +91,8 @@ public webcamImageInfo: any;
     this.googleTextService.isBusinessVerified({img: webcamImage.imageAsBase64}).subscribe((businesses) => {
       // run an each loop over businesses lats/longs, returning the business with the
       // lowest distance from current user's location
-         if (businesses !== 'Business Not Found, Please Try Again') {
+         if (businesses !== 'Business Not Found, Please Try Again' && businesses.length !== 0) {
+        console.log(businesses.length);
         const closestBusiness: any = businesses.reduce((closestBiz: any, business: any) => {
         if(this.getClosestBusiness(business.latitude, business.longitude) < this.getClosestBusiness(closestBiz.latitude, closestBiz.longitude)){
           return business;
@@ -162,15 +167,6 @@ this.businessProfileService.changeProfile(biz);
       this.showBusinessSummary = true;
     }
   }
-
-
-
-
-
-
-
-
-
 
   public cameraWasSwitched(deviceId: string): void {
     console.log('active device: ' + deviceId);

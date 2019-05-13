@@ -12,30 +12,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./business-listings.component.css']
 })
 export class BusinessListingsComponent implements OnInit {
-  title:string;
+  title: string;
+  loading: boolean;
   businessListings;
-  constructor(private businessListingService: BusinessListingService, 
+  constructor(private businessListingService: BusinessListingService,
               private imageService: GetBusinessImagesService,
               private businessProfileService: BusinessProfileService,
               private searchService: SearchService,
               private router: Router) { }
 
   ngOnInit() {
+    this.loading = true;
     this.businessListingService.getBusinessListings().subscribe( businessListings => {
+      // add filter here to filter business by proximity
       this.businessListings = businessListings;
       console.log(this.businessListings);
       this.businessListings.forEach((business) => {
-        this.imageService.getImageById(business.id)
-          .subscribe((image) => {
-            if (image) {
-              business.ftImg = image;
-            } else {
-              business.ftImg = {
-                url: 'https://i.imgur.com/BNtJWJM.png'
-              };
-            }
-          });
+        if (business.idFeaturedImage === null){
+          business.ftImg = {
+            url: 'https://i.imgur.com/BNtJWJM.png'
+          };
+        } else {
+          this.imageService.getFeaturedImage(business.idFeaturedImage)
+            .subscribe((image) => {
+                business.ftImg = image;
+            });
+        }
       });
+      this.loading = false;
     });
   }
 

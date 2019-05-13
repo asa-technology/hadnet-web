@@ -14,7 +14,11 @@ export class GetBusinessImagesService {
     return this.http.get<BusinessImage>(this.businessImagesEndpoint.concat(`${id}`));
   }
 
-  getImageById(id:number) {
+  getImageById(id: number) {
+    return this.http.get<BusinessImage>(`/api/image/${id}`);
+  }
+
+  getFeaturedImage(id: number) {
     return this.http.get<BusinessImage>(`/api/image/${id}`);
   }
 }

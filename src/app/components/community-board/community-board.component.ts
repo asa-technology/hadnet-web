@@ -33,7 +33,7 @@ this.getAllListings();
     //console.log(title, body);
     const currentUser = this.getUserId.currentLocalUser;
     return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, currentUser)
-    .subscribe(addedListing => this.getAllListings());
+    .subscribe(addedListing => console.log(addedListing));
   }
 
   removeListing(listingId, idUser) {

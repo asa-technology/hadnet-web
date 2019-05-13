@@ -7,19 +7,71 @@
   <hr>
   <div class="row h-auto">
     <div class="col shadow bg-secondary">
-      <h3 style="font-size:8vw;" class="display-4 text-white font-weight-bold"> {{ businessListing.name }} </h3>
+      <span *ngIf="!editorToggle.name">
+        <h3 style="font-size:5vw;" class="display-4 text-white font-weight-bold"> {{ businessListing.name | titlecase }} </h3><i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('name')" class="fas fa-edit"></i>
+      </span>
+      <span *ngIf="editorToggle.name">
+        <div class='input-group'>
+          <input class="form-control form-control-lg" type="text" value="{{ businessListing.name }}" #nameEdit>
+          <div class="input-group-append">
+            <button class="btn btn-secondary btn-lg" type="button" (click)="updateBusiness(businessListing, 'name', nameEdit.value)">Submit</button>
+          </div>
+        </div>
+      </span>
     </div>
   </div>
   <div class="row h-auto">
-    <div class="col-12">
-      <br><span class="font-weight-bold">Average Rating: </span>{{ businessRating }}
+    <div *ngIf="somethingChanged" class='alert alert-info' role="alert">
+      Edit submitted! Note: It may take a few minutes for your changes to appear.
     </div>
-    <div class="col-12 business-data">
+    <div class="col-12" style="text-align: left">
+      <br>
+      <span class="font-weight-bold">Average Rating: </span><span [innerHtml]='businessRating | rating'></span>
+    </div>
+    <div class="col-12 business-data" style="text-align: left">
       <!-- <p> verification status *** </p> -->
       <p>
-        <span class="font-weight-bold">Phone: </span>{{ businessPhoneNumber }}<br>
-        <span class="font-weight-bold">Email: </span>{{ businessListing.email }}<br>
-        <span class="font-weight-bold">Address: </span>{{ businessListing.address }}<br> 
+        <span *ngIf="!editorToggle.phone">
+          <i class="fas fa-phone-square"></i>&nbsp;&nbsp;{{ businessPhoneNumber | formatPhone }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('phone')" class="fas fa-edit"></i>
+          <br>
+        </span>
+        <span *ngIf="editorToggle.phone">
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="text" value="{{ businessPhoneNumber }}" #phoneEdit>
+            <div class="input-group-append">
+              <button class="btn btn-secondary btn-sm" type="button" (click)="updateBusiness(businessListing, 'phone', phoneEdit.value)">Submit</button>
+            </div>
+          </div>
+          <br>
+        </span>
+        
+        <span *ngIf="!editorToggle.email">
+          <i class="fas fa-envelope"></i>&nbsp;{{ businessListing.email | lowercase }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('email')" class="fas fa-edit"></i>
+          <br>
+        </span>
+        <span *ngIf="editorToggle.email">
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="text" value="{{ businessListing.email}}" #emailEdit>
+            <div class="input-group-append">
+              <button class="btn btn-secondary btn-sm" type="button" (click)="updateBusiness(businessListing, 'email', emailEdit.value)">Submit</button>
+            </div>
+          </div>
+          <br>
+        </span>
+        
+        <span *ngIf="!editorToggle.address">
+          <i class="fas fa-location-arrow"></i>&nbsp;{{ businessListing.address | titlecase }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('address')" class="fas fa-edit"></i>
+          <br>
+        </span>
+        <span *ngIf="editorToggle.address">
+          <div class="input-group">
+            <input class="form-control form-control-sm" type="text" value="{{ businessListing.address }}" #addressEdit>
+            <div class="input-group-append">
+              <button class="btn btn-secondary btn-sm" type="button" (click)="updateBusiness(businessListing, 'address', addressEdit.value)">Submit</button>
+            </div>
+          </div>
+          <br>
+        </span>
       </p>
     </div>
   </div>
