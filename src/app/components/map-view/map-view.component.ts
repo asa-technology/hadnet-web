@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { BusinessListingService } from 'src/app/services/business-listings/business-listing.service';
 import { BusinessListing } from '../../models/BusinessListing';
-
+import { environment } from 'src/environments/environment';
 declare let L;
 declare let tomtom: any;
 
@@ -53,7 +53,7 @@ export class MapViewComponent implements OnInit {
     this.loading = true;
     tomtom.setProductInfo('Hadnet', '0.1');
     const map = tomtom.L.map('map', {
-      key: 'BATuQkjG9LX7IGcAzxbZVkXG1GUPsF68',
+      key: environment.MAPS_API_KEY,
       basePath: '/assets/sdk',
       center: [ this.lat, this.long ],
       zoom: 15,

@@ -11,7 +11,8 @@ export const environment = {
     projectId: 'hadnet2',
     storageBucket: 'hadnet2.appspot.com',
     messagingSenderId: '561644983327'
-  }
+  },
+  MAPS_API_KEY: 'BATuQkjG9LX7IGcAzxbZVkXG1GUPsF68',
 };
 
 /*
