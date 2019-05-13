@@ -8,7 +8,6 @@ const bodyParser = require('body-parser');
 
 const port = process.env.PORT || 3000;
 const path = require('path');
-const { db } = require('../database/index');
 
 // routers
 const businesses = require('./routes/businesses');
