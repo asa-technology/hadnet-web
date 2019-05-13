@@ -1,5 +1,5 @@
 
-<div class="list-group">
+<div *ngIf="!isHadnet(selectedBusiness.name)" class="list-group">
   <h4 class="list-group-item list-group-item-action list-group-item-secondary">{{ selectedBusiness.name | titlecase}}</h4>
   <div class="card-header">
     <!-- <span class="font-weight-bold">Average rating: </span><span [innerHtml]='selectedBusiness.averageRating | rating'></span><br> -->
@@ -8,4 +8,12 @@
     <i class="fas fa-envelope"></i>&nbsp;{{ selectedBusiness.email | lowercase }}<br><br>
     <button class="btn btn-dark btn-block" (click)="goToProfile(selectedBusiness)">Business Profile</button>
   </div>
+</div>
+<div *ngIf="isHadnet(selectedBusiness.name)">
+  <h4>Welcome to Hadnet</h4>
+  <p>
+    We're glad you chose Hadnet. The markers on the map represent African American owned businesses. To visit a
+    businesses profile from the map, select the business you'd like to visit, and click on 'Business Profile'. Feel
+    free to leave reviews once you've signed up for a <a routerLink="login" >Hadnet Account</a>. Thank you!
+  </p>
 </div>
