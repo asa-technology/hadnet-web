@@ -101,6 +101,15 @@ const getBusinessByUser = userId => (
 );
 
 /**
+ * Updates business' average rating.
+ * @param {number} id - A number representing a business id.
+ * @param {number} avgRating - The average rating of the business.
+ * @return {promise}
+ */
+const updateBusinessRating = (id, avgRating) => (
+  Business.update({ averageRating: avgRating }, { where: { id } })
+);
+/**
  * Adds a user to the database using information from a userObj.
  * @param {object} userObj - An object containing the new user's information.
  * @return {promise}
@@ -264,6 +273,7 @@ module.exports = {
   getBusinessById,
   getAllBusinesses,
   getBusinessByUser,
+  updateBusinessRating,
   addUser,
   getAllUsers,
   getUserById,

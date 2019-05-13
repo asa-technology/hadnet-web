@@ -6,6 +6,7 @@ import { GetUsersWhoReviewedService } from '../../services/business-images-and-r
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { RatingsService } from '../../services/ratings/ratings.service';
 import { BusinessProfileService } from '../../services/business-profile/business-profile.service';
+import { UpdateRatingService } from '../../services/business-ratings/update-rating.service';
 
 @Component({
   selector: 'app-ratings',
@@ -21,7 +22,8 @@ export class RatingsComponent implements OnInit {
               private getUsersWhoReviewedService: GetUsersWhoReviewedService,
               private authService: AuthService,
               private ratingsService: RatingsService,
-              private profileService: BusinessProfileService) { }
+              private profileService: BusinessProfileService,
+              private updateRatingService: UpdateRatingService) { }
 
   ngOnInit() {
     const profile = this.profileService.currentProfile;
@@ -61,7 +63,10 @@ export class RatingsComponent implements OnInit {
 
     }
     this.ratingsService.sendUserReview(review).subscribe((response) => {
-      this.reviews = [response];
+      //this.reviews = [response];
+    });
+    this.updateRatingService.sendUserReview({id: profile.id}).subscribe(() => {
+      console.log('finished');
     });
     this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
     .subscribe((reviews) => {
@@ -74,6 +79,7 @@ export class RatingsComponent implements OnInit {
             review.userName = user.displayName;
           });
       });
+      this.reviews = reviews;
     });
     this.toggleForm();
   }
