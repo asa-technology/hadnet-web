@@ -28,11 +28,11 @@
   <ul class="userReview list-group" *ngFor="let review of reviews">
     <li class="list-group-item">
       <div>
-        <img class="reviewProfilePic img-thumbnail" src="{{ userProfilePic }}">
+        <img class="reviewProfilePic img-thumbnail" src="{{ review.userImage }}">
       </div>
       <div class="reviewDescription">
-        <span class="font-weight-bold">Name: </span>{{ userDisplayName }}<br>
-        <span class="font-weight-bold">Rating: </span>{{ review.ratingNumber }}<br>
+        <span class="font-weight-bold">Name: </span>{{ review.userName }}<br>
+        <span class="font-weight-bold">Rating: </span><span [innerHtml]='review.ratingNumber | rating'></span><br>
         <span class="font-weight-bold">Experience: </span> {{ review.text }}
       </div>
     </li>

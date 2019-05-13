@@ -27,6 +27,7 @@
             <div class="card-body">
                 <h5 class='card-title'>{{ businessListing.name | titlecase }}</h5>
                 <p class='card-text' style="font-size: 14px;">
+                  <span class="font-weight-bold">Average Rating: </span><span [innerHtml]='businessListing.averageRating | rating'></span><br>
                   <i class="far fa-envelope"></i> {{ businessListing.email | lowercase }}<br>
                   <i class="fas fa-mobile-alt"></i> {{ businessListing.phoneNumber | formatPhone }}<br>
                   <i class="fas fa-map-marker-alt"></i> {{ businessListing.address | titlecase }}<br>

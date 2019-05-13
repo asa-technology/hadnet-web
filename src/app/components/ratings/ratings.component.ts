@@ -13,7 +13,7 @@ import { BusinessProfileService } from '../../services/business-profile/business
   styleUrls: ['./ratings.component.css']
 })
 export class RatingsComponent implements OnInit {
-  reviews: BusinessRating[];
+  reviews;
   userProfilePic: string;
   userDisplayName: string;
   showReviewForm: boolean = false;
@@ -30,11 +30,13 @@ export class RatingsComponent implements OnInit {
     .subscribe((reviews) => {
       this.reviews = reviews;
       // return usernames from the id's held on these reviews
-      this.getUsersWhoReviewedService.getUsersWhoReviewed(this.reviews[0].idUser)
-      .subscribe((user) => {
-          this.userProfilePic = user.urlImage;
-          this.userDisplayName = user.displayName;
-        });
+      this.reviews.forEach ((review) => {
+        this.getUsersWhoReviewedService.getUsersWhoReviewed(review.idUser)
+        .subscribe((user) => {
+            review.userImage = user.urlImage;
+            review.userName = user.displayName;
+          });
+      })
     });
   }
 
@@ -60,6 +62,18 @@ export class RatingsComponent implements OnInit {
     }
     this.ratingsService.sendUserReview(review).subscribe((response) => {
       this.reviews = [response];
+    });
+    this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
+    .subscribe((reviews) => {
+      this.reviews = reviews;
+      // return usernames from the id's held on these reviews
+      this.reviews.forEach ((review) => {
+        this.getUsersWhoReviewedService.getUsersWhoReviewed(review.idUser)
+        .subscribe((user) => {
+            review.userImage = user.urlImage;
+            review.userName = user.displayName;
+          });
+      });
     });
     this.toggleForm();
   }
