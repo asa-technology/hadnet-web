@@ -1,16 +1,17 @@
+/* eslint-disable no-console */
 const router = require('express').Router();
-const { db } = require('../../database/index');
-const { addCommunityListing, removeCommunityListing, getAllCommunityListings, searchForCommunityListings } = require('../../database/helpers');
-// mock data
-const { communityListings } = require('../../database/mock-community-listings');
+const {
+  addCommunityListing, removeCommunityListing, getAllCommunityListings, searchForCommunityListings,
+} = require('../../database/helpers');
+
 
 router.get('/', (req, res) => {
   console.log('Getting community data!');
-  res.send(communityListings);
 });
 
 // postman request structure, for testing :
-// choosing not to use businessId, because businesses that even want to add listings need userId's anyway. - Sam
+// choosing not to use businessId, because businesses
+// that even want to add listings need userId's anyway. - Sam
 // {
 //   "idUser": "2",
 //   "title": "Come hang out at this fundraiser!",
@@ -25,7 +26,8 @@ router.post('/addCommunityListing', (req, res) => {
   // req body requires a userid, title, body, image url, expiration date
   const defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png';
   return addCommunityListing(req.body, req.body.imageUrl || defaultImageUrl)
-    .then(communityListingAdded => res.send(communityListingAdded)) // sends back info regarding listing that was posted
+  // sends back info regarding listing that was posted
+    .then(communityListingAdded => res.send(communityListingAdded))
     .catch(err => console.log('server/community, error line 29: ', err) /**  res.send('my condolences, friend. that didnt quite work') */);
 });
 // removes specific community listing, takes in a user's id and a listing's title
@@ -37,11 +39,10 @@ router.delete('/removeCommunityListing', (req, res) => {
 });
 
 // returns all community listings
-router.get('/getAllCommunityListings', (req, res) => {
-  return getAllCommunityListings()
+router.get('/getAllCommunityListings', (req, res) => (
+  getAllCommunityListings()
     .then(allCommunityListings => res.send(allCommunityListings))
-    .catch(err => console.log('server/community, error line 43: ', err));
-});
+    .catch(err => console.log('server/community, error line 43: ', err))));
 
 // takes in a community listing title,
 // returns array of all listings including the query in their title

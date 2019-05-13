@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 require('dotenv').config();
 const router = require('express').Router();
 const axios = require('axios');
@@ -30,7 +31,7 @@ router.get('/userid/:id', (req, res) => {
 
 router.get('/firebaseId/:uid', (req, res) => {
   const { uid } = req.params;
-  console.log('Grabbing businesses associated with UID: ' + uid);
+  console.log(`Grabbing businesses associated with UID: ${uid}`);
   getBusinessByFirebaseId(uid)
     .then((results) => {
       res.send(results);
@@ -44,7 +45,7 @@ router.get('/firebaseId/:uid', (req, res) => {
 // gets business at specified id
 // this still uses mock data
 router.get('/:id', (req, res) => {
-  const id = req.params.id - 1;
+  const { id } = req.params;
 
   /** **************TODO****************
    * get business by id from database
