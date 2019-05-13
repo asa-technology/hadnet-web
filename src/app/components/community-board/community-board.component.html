@@ -1,4 +1,8 @@
 <div class="jumbotron jumbotron-fluid">
+  <div *ngIf="!loggedIn">
+    <h1> please log in to add events </h1>
+    <a routerLink="/login"><button>log in to be able to add event</button></a>
+  </div>
   <div class="container">
 
     <h1 class="display-3">Community Board</h1>
