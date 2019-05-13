@@ -212,7 +212,7 @@ const getAllImagesByBusiness = businessId => (
  * @param {object} communityListingInfo - An object representing a community listing.
  * @param {string} defaultImageUrl - A string representing an image URL for the listing.
  */
-const addCommunityListing = (communityListingInfo, defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png') => {
+const addCommunityListing = (communityListingInfo, defaultImageUrl) => {
   const communityListing = Object.create(communityListingInfo);
   communityListing.imageUrl = defaultImageUrl;
   return CommunityListing.create(communityListing);
@@ -222,7 +222,7 @@ const addCommunityListing = (communityListingInfo, defaultImageUrl = 'https://ma
  * Deletes a community listing in the database.
  * @param {number} idUser - A number representing the review's author's user Id.
  * @param {number} id - A number representing the review's Id.
- * @return
+ * @return {promise}
  */
 const removeCommunityListing = (idUser, id) => (
   CommunityListing.destroy({ where: { idUser, id } })
@@ -230,14 +230,20 @@ const removeCommunityListing = (idUser, id) => (
     .catch(err => console.log('error line 176 helpers.js database: ', err))
 );
 
-// returns all community listings
+/**
+ * Grabs all community listings in the database.
+ * @return {promise}
+ */
 const getAllCommunityListings = () => (
   CommunityListing.findAll()
     .then(result => result)
     .catch(err => console.log('error line 183 db helers:', err))
 );
 
-// queries community listings by title, maybe should also query based on body text??
+/**
+ * Finds any listings in the database which match any word in the query array.
+ * @param {string[]} communityListingsQuery - An array of strings to query the listings by.
+ */
 const searchForCommunityListings = communityListingsQuery => (
   CommunityListing.findAll({
     where: {
