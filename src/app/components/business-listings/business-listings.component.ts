@@ -91,22 +91,4 @@ export class BusinessListingsComponent implements OnInit {
     });
   }
 
-  public getClosestBusiness(businessLat: any, businessLong: any) {
-    let userCurrentLat: number;
-    let userCurrentLong: number;
-    let distance: number;
-    if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      userCurrentLat = position.coords.latitude * Math.PI / 180;
-      userCurrentLong = position.coords.longitude * Math.PI / 180;
-      businessLat = businessLat * Math.PI / 180;
-      businessLong = businessLong * Math.PI / 180;
-      const x: number = (businessLong - userCurrentLong) * Math.cos((userCurrentLat + businessLat) / 2);
-      const y: number = (businessLong - userCurrentLat);
-      distance = Math.sqrt(x * x + y * y) * 6371;
-      return distance;
-    });
-  }
-  }
-
 }
