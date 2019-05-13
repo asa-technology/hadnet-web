@@ -1,13 +1,12 @@
 <div class="jumbotron jumbotron-fluid">
-  <div *ngIf="!loggedIn">
+  <div *ngIf="!authService.isLoggedIn">
     <h1> please log in to add events </h1>
     <a routerLink="/login"><button>log in to be able to add event</button></a>
   </div>
   <div class="container">
 
     <h1 class="display-3">Community Board</h1>
-    <div class="float-right"><button>Add Event</button></div>
-
+    <div *ngIf="authService.isLoggedIn" class="float-right"><button>Add Event</button></div>
     <p class="lead">This is where each event listing should go</p>
   </div>
 </div>

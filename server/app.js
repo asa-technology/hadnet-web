@@ -22,7 +22,6 @@ app.use(bodyParser.json({ limit: '10mb', extended: true }));
 // app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(express.static(path.join(__dirname, '../dist/hadnet')));
 
-
 // businesses route
 app.use('/api/business', businesses);
 // user route
