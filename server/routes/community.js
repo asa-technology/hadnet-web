@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const { db } = require('../../database/index');
 const { addCommunityListing, removeCommunityListing, getAllCommunityListings, searchForCommunityListings } = require('../../database/helpers');
-// mock data
-const { communityListings } = require('../../database/mock-community-listings');
+
 
 router.get('/', (req, res) => {
   console.log('Getting community data!');

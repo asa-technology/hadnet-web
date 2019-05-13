@@ -2,9 +2,6 @@ const router = require('express').Router();
 const { db } = require('../../database/index');
 const { addUser, getUserById, getUserByUserId, updateUser } = require('../../database/helpers');
 
-// mock data
-const { users } = require('../../database/mock-user-data');
-
 
 // gets all users
 router.get('/', (req, res) => {

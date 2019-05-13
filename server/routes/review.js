@@ -6,7 +6,6 @@ const {
   getReviewsByBusiness,
 } = require('../../database/helpers')
 
-//const { reviews } = require('../../database/mock-reviews');
 
 router.get('/business/:id', (req, res) => {
   const id = req.params.id;

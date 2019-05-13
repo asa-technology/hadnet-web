@@ -2,8 +2,6 @@ const router = require('express').Router();
 const { db } = require('../../database/index');
 const { getFeaturedImage } = require('../../database/helpers');
 
-//mock data
-const { images } = require('../../database/mock-image-data');
 
 router.get('/:id', (req, res) =>{
   const id = req.params.id;
