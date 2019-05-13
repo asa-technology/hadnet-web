@@ -1,9 +1,12 @@
 <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-
     <h1 class="display-3">Community Board</h1>
+  <div class="container">
+      <div *ngIf="!authService.isLoggedIn">
+          <a routerLink="/login"><button type="button" class="float-right" class="btn btn-light">log in to be able to add event</button></a>
+        </div>
+   
     
-    <form #eventForm="ngForm" (ngSubmit)="addListing(eventTitle,eventBody,eventImage,eventExpire,currentUser)">
+    <form *ngIf="authService.isLoggedIn" (ngSubmit)="addListing(eventTitle,eventBody,eventExpire,eventImage)" #eventForm="ngForm">
     <div class="lead">
       <div class="form-group">
       <input id="eventTitle"  name="title" [(ngModel)]= "eventTitle" class="form-control" type="text" placeholder="Title">
@@ -18,7 +21,7 @@
       <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year/mm/dd">
       </div>
     </div>
-      <div class="float-right"><button type="submit" (click)="addEvent(eventTitle, eventBody, eventExpire, eventImage)" class="btn btn-dark">Add Event</button></div>
+      <div class="float-right"><button type="submit" class="btn btn-dark">Add Event</button></div>
     </form>
     <div *ngIf="allListings">
         <div *ngFor="let listing of allListings" class="card text-white bg-dark mb-3 d-inline-block" style="max-width: 20rem;">

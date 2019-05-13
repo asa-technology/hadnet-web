@@ -8,32 +8,40 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   styleUrls: ['./community-board.component.css']
 })
 export class CommunityBoardComponent implements OnInit {
+  loggedIn: boolean;
   allListings: CommunityListing[];
   title: any;
   body: any;
   dateExpire: any;
   idUser: any;
   imageUrl: any;
-
-
-  constructor(private communityListingsService: CommunityListingsService, private getUserId: AuthService
-    ) { }
+  constructor(private communityListingsService: CommunityListingsService,
+              public authService: AuthService) { }
 
   ngOnInit() {
-this.getAllListings();
+    // if (this.authService.currentLocalUser) {
+    //   this.loggedIn = true;
+    //   this.getAllListings();
+    // } else {
+    //   this.loggedIn = false;
+    //   this.getAllListings();
+    // }
     // testing all the functions
-    // this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12', 1, 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
+     //this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12', 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
     // this.searchForListings('bb');
     // this.getAllListings();
     // this.removeListing(12, 2);
+    this.getAllListings();
   }
 
     // dateExpire needs a format of '2019-05-12'
   addListing(title, body, dateExpire, imageUrl) {
-    //console.log(title, body);
-    const currentUser = this.getUserId.currentLocalUser;
-    return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, currentUser)
-    .subscribe(addedListing => console.log(addedListing));
+    // console.log(this.authService.currentLocalUser);
+    // const idUser = this.authService.currentLocalUser.id;
+      console.log(title, body, dateExpire, imageUrl);
+      // this.loggedIn = true;
+      return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, this.authService.currentLocalUser.id)
+      .subscribe(addedListing => this.getAllListings());
   }
 
   removeListing(listingId, idUser) {
@@ -48,7 +56,7 @@ this.getAllListings();
   getAllListings() {
     // assign this to state and *ngFor over all this data to display community listings
     return this.communityListingsService.getAllCommunityListings()
-    .subscribe(allListings => this.allListings = allListings);
+    .subscribe(allListings => this.allListings = allListings );
   }
 
   searchForListings(title) {
