@@ -22,23 +22,45 @@ export class BusinessListingsComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    let userCurrentLat: number;
+    let userCurrentLong: number;
+    let businessLat: number;
+    let businessLong: number;
+    let distance: number;
     this.loading = true;
     this.businessListingService.getBusinessListings().subscribe( businessListings => {
       // add filter here to filter business by proximity
       this.businessListings = businessListings;
       console.log(this.businessListings);
-      this.businessListings.forEach((business) => {
-        if (business.idFeaturedImage === null){
-          business.ftImg = {
-            url: 'https://i.imgur.com/BNtJWJM.png'
-          };
-        } else {
-          this.imageService.getFeaturedImage(business.idFeaturedImage)
-            .subscribe((image) => {
-                business.ftImg = image;
-            });
-        }
-      });
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          userCurrentLat = position.coords.latitude * Math.PI / 180;
+          userCurrentLong = position.coords.longitude * Math.PI / 180;
+          this.businessListings.forEach((business) => {
+            businessLat = business.latitude * Math.PI / 180;
+            businessLong = business.longitude * Math.PI / 180;
+            const x: number = (businessLong - userCurrentLong) * Math.cos((userCurrentLat + businessLat) / 2);
+            const y: number = (businessLat - userCurrentLat);
+            distance = Math.sqrt(x * x + y * y) * 6371;
+            business.proximity = distance;
+            if (business.idFeaturedImage === null) {
+              business.ftImg = {
+                url: 'https://i.imgur.com/BNtJWJM.png'
+              };
+            } else {
+              this.imageService.getFeaturedImage(business.idFeaturedImage)
+                .subscribe((image) => {
+                    business.ftImg = image;
+                });
+            }
+          });
+          this.businessListings.sort((a, b) => (a.proximity > b.proximity) ? 1 : -1)
+          this.businessListings = this.businessListings.slice(0, 50);
+          console.log(this.businessListings);
+        });
+      }
+      
       this.loading = false;
     });
   }
@@ -66,7 +88,25 @@ export class BusinessListingsComponent implements OnInit {
             }
           });
       });
-    })
+    });
+  }
+
+  public getClosestBusiness(businessLat: any, businessLong: any) {
+    let userCurrentLat: number;
+    let userCurrentLong: number;
+    let distance: number;
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      userCurrentLat = position.coords.latitude * Math.PI / 180;
+      userCurrentLong = position.coords.longitude * Math.PI / 180;
+      businessLat = businessLat * Math.PI / 180;
+      businessLong = businessLong * Math.PI / 180;
+      const x: number = (businessLong - userCurrentLong) * Math.cos((userCurrentLat + businessLat) / 2);
+      const y: number = (businessLong - userCurrentLat);
+      distance = Math.sqrt(x * x + y * y) * 6371;
+      return distance;
+    });
+  }
   }
 
 }
