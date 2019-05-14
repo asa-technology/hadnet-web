@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
 const router = require('express').Router();
 const {
-  addCommunityListing, removeCommunityListing, getAllCommunityListings, searchForCommunityListings,
+  addCommunityListing,
+  removeCommunityListing,
+  getAllCommunityListings,
+  searchForCommunityListings,
 } = require('../../database/helpers');
-
-
-router.get('/', (req, res) => {
-  console.log('Getting community data!');
-});
 
 // postman request structure, for testing :
 // choosing not to use businessId, because businesses
@@ -20,16 +18,28 @@ router.get('/', (req, res) => {
 //     "date_expire": "2019-05-12"
 // }
 
-// adds community listing
+/**
+ * Adds a community listing to the database.
+ * @name Add Community Listing
+ * @route {POST} /api/community/addCommunityListing (really needs to be renamed)
+ * @bodyparam {Object} listing is an object containing the listing information.
+ */
 router.post('/addCommunityListing', (req, res) => {
-  console.log(req.body);
+  const listing = req.body;
   // req body requires a userid, title, body, image url, expiration date
   const defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png';
-  return addCommunityListing(req.body, req.body.imageUrl || defaultImageUrl)
-    .then(communityListingAdded => res.send(communityListingAdded)) // sends back info regarding listing that was posted
-    .catch(err => console.log('server/community, error line 29: ', err));/**  res.send('my condolences, friend. that didnt quite work') */
+  return addCommunityListing(listing, listing.imageUrl || defaultImageUrl)
+    .then(communityListingAdded => res.send(communityListingAdded))
+    .catch(err => console.log('server/community, error line 29: ', err));
 });
-// removes specific community listing, takes in a user's id and a listing's title
+
+/**
+ * Deletes a community listing.
+ * @name Delete Community Listing
+ * @route {DELETE} /api/community/removeCommunityListing (really needs to be renamed)
+ * @queryparam {Number} idUser is a unique identifier for a user
+ * @queryparam {Number} id is a unique identifier for the listing we're trying to delete.
+ */
 router.delete('/removeCommunityListing', (req, res) => {
   console.log(req.query);
   removeCommunityListing(req.query.idUser, req.query.id)
@@ -37,7 +47,11 @@ router.delete('/removeCommunityListing', (req, res) => {
     .catch(err => console.log('server/community, error line 36: ', err));
 });
 
-// returns all community listings
+/**
+ * Grabs all the community listings.
+ * @name Get All Community Listings
+ * @route {GET} /api/community/getAllCommunityListings (really needs to be renamed, should just be "/api/community/")
+ */
 router.get('/getAllCommunityListings', (req, res) => (
   getAllCommunityListings()
     .then(allCommunityListings => res.send(allCommunityListings))
@@ -45,6 +59,12 @@ router.get('/getAllCommunityListings', (req, res) => (
 
 // takes in a community listing title,
 // returns array of all listings including the query in their title
+/**
+ * Grabs community listings that match a specified query.
+ * @name Search For Community Listing
+ * @route {GET} /api/community/searchForCommunityListings
+ * @queryparam {String} title is the title of the listing to search for.
+ */
 router.get('/searchForCommunityListings', (req, res) => {
   const query = req.query.title;
   let origArray;
