@@ -44,7 +44,7 @@ router.get('/user/:id', (req, res) => {
 /**
  * Adds a review to the database.
  * @name Add Review
- * @route /api/review/
+ * @route {POST} /api/review/
  * @bodyparam {Object} review is an object containing the info for a review.
  */
 router.post('/', (req, res) => {
