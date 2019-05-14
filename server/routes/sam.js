@@ -3,7 +3,15 @@ const router = require('express').Router();
 const axios = require('axios');
 const { addBusiness } = require('../../database/helpers');
 
-router.get('/:zip', (req, res) => {
+/**
+ * This route is only for seeding the database with business info.
+ * It does not send a response, which may be confusing.
+ * This is for dev purposes only.
+ * @name Seed Database
+ * @route {GET} /api/sam/:zip
+ * @routeparam {Number} zip is a zip code to find businesses in.
+ */
+router.get('/:zip', (req) => {
   const { zip } = req.params;
   console.log('request made');
   axios.get('https://api.data.gov/sam/v3/registrations', {
@@ -43,21 +51,17 @@ router.get('/:zip', (req, res) => {
         const streetAdd = listing.samAddress.line1.split(' ');
         streetAdd.shift();
         const street = encodeURI(streetAdd.join(' ').trim());
-        axios.get(`https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=USA&streetNumber=${streetNum}&streetName=${street}&municipality=New%20Orleans&countrySubdivision=Louisiana&postalCode=${listing.samAddress.zip}&extendedPostalCodesFor=Addr&key=${process.env.MAPS_API_KEY}`
-        )
-          .then((results) => {
+        axios.get(`https://api.tomtom.com/search/2/structuredGeocode.json?countryCode=USA&streetNumber=${streetNum}&streetName=${street}&municipality=New%20Orleans&countrySubdivision=Louisiana&postalCode=${listing.samAddress.zip}&extendedPostalCodesFor=Addr&key=${process.env.MAPS_API_KEY}`)
+          .then(() => {
             const latitude = results.data.results[0].position.lat;
             const longitude = results.data.results[0].position.lon;
             console.log(latitude, longitude);
             businessEntry.latitude = latitude;
             businessEntry.longitude = longitude;
             if (listing.businessTypes.includes('OY')) {
-              addBusiness(businessEntry)
-                .then((result) => {
-                });
+              addBusiness(businessEntry);
             }
-          })
-          .catch((error) => {
+          }).catch((error) => {
             console.log(error);
           });
       });
