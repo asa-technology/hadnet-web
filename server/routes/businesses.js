@@ -18,7 +18,7 @@ require('dotenv').config();
 /**
  * These are the routes for business-related information.
  * All endpoints look like: /api/business/[rest of endpoint here]
- * @namespace Business Routes
+ * @namespace BusinessRoutes
  */
 
 /**
