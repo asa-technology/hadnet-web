@@ -30,7 +30,7 @@ router.get('/business/:id', (req, res) => {
  * @route {GET} /api/review/user/:id
  * @routeparam {Number} id is the unique identifier for a user.
  */
-router.get('/user/:id', (req,res) => {
+router.get('/user/:id', (req, res) => {
   const userId = parseInt(req.params.id, 10);
   getReviewsByUser(userId)
     .then((reviews) => {
