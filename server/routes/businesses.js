@@ -149,7 +149,7 @@ router.put('/update/:id', (req, res) => {
 });
 
 // verifies a business by checking if image data name matches any buisness name in the table
-router.post('/isVerfied', (req, res) => {
+router.post('/isVerified', (req, res) => {
   axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_IMAGE_VERIFY_KEY}`, {
     requests: [
       {

@@ -54,6 +54,7 @@ router.get('/:zip', (req, res) => {
             if (listing.businessTypes.includes('OY')) {
               addBusiness(businessEntry)
                 .then((result) => {
+                  res.send('done');
                 });
             }
           })
