@@ -17,14 +17,15 @@ require('dotenv').config();
 
 /**
  * These are the routes for business-related information.
- * All endpoints look like:
- * "/api/business/[rest of endpoint here]"
+ * All endpoints look like: /api/business/[rest of endpoint here]
+ * @namespace Business Routes
  */
 
 /**
  * Grabs all businesses from the database.
  * @name Get All Businesses
  * @route {GET} /api/business/
+ * @memberof BusinessRoutes
  */
 router.get('/', (req, res) => {
   console.log('Grabbing all businesses');
@@ -39,6 +40,7 @@ router.get('/', (req, res) => {
  * @name Get Business by User ID
  * @route {GET} /api/business/userid/:id
  * @routeparam {Number} :id is the unique id for a user.
+ * @memberof BusinessRoutes
  */
 router.get('/userid/:id', (req, res) => {
   const userId = req.params.id;
@@ -51,6 +53,7 @@ router.get('/userid/:id', (req, res) => {
  * @name Get Business by User Firebase ID
  * @route {GET} /api/business/firebaseId/:uid
  * @routeparam {String} :uid is the unique firebase id for a user.
+ * @memberof BusinessRoutes
  */
 router.get('/firebaseId/:uid', (req, res) => {
   const { uid } = req.params;
@@ -69,6 +72,7 @@ router.get('/firebaseId/:uid', (req, res) => {
  * @name Search For Business
  * @route {GET} /api/business/search/:query
  * @routeparam {String} :query is a string to query by.
+ * @memberof BusinessRoutes
  */
 router.get('/search/:query', (req, res) => {
   const { query } = req.params;
@@ -118,6 +122,7 @@ router.get('/search/:query', (req, res) => {
  * @name Update Business Avg Review
  * @route {PUT} /api/business/avgreviews
  * @bodyparam {Number} id is the unique identifier for the business we are updating.
+ * @memberof BusinessRoutes
  */
 router.put('/avgreviews', (req, res) => {
   const { id } = req.body;
@@ -145,6 +150,7 @@ router.put('/avgreviews', (req, res) => {
  * @route {PUT} /api/business/claim/:id
  * @routeparam {Number} :id is the unique identifier for a business.
  * @bodyparam {String} uid is the unique firebase id for a user.
+ * @memberof BusinessRoutes
  */
 router.put('/claim/:id', (req, res) => {
   const { id } = req.params;
@@ -158,9 +164,10 @@ router.put('/claim/:id', (req, res) => {
 /**
  * Updates the information of a specified business (specified by Id)
  * @name Update Business
- * @route /api/business/update/:id
+ * @route {PUT} /api/business/update/:id
  * @routeparam {Number} :id is the unique identifier for a business.
  * @bodyparam {Object} changes is an object containing the changes to be made to the business.
+ * @memberof BusinessRoutes
  */
 router.put('/update/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
@@ -175,6 +182,7 @@ router.put('/update/:id', (req, res) => {
  * @name Verify A Business
  * @route {POST} /api/business/isVerfied
  * @bodyparam {String} img is the base64 encoded image to be checked for text.
+ * @memberof BusinessRoutes
  */
 router.post('/isVerfied', (req, res) => {
   axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_IMAGE_VERIFY_KEY}`, {
