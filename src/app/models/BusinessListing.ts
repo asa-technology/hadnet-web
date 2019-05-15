@@ -1,12 +1,12 @@
 export class BusinessListing {
   id: number;
   name: string;
-  idBusinessType: number;
+  idBusinessType: any;
   phoneNumber: number;
   email: string;
-  urlHomepage: string;
+  urlHomepage: any;
   address: string;
-  idFeaturedImage: number;
+  idFeaturedImage: any;
   latitude: number;
   longitude: number;
   idUser: number;

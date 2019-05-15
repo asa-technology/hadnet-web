@@ -44,7 +44,7 @@
           </div>
           <br>
         </span>
-        
+
         <span *ngIf="!editorToggle.email">
           <i class="fas fa-envelope"></i>&nbsp;{{ businessListing.email | lowercase }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('email')" class="fas fa-edit"></i>
           <br>
@@ -58,7 +58,7 @@
           </div>
           <br>
         </span>
-        
+
         <span *ngIf="!editorToggle.address">
           <i class="fas fa-location-arrow"></i>&nbsp;{{ businessListing.address | titlecase }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('address')" class="fas fa-edit"></i>
           <br>

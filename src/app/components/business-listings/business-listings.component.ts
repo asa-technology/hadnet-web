@@ -43,6 +43,7 @@ export class BusinessListingsComponent implements OnInit {
             const y: number = (businessLat - userCurrentLat);
             distance = Math.sqrt(x * x + y * y) * 6371;
             business.proximity = distance;
+            business.ftImg = {};
             if (business.idFeaturedImage === null) {
               business.ftImg = {
                 url: 'https://i.imgur.com/BNtJWJM.png'
@@ -66,6 +67,7 @@ export class BusinessListingsComponent implements OnInit {
     this.businessProfileService.changeProfile(business);
     this.router.navigate(['/', 'business-profile']);
   }
+
   onSubmit() {
     this.searchService.searchForBusiness(this.title).subscribe( searchResults => {
       this.businessListings = searchResults;
