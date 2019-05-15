@@ -13,7 +13,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  */
 export class FormatAddressPipe implements PipeTransform {
 /**
- * 
+ * transform takes in a piped value and returns a transformed value.
  * @param address address being passed into the pipe.
  * @returns a string with the address formatted.
  */
