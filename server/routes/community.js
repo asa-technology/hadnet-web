@@ -19,10 +19,16 @@ const {
 // }
 
 /**
+ * These routes are all for community listings.
+ * @namespace CommunityRoutes
+ */
+
+/**
  * Adds a community listing to the database.
  * @name Add Community Listing
  * @route {POST} /api/community/addCommunityListing (really needs to be renamed)
  * @bodyparam {Object} listing is an object containing the listing information.
+ * @memberof CommunityRoutes
  */
 router.post('/addCommunityListing', (req, res) => {
   const listing = req.body;
@@ -39,6 +45,7 @@ router.post('/addCommunityListing', (req, res) => {
  * @route {DELETE} /api/community/removeCommunityListing (really needs to be renamed)
  * @queryparam {Number} idUser is a unique identifier for a user
  * @queryparam {Number} id is a unique identifier for the listing we're trying to delete.
+ * @memberof CommunityRoutes
  */
 router.delete('/removeCommunityListing', (req, res) => {
   console.log(req.query);
@@ -51,6 +58,7 @@ router.delete('/removeCommunityListing', (req, res) => {
  * Grabs all the community listings.
  * @name Get All Community Listings
  * @route {GET} /api/community/getAllCommunityListings (really needs to be renamed, should just be "/api/community/")
+ * @memberof CommunityRoutes
  */
 router.get('/getAllCommunityListings', (req, res) => (
   getAllCommunityListings()
@@ -64,6 +72,7 @@ router.get('/getAllCommunityListings', (req, res) => (
  * @name Search For Community Listing
  * @route {GET} /api/community/searchForCommunityListings
  * @queryparam {String} title is the title of the listing to search for.
+ * @memberof CommunityRoutes
  */
 router.get('/searchForCommunityListings', (req, res) => {
   const query = req.query.title;

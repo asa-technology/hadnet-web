@@ -8,6 +8,9 @@ const {
   getAllUsers,
 } = require('../../database/helpers');
 
+/**
+ * 
+ */
 
 /**
  * Grabs all users from the database.

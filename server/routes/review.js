@@ -8,10 +8,16 @@ const {
 } = require('../../database/helpers');
 
 /**
+ * These routes are all relating to reviews and ratings.
+ * @namespace ReviewRoutes
+ */
+
+/**
  * Grabs all reviews associated with a specified business.
  * @name Get Reviews By Business ID
  * @route {GET} /api/review/business/:id
  * @routeparam {Number} id is the unique identifier for a business.
+ * @memberof ReviewRoutes
  */
 router.get('/business/:id', (req, res) => {
   const { id } = req.params;
@@ -29,6 +35,7 @@ router.get('/business/:id', (req, res) => {
  * @name Get Reviews By User ID
  * @route {GET} /api/review/user/:id
  * @routeparam {Number} id is the unique identifier for a user.
+ * @memberof ReviewRoutes
  */
 router.get('/user/:id', (req, res) => {
   const userId = parseInt(req.params.id, 10);
@@ -46,6 +53,7 @@ router.get('/user/:id', (req, res) => {
  * @name Add Review
  * @route {POST} /api/review/
  * @bodyparam {Object} review is an object containing the info for a review.
+ * @memberof ReviewRoutes
  */
 router.post('/', (req, res) => {
   const review = req.body;

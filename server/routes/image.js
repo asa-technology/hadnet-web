@@ -7,6 +7,7 @@ const { getFeaturedImage } = require('../../database/helpers');
  * @name Get Image by ID
  * @route {GET} /api/image/:id
  * @routeparam {Number} id is the unique identifier for an image.
+ * @namespace ImageRoutes
  */
 router.get('/:id', (req, res) => {
   const { id } = req.params;
