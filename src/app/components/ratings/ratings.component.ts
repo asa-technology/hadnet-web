@@ -65,7 +65,6 @@ export class RatingsComponent implements OnInit {
     this.ratingsService.sendUserReview(review).subscribe((response) => {
     });
     this.updateRatingService.sendUserReview({id: profile.id}).subscribe(() => {
-      console.log('finished');
     });
     this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
     .subscribe((reviews) => {
