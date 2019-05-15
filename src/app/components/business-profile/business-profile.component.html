@@ -59,8 +59,8 @@
           <br>
         </span>
         
-        <span *ngIf="!editorToggle.address">
-          <i class="fas fa-location-arrow"></i>&nbsp;{{ businessListing.address | titlecase }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('address')" class="fas fa-edit"></i>
+        <span *ngIf="!editorToggle.address" style="white-space: pre-wrap">
+          <i class="fas fa-location-arrow"></i>&nbsp;{{ businessListing.address | titlecase | formatAddress }}&nbsp;&nbsp;&nbsp;&nbsp;<i *ngIf="isCurrentUsersBusiness()" (click)="toggleEdit('address')" class="fas fa-edit"></i>
           <br>
         </span>
         <span *ngIf="editorToggle.address">

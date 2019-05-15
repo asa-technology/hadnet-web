@@ -2,7 +2,13 @@
 const router = require('express').Router();
 const { getFeaturedImage } = require('../../database/helpers');
 
-
+/**
+ * Grabs an image specified by its id.
+ * @name Get Image by ID
+ * @route {GET} /api/image/:id
+ * @routeparam {Number} id is the unique identifier for an image.
+ * @namespace ImageRoutes
+ */
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   getFeaturedImage(id)
@@ -16,11 +22,6 @@ router.get('/:id', (req, res) => {
     }).catch((err) => {
       console.log(err);
     });
-})
-
-router.get('/business/:id', (req, res) => {
-  // add functionality to get images by busimess id
-  const businessId = parseInt(req.params.id, 10);
 });
 
 module.exports = router;

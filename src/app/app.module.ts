@@ -27,6 +27,7 @@ import { RatingsComponent } from './components/ratings/ratings.component';
 import { RatingsItemComponent } from './components/ratings-item/ratings-item.component';
 import { CommunityBoardComponent } from './components/community-board/community-board.component';
 import { FormatPhonePipe } from './pipes/formatPhone.pipe';
+import { FormatAddressPipe } from './pipes/formatAddress.pipe';
 import { RatingPipe } from './pipes/rating.pipe';
 
 
@@ -48,6 +49,7 @@ import { RatingPipe } from './pipes/rating.pipe';
     RatingsItemComponent,
     CommunityBoardComponent,
     FormatPhonePipe,
+    FormatAddressPipe,
     RatingPipe,
   ],
   imports: [

@@ -7,9 +7,9 @@ import { BusinessVerified } from '../../app/models/BusinessVerified';
   providedIn: 'root'
 })
 export class GoogleTextService {
-verifiedBusinessEndpoint = '/api/business/isVerfied';
+verifiedBusinessEndpoint = '/api/business/isVerified';
   constructor(private http: HttpClient) { }
-  isBusinessVerified(image: any): Observable <any>{
+  isBusinessVerified(image: any): Observable <any> {
     return this.http.post<any>(this.verifiedBusinessEndpoint, image);
   }
 }

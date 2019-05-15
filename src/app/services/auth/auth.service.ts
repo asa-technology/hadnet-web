@@ -35,7 +35,7 @@ export class AuthService {
         firebaseId: this.user.uid,
         accountType: 'User',
         urlImage: 'https://i.imgur.com/BNtJWJM.png'
-      }
+      };
       this.http.post<any>('/api/user', userObj).subscribe();
       await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
       this.router.navigate(['']);
@@ -54,7 +54,7 @@ export class AuthService {
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password);
       await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
-      await this.refreshUserBusiness()
+      await this.refreshUserBusiness();
       this.router.navigate(['']);
     } catch (e) {
       alert('Error! ' + e.message);
@@ -72,14 +72,14 @@ export class AuthService {
   async fbLogin() {
     try {
       const provider = new firebase.auth.FacebookAuthProvider();
-      await this.afAuth.auth.signInWithPopup(provider)
+      await this.afAuth.auth.signInWithPopup(provider);
       const userObj = {
         email: this.user.email,
         displayName: this.user.displayName,
         firebaseId: this.user.uid,
         accountType: 'User',
         urlImage: this.user.photoURL
-      }
+      };
       this.http.post<any>('/api/user', userObj).subscribe();
       await this.http.get(`/api/user/firebaseId/${this.user.uid}`).subscribe(user => this.localUser = user);
       await this.refreshUserBusiness();

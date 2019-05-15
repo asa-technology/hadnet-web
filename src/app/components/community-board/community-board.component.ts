@@ -20,7 +20,8 @@ export class CommunityBoardComponent implements OnInit {
 
   ngOnInit() {
     // testing all the functions
-     //this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12', 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
+    // this.addListing('bbq', 'come to my backyard barbecue', '2019-05-12',
+    // 'https://cdn.stockphotosecrets.com/wp-content/uploads/2018/08/hide-the-pain-stockphoto-840x560.jpg');
     // this.searchForListings('bb');
     // this.getAllListings();
     // this.removeListing(12, 2);
@@ -29,19 +30,15 @@ export class CommunityBoardComponent implements OnInit {
 
     // dateExpire needs a format of '2019-05-12'
   addListing(title, body, dateExpire, imageUrl) {
-    // console.log(this.authService.currentLocalUser);
     // const idUser = this.authService.currentLocalUser.id;
-      console.log(title, body, dateExpire, imageUrl);
       // this.loggedIn = true;
       return this.communityListingsService.addCommunityListing(title, body, imageUrl, dateExpire, this.authService.currentLocalUser.id)
       .subscribe(addedListing => this.getAllListings());
   }
 
   removeListing(listingId, idUser) {
-    console.log(listingId, idUser);
     return this.communityListingsService.removeCommunityListing(listingId, idUser)
     .subscribe(removedListing => {
-      console.log(removedListing, ' was removed from the database');
       // after this, get all listings
     });
   }
@@ -53,9 +50,8 @@ export class CommunityBoardComponent implements OnInit {
   }
 
   searchForListings(title) {
-    console.log(title);
     return this.communityListingsService.searchForCommunityListings(title)
-    .subscribe(searchResults => console.log(searchResults));
+    .subscribe(searchResults => {});
   }
   eventForm() {
 
