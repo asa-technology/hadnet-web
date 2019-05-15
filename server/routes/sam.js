@@ -11,7 +11,7 @@ const { addBusiness } = require('../../database/helpers');
  * @route {GET} /api/sam/:zip
  * @routeparam {Number} zip is a zip code to find businesses in.
  */
-router.get('/:zip', (req) => {
+router.get('/:zip', (req, res) => {
   const { zip } = req.params;
   console.log('request made');
   axios.get('https://api.data.gov/sam/v3/registrations', {
@@ -59,7 +59,10 @@ router.get('/:zip', (req) => {
             businessEntry.latitude = latitude;
             businessEntry.longitude = longitude;
             if (listing.businessTypes.includes('OY')) {
-              addBusiness(businessEntry);
+              addBusiness(businessEntry)
+                .then(() => {
+                  res.send('done');
+                });
             }
           }).catch((error) => {
             console.log(error);
