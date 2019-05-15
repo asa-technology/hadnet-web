@@ -63,21 +63,21 @@ export class RatingsComponent implements OnInit {
 
     };
     this.ratingsService.sendUserReview(review).subscribe((response) => {
-    });
-    this.updateRatingService.sendUserReview({id: profile.id}).subscribe(() => {
-    });
-    this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
-    .subscribe((reviews) => {
-      this.reviews = reviews;
-      // return usernames from the id's held on these reviews
-      this.reviews.forEach ((rev) => {
-        this.getUsersWhoReviewedService.getUsersWhoReviewed(rev.idUser)
-        .subscribe((user) => {
-            rev.userImage = user.urlImage;
-            rev.userName = user.displayName;
+      this.updateRatingService.sendUserReview({id: profile.id}).subscribe(() => {
+        this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
+        .subscribe((reviews) => {
+          this.reviews = reviews;
+          // return usernames from the id's held on these reviews
+          this.reviews.forEach ((rev) => {
+            this.getUsersWhoReviewedService.getUsersWhoReviewed(rev.idUser)
+            .subscribe((user) => {
+                rev.userImage = user.urlImage;
+                rev.userName = user.displayName;
+              });
           });
+          this.reviews = reviews;
+        });
       });
-      this.reviews = reviews;
     });
     this.toggleForm();
   }

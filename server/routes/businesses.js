@@ -134,7 +134,7 @@ router.put('/avgreviews', (req, res) => {
         avgRating = reviews.reduce((total, review) => total + review.ratingNumber, 0);
         avgRating /= reviews.length;
         updateBusinessRating(id, Math.floor(avgRating))
-          .then(() => res.sendStatus(201));
+          .then(business => res.send(business));
       } else {
         avgRating = 0;
         updateBusinessRating(id, avgRating)
