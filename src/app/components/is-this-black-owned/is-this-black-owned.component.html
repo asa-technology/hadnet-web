@@ -13,6 +13,7 @@
     ></webcam>
     <br/>
     <button class="actionBtn" *ngIf="showWebcam" (click)="triggerSnapshot();">Take A Snapshot of Business</button>
+    <hr>
     <div class="container">
         <button type="button" class="btn btn" data-toggle="modal" data-target="#ITBOinfo"><i class="far fa-question-circle"></i>
         </button>  
@@ -55,17 +56,19 @@
 <!-- <div class="snapshot" *ngIf="webcamImage">
   <img [src]="webcamImage.imageAsDataUrl"/>
 </div> -->
-<div class="container" *ngIf="showBusinessSummary">
-   <p>{{ business.name }}<br>
-      {{ business.address}}<br>
-      {{ business.email }}
-   </p>
+<div class="container" *ngIf="showBusinessSummary" >
+  <h4>{{ business.name | titlecase}}</h4><br>
+  <p style="white-space: pre-wrap">
+    <i class="far fa-envelope"></i> {{ business.email | lowercase }}<br>
+    <i class="fas fa-map-marker-alt"></i> {{ business.address | titlecase | formatAddress }}<br>
+  </p>
+  <hr>
   <span class="row">
     <div class="col-sm">
-      is this the business you'd like to visit?
+      <h4>Is this the business you'd like to visit?</h4>
     </div>
     <div class="col-sm">
-      <a routerLink="/business-profile"><button (click)="changeBusinessProfile(business);">yes</button></a> <button (click)="returnToCameraView()">nope</button>
+      <a routerLink="/business-profile"><button class="btn btn-dark btn-block btn-sm" (click)="changeBusinessProfile(business);">yes</button></a> <button class="btn btn-dark btn-block btn-sm" (click)="returnToCameraView()">nope</button>
     </div>
   </span>
 
