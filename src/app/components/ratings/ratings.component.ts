@@ -70,11 +70,11 @@ export class RatingsComponent implements OnInit {
     .subscribe((reviews) => {
       this.reviews = reviews;
       // return usernames from the id's held on these reviews
-      this.reviews.forEach ((review) => {
-        this.getUsersWhoReviewedService.getUsersWhoReviewed(review.idUser)
+      this.reviews.forEach ((rev) => {
+        this.getUsersWhoReviewedService.getUsersWhoReviewed(rev.idUser)
         .subscribe((user) => {
-            review.userImage = user.urlImage;
-            review.userName = user.displayName;
+            rev.userImage = user.urlImage;
+            rev.userName = user.displayName;
           });
       });
       this.reviews = reviews;
