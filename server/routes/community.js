@@ -26,11 +26,11 @@ const {
 /**
  * Adds a community listing to the database.
  * @name Add Community Listing
- * @route {POST} /api/community/addCommunityListing (really needs to be renamed)
+ * @route {POST} /api/community/add (really needs to be renamed)
  * @bodyparam {Object} listing is an object containing the listing information.
  * @memberof CommunityRoutes
  */
-router.post('/addCommunityListing', (req, res) => {
+router.post('/add', (req, res) => {
   const listing = req.body;
   // req body requires a userid, title, body, image url, expiration date
   const defaultImageUrl = 'https://makitweb.com/demo/broken_image/images/noimage.png';
@@ -42,12 +42,12 @@ router.post('/addCommunityListing', (req, res) => {
 /**
  * Deletes a community listing.
  * @name Delete Community Listing
- * @route {DELETE} /api/community/removeCommunityListing (really needs to be renamed)
+ * @route {DELETE} /api/community/remove (really needs to be renamed)
  * @queryparam {Number} idUser is a unique identifier for a user
  * @queryparam {Number} id is a unique identifier for the listing we're trying to delete.
  * @memberof CommunityRoutes
  */
-router.delete('/removeCommunityListing', (req, res) => {
+router.delete('/remove', (req, res) => {
   console.log(req.query);
   removeCommunityListing(req.query.idUser, req.query.id)
     .then(removedCommunityListing => res.send(removedCommunityListing))
@@ -57,10 +57,10 @@ router.delete('/removeCommunityListing', (req, res) => {
 /**
  * Grabs all the community listings.
  * @name Get All Community Listings
- * @route {GET} /api/community/getAllCommunityListings (really needs to be renamed, should just be "/api/community/")
+ * @route {GET} /api/community/getAll (really needs to be renamed, should just be "/api/community/")
  * @memberof CommunityRoutes
  */
-router.get('/getAllCommunityListings', (req, res) => (
+router.get('/getAll', (req, res) => (
   getAllCommunityListings()
     .then(allCommunityListings => res.send(allCommunityListings))
     .catch(err => console.log('server/community, error line 43: ', err))));
@@ -70,11 +70,11 @@ router.get('/getAllCommunityListings', (req, res) => (
 /**
  * Grabs community listings that match a specified query.
  * @name Search For Community Listing
- * @route {GET} /api/community/searchForCommunityListings
+ * @route {GET} /api/community/search
  * @queryparam {String} title is the title of the listing to search for.
  * @memberof CommunityRoutes
  */
-router.get('/searchForCommunityListings', (req, res) => {
+router.get('/search', (req, res) => {
   const query = req.query.title;
   let origArray;
   let uppArray;
