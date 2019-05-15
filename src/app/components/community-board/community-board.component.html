@@ -1,37 +1,73 @@
 <div class="jumbotron jumbotron-fluid">
-    <h1 class="display-3">Community Board</h1>
+    <h1 class="display-3" class="text-center">Community Board</h1>
+    <button type="button" class="btn btn" data-toggle="modal" data-target="#communityForm"><i class="far fa-calendar-plus"></i>
+    </button> 
   <div class="container">
-      <div *ngIf="!authService.isLoggedIn">
-          <a routerLink="/login"><button class="float-right" class="btn btn-light">log in to be able to add event</button></a>
+      <div *ngIf="!authService.isLoggedIn" class="float-right">
+          <a routerLink="/login"><button  class="btn btn-light"><small>Login to Add Event</small></button></a>
         </div>
-   
+        <div *ngIf="allListings">
+            <div class="container">
+                <div class="row">
+                  <div *ngFor="let listing of allListings" class="col-12 col-sm-8 col-md-6 col-lg-4">
+                    <div class="card">
+                      <img class="card-img" src={{listing.imageUrl}} alt="Bologna">
+                      <div class="card-body">
+                        <h4 class="card-title">{{listing.title}}</h4>
+                       
+                        <p class="card-text">{{listing.body}}</p>
+                        <!-- <a href="#" class="btn btn-dark"><small>Read Recipe<small></a> -->
+                      </div>
+                      <div class="card-footer text-muted d-flex justify-content-between bg-transparent border-top-0">
+                        <div class="views">{{listing.date_expire}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>  
+  </div>
     
-    <form *ngIf="authService.isLoggedIn" (ngSubmit)="addListing(eventTitle,eventBody,eventExpire,eventImage)" #eventForm="ngForm">
-    <div class="lead">
-      <div class="form-group">
-      <input id="eventTitle"  name="title" [(ngModel)]= "eventTitle" class="form-control" type="text" placeholder="Title">
-    </div>
-    <div class="form-group">
-      <input id="eventBody" name="body" [(ngModel)]= "eventBody" class="form-control" type="text" placeholder="Description">
-      </div>
-      <div class="form-group">
-      <input id="eventImage"  name="image" [(ngModel)]= "eventImage" class="form-control" type="text" placeholder="Image Url">
-      </div>
-      <div class="form-group">
-      <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year/mm/dd">
-      </div>
-    </div>
-      <div class="float-right"><button type="submit" class="btn btn-dark">Add Event</button></div>
-    </form>
-    <div *ngIf="allListings">
-        <div *ngFor="let listing of allListings" class="card text-white bg-dark mb-3 d-inline-block" style="max-width: 20rem;">
-            <div class="card-header">{{listing.title}}</div>
-            <div class="card-body">
-              <p class="card-text">{{listing.body}}<br><img class="card-image" src={{listing.imageUrl}}><br>{{listing.date_expire}}</p>
+   
+          
+          <div class="modal fade" id="communityForm" tabindex="-1" role="dialog" aria-labelledby="communityForm" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" id="communityForm" >Community Listing</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-center">
+                    <form *ngIf="authService.isLoggedIn" (ngSubmit)="addEvent(eventTitle,eventBody,eventExpire,eventImage)" #eventForm="ngForm">
+                        
+                    <div class="lead">
+                        <div class="form-group">
+                        <input id="eventTitle"  name="title" [(ngModel)]= "eventTitle" class="form-control" type="text" placeholder="Title">
+                      </div>
+                      <div class="form-group">
+                        <input id="eventBody" name="body" [(ngModel)]= "eventBody" class="form-control" type="text" placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                        <input id="eventImage"  name="image" [(ngModel)]= "eventImage" class="form-control" type="text" placeholder="Image Url">
+                        </div>
+                        <div class="form-group">
+                        <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year-mm-dd(date format)">
+                        </div>
+                      </div>
+                        <div class="float-right"><button type="submit" class="btn btn-dark"><small>Add Event</small></button></div>
+                      </form>
+                      
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
             </div>
           </div>
-    </div>
   
     <!-- {{eventForm.value | json}} -->
   </div>
 </div>
+
