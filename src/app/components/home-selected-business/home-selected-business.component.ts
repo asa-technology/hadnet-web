@@ -19,7 +19,7 @@ export class HomeSelectedBusinessComponent implements OnInit {
     this.businessProfileService.changeProfile(business);
     this.router.navigate(['/', 'business-profile']);
   }
-  isHadnet(businessName){
+  isHadnet(businessName) {
     return businessName === 'Hadnet Headquarters' ? true : false;
   }
 }

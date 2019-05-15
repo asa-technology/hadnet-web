@@ -9,7 +9,6 @@ export class UpdateRatingService {
   updateRatingEndpoint = '/api/business/avgreviews';
   constructor(private http: HttpClient) { }
   sendUserReview(id: any): Observable <any> {
-    console.log('trying to update avg ratings');
     return this.http.put<any>(this.updateRatingEndpoint, id);
   }
 }

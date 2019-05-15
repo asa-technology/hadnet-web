@@ -17,7 +17,7 @@ export class RatingsComponent implements OnInit {
   reviews;
   userProfilePic: string;
   userDisplayName: string;
-  showReviewForm: boolean = false;
+  showReviewForm = false;
   constructor(private getBusinessRatingsService: GetBusinessRatingsService,
               private getUsersWhoReviewedService: GetUsersWhoReviewedService,
               private authService: AuthService,
@@ -38,7 +38,7 @@ export class RatingsComponent implements OnInit {
             review.userImage = user.urlImage;
             review.userName = user.displayName;
           });
-      })
+      });
     });
   }
 
@@ -54,19 +54,17 @@ export class RatingsComponent implements OnInit {
       email: currentUser.email,
       photoURL: currentUser.photoURL,
       uid: currentUser.uid
-    }
+    };
     const review = {
       text: reviewText,
       ratingNumber: rating,
       idBusiness: profile.id,
       idUser: currentUser.uid,
 
-    }
+    };
     this.ratingsService.sendUserReview(review).subscribe((response) => {
-      //this.reviews = [response];
     });
     this.updateRatingService.sendUserReview({id: profile.id}).subscribe(() => {
-      console.log('finished');
     });
     this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
     .subscribe((reviews) => {

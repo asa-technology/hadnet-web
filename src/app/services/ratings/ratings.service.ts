@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class RatingsService {
 reviewEndpoint = '/api/review';
   constructor(private http: HttpClient) { }
-  sendUserReview(review: any): Observable <any>{
+  sendUserReview(review: any): Observable <any> {
     return this.http.post<any>(this.reviewEndpoint, review);
   }
 }
