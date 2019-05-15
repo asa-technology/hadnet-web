@@ -13,7 +13,7 @@ export class BusinessProfileService {
     return this.http.get(`/api/business/${id}`)
       .subscribe((business) => {
         this.businessProfile = business;
-      })
+      });
   }
 
   async refreshProfile() {
