@@ -77,7 +77,7 @@ export class BusinessProfileComponent implements OnInit {
   }
 
   businessCanBeClaimed() {
-    if (this.authService.canClaimBusiness() && !this.businessListing.idUser) {
+    if (this.authService.isLoggedIn && this.authService.canClaimBusiness() && !this.businessListing.idUser) {
       return true;
     } else {
       return false;
@@ -85,7 +85,7 @@ export class BusinessProfileComponent implements OnInit {
   }
 
   isCurrentUsersBusiness() {
-    if (this.authService.localUser.id === this.businessListing.idUser) {
+    if (this.authService.isLoggedIn && this.authService.localUser.id === this.businessListing.idUser) {
       return true;
     } else {
       return false;
