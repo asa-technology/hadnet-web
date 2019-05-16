@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * RatingsComponent
+ */
 
+import { Component, OnInit } from '@angular/core';
 import { BusinessRating } from '../../models/BusinessRating';
 import { GetBusinessRatingsService } from '../../services/business-images-and-ratings/get-business-ratings.service';
 import { GetUsersWhoReviewedService } from '../../services/business-images-and-ratings/get-users-who-reviewed.service';
@@ -13,10 +16,24 @@ import { UpdateRatingService } from '../../services/business-ratings/update-rati
   templateUrl: './ratings.component.html',
   styleUrls: ['./ratings.component.css']
 })
+
 export class RatingsComponent implements OnInit {
+  /** Variable "reviews" are all reviews for given profile. Defined by a call to the getBusinessRatingsService method
+   * getBusinessRatings.
+   */
   reviews;
+  /**
+   * Variable "userProfilePic" represents an image url associated with the current user.
+   */
   userProfilePic: string;
+  /**
+   * Variable "userDisplayName" is the current user's display name.
+   */
   userDisplayName: string;
+  /**
+   * Variable "showReviewForm" is a boolean representing whether or not the user has the ability to review a business.
+   * Users must be logged in to review businesses.
+   */
   showReviewForm = false;
   constructor(private getBusinessRatingsService: GetBusinessRatingsService,
               private getUsersWhoReviewedService: GetUsersWhoReviewedService,
@@ -27,11 +44,10 @@ export class RatingsComponent implements OnInit {
 
   ngOnInit() {
     const profile = this.profileService.currentProfile;
-    // the id of 1 needs to be dynamic, it'll happen through data binding but no time
-    this.getBusinessRatingsService.getBusinessRatings(profile.id) // needs to be the business's id
+    this.getBusinessRatingsService.getBusinessRatings(profile.id)
     .subscribe((reviews) => {
       this.reviews = reviews;
-      // return usernames from the id's held on these reviews
+      // return userNames and userImages from the id's held on these reviews
       this.reviews.forEach ((review) => {
         this.getUsersWhoReviewedService.getUsersWhoReviewed(review.idUser)
         .subscribe((user) => {
@@ -42,10 +58,20 @@ export class RatingsComponent implements OnInit {
     });
   }
 
+  /**
+   * @description Function toggleForm toggles whether or not a review form is available, which is dependant on whether or not a user
+   * is logged in.
+   */
   toggleForm() {
     this.showReviewForm = !this.showReviewForm;
   }
 
+  /**
+   * @description Function submitReview takes in review text, and a rating between 1 and 5. These are recorded and show up
+   * on a business profile page.
+   * @param reviewText ReviewText is the text body of a review.
+   * @param rating Rating is a number, 1-5 representing the user's experience with a given business.
+   */
   submitReview(reviewText, rating) {
     const profile = this.profileService.currentProfile;
     const currentUser = this.authService.currentUser;
@@ -60,7 +86,6 @@ export class RatingsComponent implements OnInit {
       ratingNumber: rating,
       idBusiness: profile.id,
       idUser: currentUser.uid,
-
     };
     this.ratingsService.sendUserReview(review).subscribe((response) => {
       this.updateRatingService.sendUserReview({id: profile.id}).subscribe(() => {
@@ -81,5 +106,4 @@ export class RatingsComponent implements OnInit {
     });
     this.toggleForm();
   }
-
 }

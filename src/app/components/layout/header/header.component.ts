@@ -1,3 +1,8 @@
+/**
+ * HeaderComponent
+ *
+ * HeaderComponent is responsible for navigation.
+ */
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { BusinessProfileService } from 'src/app/services/business-profile/business-profile.service';
