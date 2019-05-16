@@ -75,15 +75,30 @@ export class MapViewComponent implements OnInit {
       businessListings.forEach((listing) => {
       const businessMarker: any = tomtom.L.marker([listing.latitude, listing.longitude]).addTo(map);
       // what shows up when a user clicks a pin on the map
+      const formattedListingName = this.formatBusinessMarker(listing.name);
+      const formattedListingAddress = this.formatBusinessMarker(listing.address);
       businessMarker.bindPopup(
         `<div>
-        <strong>${listing.name}</strong><br>
-        ${listing.address}<br>
+        ${formattedListingName}<br>
+        ${formattedListingAddress}<br>
         </div>`);
       businessMarker.on('click', () => {
         this.selectedBusiness = listing;
       });
     });
   });
+  }
+
+  formatBusinessMarker(text) {
+    const textToFormat = text.split(' ');
+    return textToFormat.map((word) => {
+      if (word) {
+        if (word === 'LLC') {
+          return word;
+        } else {
+          return word[0].toUpperCase() + `${word.slice(1).toLowerCase()}`;
+        }
+      }
+    }).join(' ');
   }
 }
