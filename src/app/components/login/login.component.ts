@@ -1,3 +1,8 @@
+/**
+ * LoginComponent
+ *
+ * LoginComponent allows users to log in/out.
+ */
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 

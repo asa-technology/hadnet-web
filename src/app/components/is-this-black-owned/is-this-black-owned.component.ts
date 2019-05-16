@@ -94,8 +94,9 @@ export class IsThisBlackOwnedComponent implements OnInit {
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
   }
+
   /**
-   *
+   * @description Function showNextWebcam takes in direction or device ID, and chooses that device/direction to iterate through devices, to.
    * @param directionOrDeviceId DirectionOrDeviceId takes either a boolean representing which direction to iterate through
    * webcams, or a string that tells which device to use to take pictures.
    *  true => move forward through devices
@@ -143,6 +144,7 @@ export class IsThisBlackOwnedComponent implements OnInit {
       }
     });
   }
+
     /**
      * @description Function getClosestBusiness takes in a businesses' latitude and longitude and returns the distance
      * the business is from the user's current location.

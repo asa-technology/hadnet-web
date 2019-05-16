@@ -1,3 +1,6 @@
+/**
+ * MapViewComponent
+ */
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { BusinessListingService } from 'src/app/services/business-listings/business-listing.service';
 import { BusinessListing } from '../../models/BusinessListing';
@@ -11,10 +14,13 @@ declare let tomtom: any;
   styleUrls: ['./map-view.component.css']
 })
 export class MapViewComponent implements OnInit {
-  // gets all business listings for rendering on map
+  /** Variable "lat" is a variable representing the user's current latitude. */
   lat: number;
+  /** Variable "long" is a variable representing the user's current longitude. */
   long: number;
+  /** Variable "loading" is a boolean representing whether or not the map has loaded. */
   loading: boolean;
+  /** Variable "selectedBusiness" is a [[BusinessListing]] which represents the business on the map that's been selected by the user. */
   selectedBusiness: BusinessListing;
   constructor(private businessListingService: BusinessListingService) { }
 
@@ -30,9 +36,7 @@ export class MapViewComponent implements OnInit {
       this.long = -90.0715;
       this.renderMap();
     }
-
-
-// initial business selected so user has an idea of what to do with the map
+// placeholder business so there's an initial value
     this.selectedBusiness = {
       id: 123123,
       name: 'Hadnet Headquarters',
@@ -49,6 +53,13 @@ export class MapViewComponent implements OnInit {
       legalBusinessName: 'Hadnet Headquarterz',
     };
   }
+
+  /**
+   * @description Function renderMap renders the map through the Tomtom Map API. RenderMap defines the product info,
+   * references the path to where the css for the map is located, as well as info the map might need.
+   *
+   * A call to the businessListingService is made in order to render all business on the map by lat/long.
+   */
   renderMap() {
     this.loading = true;
     tomtom.setProductInfo('Hadnet', '0.1');
