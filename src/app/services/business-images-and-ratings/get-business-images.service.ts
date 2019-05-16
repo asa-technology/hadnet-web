@@ -1,5 +1,5 @@
 /**
- * This is a service to get images
+ * This is a service to get images.
  */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
