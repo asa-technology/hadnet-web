@@ -1,5 +1,5 @@
-<div class="jumbotron jumbotron-fluid">
-    <h1 class="display-3" class="text-center">Community Board</h1>
+<h1 class="display-3" class="text-center">Community Board</h1>
+  <div class="jumbotron jumbotron-fluid">
     <div class="float-right">
         <button  type="button" *ngIf="authService.isLoggedIn" class="btn btn-dark" data-toggle="modal" data-target="#communityForm"><i class="far fa-calendar-plus">Add Event</i>
         </button> 
@@ -45,7 +45,7 @@
                   </button>
                 </div>
                 <div class="modal-body text-center">
-                    <form  (ngSubmit)="addEvent(eventTitle,eventBody,eventExpire,eventImage)" #eventForm="ngForm">
+                    <form (ngSubmit)="addEvent(eventTitle,eventBody,eventExpire,eventImage)" (ngSubmit)="eventForm.reset()" #eventForm="ngForm">
                         
                     <div class="lead">
                         <div class="form-group">
@@ -60,7 +60,7 @@
                         <div class="form-group">
                         <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year-mm-dd(date format)">
                         </div>
-                        <button type="submit" class="float-right" class="btn btn-dark"><small>Add Event</small></button>
+                       <div><button type="submit" class="float-right"  class="btn btn-dark"><small>Add Event</small></button></div> 
                       </div>
                       </form>
                       
