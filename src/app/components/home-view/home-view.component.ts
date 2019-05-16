@@ -1,3 +1,8 @@
+/**
+ * HomeViewComponent
+ *
+ * The Homeview contains the map-view as well as the home-selected-business component.
+ */
 import { Component, OnInit } from '@angular/core';
 
 @Component({
