@@ -1,14 +1,23 @@
+<hr>
 <h1 class="display-3" class="text-center">Community Board</h1>
-  <div class="jumbotron jumbotron-fluid">
-    <div class="float-right">
-        <button  type="button" *ngIf="authService.isLoggedIn" class="btn btn-dark" data-toggle="modal" data-target="#communityForm"><i class="far fa-calendar-plus">Add Event</i>
+  <div>
+    <div class='col text-center'>
+        <button  type="button" *ngIf="authService.isLoggedIn" class="btn btn-dark" data-toggle="modal" data-target="#communityForm"><i class="far fa-calendar-plus"> Add Event</i>
         </button> 
     </div>
-    
-
+    <div *ngIf="authService.isLoggedIn">
+      <br>
+        <hr>
+      <br>
+    </div>
   <div class="container">
-      <div *ngIf="!authService.isLoggedIn" class="float-right">
+      <div *ngIf="!authService.isLoggedIn" class='col text-center'>
           <a routerLink="/login"><button  class="btn btn-light"><small>Login to Add Event</small></button></a>
+        </div>
+        <div *ngIf="!authService.isLoggedIn">
+          <br>
+          <hr>
+          <br>
         </div>
         <div *ngIf="allListings">
             <div class="container">
@@ -18,7 +27,6 @@
                       <img class="card-img" src={{listing.imageUrl}}>
                       <div class="card-body">
                         <h4 class="card-title">{{listing.title}}</h4>
-                       
                         <p class="card-text">{{listing.body}}</p>
                         <!-- <a href="#" class="btn btn-dark"><small>Read Recipe<small></a> -->
                       </div>
@@ -27,6 +35,7 @@
                         </div>
                       </div>
                     </div>
+                    <br style='line-height:100px;'>
                   </div>
                 </div>
               </div>
