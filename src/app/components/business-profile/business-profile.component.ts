@@ -1,6 +1,8 @@
+/**
+ * BusinessProfileComponent
+ */
 import { Component, OnInit } from '@angular/core';
 import { BusinessListing } from '../../models/BusinessListing';
-import { BusinessListingService } from '../../services/business-listings/business-listing.service';
 import { GetBusinessImagesService } from '../../services/business-images-and-ratings/get-business-images.service';
 import { BusinessProfileService } from '../../services/business-profile/business-profile.service';
 import { BusinessImage } from '../../models/BusinessImage';
@@ -14,10 +16,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./business-profile.component.css']
 })
 export class BusinessProfileComponent implements OnInit {
+  /** "businessListing" represents the current business object to be represented */
   businessListing: BusinessListing;
   businessImages: BusinessImage;
+  /** "businessPhoneNumber" is a string that represents the businesses phone number */
   businessPhoneNumber: string;
+  /** "businessRating" is a string representing a rating that's either 0 if unrated, or 1-5 depending on user ratings */
   businessRating: string;
+  /** "businessImage" is a string representing the url of a business listing's image */
   businessImage: string;
   editorToggle: {} = {
     name: false,
@@ -34,6 +40,10 @@ export class BusinessProfileComponent implements OnInit {
               private router: Router ) { }
 
   ngOnInit() {
+    /**
+     * "this.businessListing" calls upon the businessProfileService to deliver the current
+     * profile being stored in this service as a variable.
+     */
     this.businessListing = this.businessProfileService.currentProfile;
     this.businessPhoneNumber = `${this.businessListing.phoneNumber}`;
     this.businessRating = `${this.businessListing.averageRating}`;
@@ -47,6 +57,13 @@ export class BusinessProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * @description claimBusiness is a function only available to users who are logged in.
+   * claimBusiness takes in a business object, and allows the user to claim the business
+   * if they have not yet claimed a business.
+   * @param business represents a business object, containing information about a business,
+   * including it's ID, which is used to assign a business ID to a user.
+   */
   async claimBusiness(business) {
     try {
       const user = this.authService.currentUser;
@@ -59,10 +76,22 @@ export class BusinessProfileComponent implements OnInit {
     }
   }
 
+/**
+ * @description toggleEdit takes in a field representing an informative property on a business
+ * profile, and allows the user to change this information if it belongs to a business the user owns.
+ * @param field If edit button is clicked, this allows the logged in user who owns this business
+ * to edit the information regarding this business.
+ */
   toggleEdit(field) {
     this.editorToggle[field] = !this.editorToggle[field];
   }
 
+  /**
+   * @description updateBusiness takes in a business, a field to update, and the change that's being made.
+   * @param business Business represents the [[BusinessListing]] that's being updated.
+   * @param field Field is a string representing the property of [[BusinessListing]] that's being updated.
+   * @param change Change is a string representing the new value being assigned to the "field".
+   */
   async updateBusiness(business: BusinessListing, field: string, change: string) {
     try {
       const changeObj = {};
@@ -76,6 +105,11 @@ export class BusinessProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * @description Function businessCanBeClaimed uses this.authService.isLoggedIn to check whether or not
+   * the user is logged in, and checks whether or not there is a User ID associated with this business.
+   * If not, the business is claimable by a logged in user.
+   */
   businessCanBeClaimed() {
     if (this.authService.isLoggedIn && this.authService.canClaimBusiness() && !this.businessListing.idUser) {
       return true;
@@ -84,6 +118,11 @@ export class BusinessProfileComponent implements OnInit {
     }
   }
 
+  /**
+   * @description Function isCurrentUsersBusiness checks whether or not a user is logged in
+   * by calling this.authService.isLoggedIn, and compares the user's ID to the businessListing's
+   * User ID. If they are equal, the user owns the business and may edit it's properties.
+   */
   isCurrentUsersBusiness() {
     if (this.authService.isLoggedIn && this.authService.localUser.id === this.businessListing.idUser) {
       return true;

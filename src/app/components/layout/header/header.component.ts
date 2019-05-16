@@ -8,11 +8,9 @@ import { BusinessProfileService } from 'src/app/services/business-profile/busine
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   constructor(private authService: AuthService,
               private profileService: BusinessProfileService) { }
 
   ngOnInit() {
   }
-
 }
