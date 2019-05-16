@@ -10,7 +10,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({name: 'formatPhone'})
 /**
- * FormatPhonePipe is a pipe for formatting an phone number.
+ * FormatPhonePipe is a pipe for formatting a phone number.
  */
 export class FormatPhonePipe implements PipeTransform {
   /**
