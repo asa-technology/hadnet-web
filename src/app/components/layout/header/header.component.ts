@@ -8,11 +8,6 @@ import { BusinessProfileService } from 'src/app/services/business-profile/busine
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  showDescription1 = false;
-  showDescription2 = false;
-  showDescription3 = false;
-  showDescription4 = false;
-  showDescription5 = false;
   constructor(private authService: AuthService,
               private profileService: BusinessProfileService) { }
 
