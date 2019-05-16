@@ -37,9 +37,9 @@ export class BusinessProfileComponent implements OnInit {
     this.businessListing = this.businessProfileService.currentProfile;
     this.businessPhoneNumber = `${this.businessListing.phoneNumber}`;
     this.businessRating = `${this.businessListing.averageRating}`;
-    if (this.businessListing.idFeaturedImage === null){
-      this.businessImage = 'https://i.imgur.com/BNtJWJM.png'
-    } else{
+    if (this.businessListing.idFeaturedImage === null) {
+      this.businessImage = 'https://i.imgur.com/BNtJWJM.png';
+    } else {
       this.getBusinessImagesService.getFeaturedImage(this.businessListing.idFeaturedImage)
         .subscribe((image) => {
             this.businessImage = image.url;

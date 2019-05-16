@@ -9,10 +9,6 @@ const {
 } = require('../../database/helpers');
 
 /**
- * 
- */
-
-/**
  * Grabs all users from the database.
  * @name Get All Users
  * @route {GET} /api/user/
