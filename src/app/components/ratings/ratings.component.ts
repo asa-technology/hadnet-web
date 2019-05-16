@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+/**
+ * RatingsComponent
+ */
 
+import { Component, OnInit } from '@angular/core';
 import { BusinessRating } from '../../models/BusinessRating';
 import { GetBusinessRatingsService } from '../../services/business-images-and-ratings/get-business-ratings.service';
 import { GetUsersWhoReviewedService } from '../../services/business-images-and-ratings/get-users-who-reviewed.service';
