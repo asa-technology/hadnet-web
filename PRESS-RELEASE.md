@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
 
 ## Heading
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > Hadnet ሓድነት
 
 ## Sub-Heading
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > An app for everyone.
 
 ## Summary
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > Tigrinya is a language spoken in southern Eritrea and nothern Ethiopia. Hadnet is a Tigrinya word that means a union of interests or purposes or sympathies among members of a group. Our app, Hadnet aims to strengthen communities of color by presenting a way to find black-owned businesses at the click of a button.
 
 ## Problem
-  > Describe the problem your product solves.
+  > Just by looking at a business its impossible to tell if that business is black-owned or not.
 
 ## Solution
-  > Describe how your product elegantly solves the problem.
+  > Hadnet allows users to search via text, location, or even picture to tell if a business is black-owned.
 
 ## Quote from You
-  > A quote from a spokesperson in your company.
+  > "At ASA tech we strive to unite all people behind a single cause to improve the lives and livelihood of disenfranchised communities."
 
 ## How to Get Started
-  > Describe how easy it is to get started.
+  > To get started simply open your web browser and navigate to https://hadnet.net.
 
 ## Customer Quote
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "This app is great, it has helped me find businesses right in my neighborhood that I can feel good about supporting!"
 
 ## Closing and Call to Action
-  > Wrap it up and give pointers where the reader should go next.
+  > Hadnet gives users the ability to find and support local black-owned businesses; so start searching and start strengthening your community one dollar at a time.
