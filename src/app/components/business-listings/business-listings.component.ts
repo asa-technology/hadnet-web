@@ -17,11 +17,11 @@ import { Router } from '@angular/router';
 })
 
 export class BusinessListingsComponent implements OnInit {
- /** string representing the name of a business */
+ /** String representing the name of a business */
   title: string;
- /** boolean representing whether or not business listings have all been loaded to page */
+ /** Boolean representing whether or not business listings have all been loaded to page */
   loading: boolean;
- /** array of businesses retrieved from database */
+ /** Array of businesses retrieved from database */
   businessListings;
   constructor(private businessListingService: BusinessListingService,
               private imageService: GetBusinessImagesService,
@@ -30,15 +30,15 @@ export class BusinessListingsComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    /** user's current latitude */
+    /** User's current latitude */
     let userCurrentLat: number;
-    /** user's current longitude */
+    /** User's current longitude */
     let userCurrentLong: number;
-    /** variable representing the latitude of businesses, used for determining proximity */
+    /** Variable representing the latitude of businesses, used for determining proximity */
     let businessLat: number;
-    /** variable representing the longitude of a business, used for determining proximity */
+    /** Variable representing the longitude of a business, used for determining proximity */
     let businessLong: number;
-    /** distance that one set of coordinates is from another set of coordinates */
+    /** Distance that one set of coordinates is from another set of coordinates */
     let distance: number;
     this.loading = true;
     this.businessListingService.getBusinessListings().subscribe( businessListings => {
@@ -74,17 +74,23 @@ export class BusinessListingsComponent implements OnInit {
     });
   }
 /**
- * function goToProfile takes in a business, changes the business displayed in
+ * @description Function goToProfile takes in a business, changes the business displayed in
  *  business-profile component to the business argument, then redirects the user
  *  to the business-profile component
- * @param business takes a business, and using the businessProfileService,
+ * @param business Takes a business, and using the businessProfileService,
  * changes the business that business-profile displays
- * @event navigate Takes the user to the business-profile page
  */
   goToProfile(business) {
     this.businessProfileService.changeProfile(business);
     this.router.navigate(['/', 'business-profile']);
   }
+
+  /**
+   * @description onSubmit calls to the searchService method [searchForBusiness]
+   * returning all businesses that match the search query
+   *
+   * "this.title" is the variable that the database is queried for
+   */
   onSubmit() {
     this.searchService.searchForBusiness(this.title).subscribe( searchResults => {
       this.businessListings = searchResults;
@@ -102,5 +108,4 @@ export class BusinessListingsComponent implements OnInit {
       });
     });
   }
-
 }
