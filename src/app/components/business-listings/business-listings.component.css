@@ -1,0 +1,23 @@
+.business-listings-title h2 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.2rem;
+}
+.col button {
+  background-color: #343a40;
+  color: #FFFFFF;
+}
+.col button:hover {
+  background-color: #63696f;
+  border-color: #63696f;
+}
+#search-button{
+  background-color: #343a40;
+}
+#search-button:hover {
+  background-color: #63696f;
+  border-color: #63696f;
+}
+
+.overflow-auto {
+  max-height: 70vmax;
+}
