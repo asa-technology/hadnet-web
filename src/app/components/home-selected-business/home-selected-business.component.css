@@ -1,0 +1,9 @@
+div button {
+  color: #FFFFFF;
+  background-color: #343a40;
+}
+
+div button:hover{
+  background-color: #63696f;
+  border-color: #63696f;
+}

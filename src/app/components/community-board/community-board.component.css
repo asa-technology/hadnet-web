@@ -1,5 +1,26 @@
 .card-image {
 max-height: 200px;
 max-width: 200px;
+}
 
+.text-center {
+  padding-top: 1.5rem;
+}
+
+div button {
+  background-color: #343a40;
+  color: #FFFFFF;
+}
+
+div button:hover {
+  background-color: #63696f;
+  border-color: #63696f;
+}
+
+#warning-triangle-color {
+  color: rgb(242, 157, 30);
+}
+
+.overflow-auto {
+  max-height: 70vmax;
 }
