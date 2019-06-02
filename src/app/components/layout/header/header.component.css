@@ -35,3 +35,14 @@
   justify-content: space-between;
   padding: 0px;
 }
+
+#logged-in-style {
+  color: green;
+}
+
+#not-logged-in-style {
+  color: red;
+}
+#home-icon-color {
+  color: green;
+}
