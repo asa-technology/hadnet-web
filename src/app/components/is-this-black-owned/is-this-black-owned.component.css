@@ -1,21 +1,29 @@
 .actionBtn {
-    width: 200px;
-    background-color: black;
-    color: white;
+    background-color: #343a40;
+    color: #FFFFFF;
     font-size: 16px;
     border-radius: 30px;
     border: none;
-    padding: 15px 20px;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     text-align: center;
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
-    /* bottom: 30px;
-    left: calc(50% - 100px); */
 }
-  
+
+.actionBtn button{
+  position: relative; left: 50%;
+  transform: translateX(-50%);
+}
+
+.actionBtn:hover{
+  background-color: #63696f;
+  border-color: #63696f;
+}
+
 .snapshot {
   text-align: center;
 }
-  
+
 ul.links {
   padding-bottom: 20px;
 }
@@ -26,5 +34,21 @@ img {
 
 webcam {
   width: 100%;
+}
+
+#itbo-title h4{
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+}
+
+#help-button-itbo button {
+  margin-top: 2rem;
+  color: #FFFFFF;
+  background-color: #343a40;
+}
+
+#help-button-itbo button:hover{
+  background-color: #63696f;
+  border-color: #63696f;
 }
 
