@@ -1,24 +1,15 @@
-<hr>
-<h1 class="display-3" class="text-center">Community Board</h1>
+<h2 class="text-center">Community Board</h2>
   <div>
-    <div class='col text-center'>
-        <button  type="button" *ngIf="authService.isLoggedIn" class="btn btn-dark" data-toggle="modal" data-target="#communityForm"><i class="far fa-calendar-plus"> Add Event</i>
-        </button> 
+    <div *ngIf="authService.isLoggedIn" class='col text-center'>
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#communityForm"><i class="far fa-calendar-plus"> Add Event </i>
+        </button>
     </div>
-    <div *ngIf="authService.isLoggedIn">
-      <br>
+    <div *ngIf="!authService.isLoggedIn" class='col text-center'>
+          <a routerLink="/login"><button class="btn btn-dark"><small><i id="warning-triangle-color" class="fas fa-exclamation-triangle"></i> Login to Add Events</small></button></a>
+    </div>
         <hr>
-      <br>
-    </div>
-  <div class="container">
-      <div *ngIf="!authService.isLoggedIn" class='col text-center'>
-          <a routerLink="/login"><button  class="btn btn-light"><small>Login to Add Event</small></button></a>
-        </div>
-        <div *ngIf="!authService.isLoggedIn">
-          <br>
-          <hr>
-          <br>
-        </div>
+  <div class="container" class="overflow-auto">
+
         <div *ngIf="allListings">
             <div class="container">
                 <div class="row">
@@ -35,15 +26,13 @@
                         </div>
                       </div>
                     </div>
-                    <br style='line-height:100px;'>
                   </div>
                 </div>
               </div>
-        </div>  
-  </div>
-    
-   
-          
+        </div>
+
+
+
           <div class="modal fade" id="communityForm" tabindex="-1" role="dialog" aria-labelledby="communityForm" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
@@ -55,7 +44,7 @@
                 </div>
                 <div class="modal-body text-center">
                     <form (ngSubmit)="addEvent(eventTitle,eventBody,eventExpire,eventImage)" (ngSubmit)="eventForm.reset()" #eventForm="ngForm">
-                        
+
                     <div class="lead">
                         <div class="form-group">
                         <input id="eventTitle"  name="title" [(ngModel)]= "eventTitle" class="form-control" type="text" placeholder="Title">
@@ -69,17 +58,17 @@
                         <div class="form-group">
                         <input id="eventExpire"  name="expire" [(ngModel)]= "eventExpire"class="form-control" type="text" placeholder="year-mm-dd(date format)">
                         </div>
-                       <div><button type="submit" class="float-right"  class="btn btn-dark"><small>Add Event</small></button></div> 
+                       <div><button type="submit" class="float-right"  class="btn btn-dark"><small>Add Event</small></button></div>
                       </div>
                       </form>
-                      
+
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
           </div>
-  
+
     <!-- {{eventForm.value | json}} -->
   </div>
 </div>

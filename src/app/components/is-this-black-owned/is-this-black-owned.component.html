@@ -1,6 +1,11 @@
+<div class="text-center p-t-55 p-b-30">
+        <span id="itbo-title">
+          <h4>Is This Business Black Owned?</h4>
+        </span>
+</div>
 <div style="text-align:center">
   <div class="alert alert-info" *ngIf="!loading && businessNotFound" role="alert">
-      Couldn't recognize that business, please try again.
+      Couldn't recognize business, please try again.
   </div>
 
   <div *ngIf="!loading">
@@ -12,29 +17,27 @@
             (initError)="handleInitError($event)"
     ></webcam>
     <br/>
-    <button class="actionBtn" *ngIf="showWebcam" (click)="triggerSnapshot();">Take A Snapshot of Business</button>
+    <button class="actionBtn" *ngIf="showWebcam" (click)="triggerSnapshot();"><i class="fas fa-camera"></i> Take A Picture of Business Logo</button>
     <hr>
-    <div class="container">
-        <button type="button" class="btn btn" data-toggle="modal" data-target="#ITBOinfo"><i class="far fa-question-circle"></i>
-        </button>  
+    <div class="container" id="help-button-itbo">
+        <button type="button" class="btn btn" data-toggle="modal" data-target="#ITBOinfo"><i class="far fa-question-circle"></i> How do I use this feature? </button>
       </div>
-      
+
       <div class="modal fade" id="ITBOinfo" tabindex="-1" role="dialog" aria-labelledby="ITBOLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title text-center" id="ITBOLabel" >IsThisBlackOwned</h5>
+              <h5 class="modal-title text-center" id="ITBOLabel" >Is This Business Black Owned?</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body text-center">
-              Welcome to the <B>I.T.B.O</B> page!<br>
-              To get the full experience of using our <B>I.T.B.O</B> camera, you position your camera to take a photo of a logo or sign of a restaurant and we will be able to tell you whether it is African-American owned or not. 
+              Welcome to the <B>I.T.B.B.O.</B> page!<br>
+              To have the best experience while using our <B>I.T.B.B.O.</B> picture based recognition system, please take a clear photo of the logo or sign of a business and we will tell you if this business is African-American owned or currently unrecognized.
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-             
             </div>
           </div>
         </div>

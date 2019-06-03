@@ -3,19 +3,13 @@
     <div class="col">
       <form class="login100-form validate-form">
 
-        <div style="padding-top: 15px">
-          <button (click)="authService.fbLogin()" class="btn btn-primary btn-block">
-            <i class="fab fa-facebook-f"></i>
-            Login with Facebook
-          </button>
-        </div>
-        <hr>
-        <div class="text-center"><h5>Or</h5></div>
-        <hr>
         <div class="text-center p-t-55 p-b-30">
           <span class="txt1">
-            <h4>Login with email</h4>
+            <h2>Login to Hadnet</h2>
           </span>
+          <span id="login-info" *ngIf="!authService.isLoggedIn" class="txt2 p-b-10">
+              Please log in via email or Facebook to access additional features.
+            </span>
         </div>
 
         <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter email: ex@abc.xyz">
@@ -29,24 +23,35 @@
         </div>
 
         <div class="container-login100-form-btn">
-          <button class="btn btn-dark btn-block" (click)="authService.login(userEmail.value, userPassword.value)">
+          <button id="log-in-button" class="btn btn-dark btn-block" (click)="authService.login(userEmail.value, userPassword.value)">
             Login
           </button>
-        </div><br>
-        
-        <hr>
-        <div class="text-center">
-          <span class="txt2 p-b-10">
-            Don’t have an account?
-          </span>
         </div>
+        <br>
 
-        <div class="container-login100-form-btn">
-          <button routerLink="/signup" class="btn btn-dark btn-block">
-            Sign up now
-          </button>
-        </div>
-        
+        <div style="padding-bottom: 0.6rem" class="text-center">
+            <span id="sign-up-button-spacing" class="txt2 p-b-10">
+              Don’t have an account?
+            </span>
+          </div>
+
+          <div style="margin-bottom: 2.5rem" class="container-login100-form-btn">
+            <button id="sign-up-button" routerLink="/signup" class="btn btn-dark btn-block">
+              Sign up now!
+            </button>
+          </div>
+
+        <hr>
+          <div class="text-center"><h5>Or</h5></div>
+        <hr>
+
+        <div style="padding-top: 15px">
+            <button id="facebook-login-button" (click)="authService.fbLogin()" class="btn btn-primary btn-block">
+              <i id="facebook-logo-background-color" class="fab fa-facebook-f"></i>
+              Login with Facebook
+            </button>
+          </div>
+
       </form>
     </div>
   </div>

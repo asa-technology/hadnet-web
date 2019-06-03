@@ -1,0 +1,54 @@
+#facebook-login-button{
+  margin-top: .8rem;
+  background-color: #343a40;
+  border-color: #343a40;
+  position: relative; left: 50%;
+  transform: translateX(-50%);
+}
+#facebook-login-button:hover{
+  background-color: #63696f;
+  border-color: #63696f;
+}
+
+#facebook-logo-background-color{
+  background-color: #3b5998;
+}
+
+#log-in-button{
+  margin-top: 1.2rem;
+  position: relative; left: 50%;
+  transform: translateX(-50%);
+}
+
+#log-in-button:hover{
+  background-color: #63696f;
+  border-color: #63696f;
+}
+
+#sign-up-button{
+  position: relative; left: 50%;
+  transform: translateX(-50%);
+}
+
+#sign-up-button:hover{
+  background-color: #63696f;
+  border-color: #63696f;
+}
+
+.txt1 h2{
+padding-top: 2rem;
+padding-bottom: 1.5rem
+}
+
+#sign-up-button-spacing{
+  margin-bottom: .6rem;
+}
+
+#login-info{
+  padding-bottom: .6rem;
+}
+
+
+
+
+
