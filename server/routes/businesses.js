@@ -13,6 +13,7 @@ const {
   getReviewsByBusiness,
   updateBusinessRating,
 } = require('../../database/helpers');
+const { Business } = require('../../database/index.js');
 require('dotenv').config();
 
 /**
@@ -186,37 +187,45 @@ router.put('/update/:id', (req, res) => {
  */
 // verifies a business by checking if image data name matches any buisness name in the table
 router.post('/isVerified', (req, res) => {
-  axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_IMAGE_VERIFY_KEY}`, {
-    requests: [
-      {
-        image: {
-          content: req.body.img,
-        },
-        features: [
-          {
-            type: 'DOCUMENT_TEXT_DETECTION',
-            maxResults: 5,
-          },
-        ],
-      },
-    ],
-  }).then((result) => {
-    if (result.data.responses[0].textAnnotations) {
-      let x = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
-      if (Array.isArray(x)) {
-        x = x.map(query => `%${query}%`);
-      } else if (x) {
-        x = `%${x}%`;
-      }
-      x.pop();
-      return getAllBusinessesFromText(x);
-    }
-    return 'Business Not Found, Please Try Again';
-  })
-    .then(business => res.json(business))
-    .catch((error) => {
-      console.log('error, line 148 businesses.js database: ', error);
-    });
+  // axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${process.env.GOOGLE_IMAGE_VERIFY_KEY}`, {
+  //   requests: [
+  //     {
+  //       image: {
+  //         content: req.body.img,
+  //       },
+  //       features: [
+  //         {
+  //           type: 'DOCUMENT_TEXT_DETECTION',
+  //           maxResults: 5,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // })//.then((result) => {
+  // //   if (result.data.responses[0].textAnnotations) {
+  // //     let x = result.data.responses[0].textAnnotations[0].description.replace(/\n/g, ' ').split(' ');
+  // //     if (Array.isArray(x)) {
+  // //       x = x.map(query => `%${query}%`);
+  // //     } else if (x) {
+  // //       x = `%${x}%`;
+  // //     }
+  // //     x.pop();
+  // //     return getAllBusinessesFromText(x);
+  // //   }
+  // //   return 'Business Not Found, Please Try Again';
+  // // })
+  //   .then(business => {
+  //     Business.findOne({where: {name: "George & Leah Mckenna Museum Of African American Art"}})
+  //       .then(business => res.json(business));
+  //   })
+  //   .catch((error) => {
+  //     console.log('error, line 148 businesses.js database: ', error);
+  //   });
+  Business.findAll({where: {id: 206}})
+  .then(business => {
+    console.log(business);
+    res.json(business);
+  });
 });
 
 
